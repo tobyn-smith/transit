@@ -11,11 +11,8 @@ Energy security · Spatial analysis
 ```{r stat-cards}
 #| echo: false
 #| output: asis
-#| message: false
-library(readr)
-library(dplyr)
-t  <- read_csv("data/processed/lng_terminals.csv", show_col_types = FALSE)
-op <- t |> filter(status == "operating")
+t  <- read.csv("data/processed/lng_terminals.csv", stringsAsFactors = FALSE)
+op <- t[t$status == "operating", ]
 n_term     <- nrow(t)
 op_cap     <- round(sum(op$capacity_bcm), 1)
 fsru_share <- round(100 * sum(op$capacity_bcm[op$type == "fsru"]) / sum(op$capacity_bcm))
