@@ -6,14 +6,14 @@ data/raw/
 .Rhistory
 .RData
 .Ruserdata
-*.Rproj
 
 # renv library (lockfile is committed, library is not)
 renv/library/
 renv/staging/
 
-# quarto
+# quarto build output (the site is deployed from CI, not committed)
 /.quarto/
+/docs/
 
 # OS
 .DS_Store
