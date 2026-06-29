@@ -1,0 +1,8 @@
+name,country,iso_a2,lon,lat,capacity_bcm,status,type
+Swinoujscie LNG,Poland,PL,14.27,53.92,6.2,operating,onshore
+Klaipeda FSRU,Lithuania,LT,21.08,55.72,4.0,operating,fsru
+Inkoo FSRU,Finland,FI,24.00,60.05,5.0,operating,fsru
+Hamina LNG,Finland,FI,27.18,60.55,0.3,operating,small-scale
+Paldiski,Estonia,EE,24.08,59.35,2.5,operating,jetty
+Gdansk FSRU,Poland,PL,18.65,54.40,6.1,planned,fsru
+Rostock LNG,Germany,DE,12.10,54.15,0.3,operating,small-scale

@@ -2,135 +2,195 @@
 title: "Analysis"
 ---
 
+This page computes everything from public data at render time: country geometry
+comes from Natural Earth (via `rnaturalearth`), and the terminal and dependence
+tables are the small committed files in `data/processed/`. All distance work is
+done in ETRS89 / LAEA Europe (EPSG:3035), so measurements are in metres.
+
+The terminal capacities are compiled approximations from public reporting — see
+the [Data](01-data.qmd) page. Treat the rankings as a structured view of
+exposure, not authoritative figures.
+
 ```{r setup}
 #| include: false
-#| eval: false
+#| message: false
+#| warning: false
 library(sf)
 library(dplyr)
 library(readr)
 library(ggplot2)
-library(tmap)
 library(leaflet)
-library(stringr)
+library(rnaturalearth)
+library(scales)
+library(knitr)
 
-# Processed layers are written by scripts/01_clean.R and committed to the repo,
-# so this page renders without re-running the analysis or touching the network.
-proc <- "data/processed"
-```
+laea <- 3035
 
-## Area of interest
+# Country geometry (offline, bundled with rnaturalearthdata)
+world <- ne_countries(scale = "medium", returnclass = "sf")
 
-All measurements are in ETRS89 / LAEA Europe (EPSG:3035) so distances are in
-metres, not degrees.
+# Area of interest: a box around the Baltic
+aoi <- st_as_sfc(st_bbox(c(xmin = 9, ymin = 53, xmax = 30, ymax = 66),
+                         crs = 4326)) |>
+  st_transform(laea)
 
-```{r aoi}
-#| eval: false
-aoi        <- st_read(file.path(proc, "aoi.gpkg"))
-terminals  <- st_read(file.path(proc, "lng_terminals.gpkg"))
-boundary   <- st_read(file.path(proc, "ru_maritime_boundary.gpkg"))
-chokepoint <- st_read(file.path(proc, "danish_straits.gpkg"))
-```
+# Russian territory (includes the Kaliningrad exclave) — the proximity reference
+russia <- world |>
+  filter(admin == "Russia") |>
+  st_transform(laea) |>
+  st_make_valid()
 
-## Concentration
+# Danish Straits chokepoint: a simple gate every cargo must transit
+chokepoint <- st_as_sfc(st_bbox(c(xmin = 10.5, ymin = 55.0, xmax = 13.0, ymax = 56.2),
+                                crs = 4326)) |>
+  st_transform(laea)
 
-Where the infrastructure sits, sized by capacity.
+# Terminals
+terminals <- read_csv("data/processed/lng_terminals.csv", show_col_types = FALSE) |>
+  st_as_sf(coords = c("lon", "lat"), crs = 4326) |>
+  st_transform(laea)
 
-```{r map-concentration}
-#| eval: false
-tm_shape(aoi) +
-  tm_borders() +
-  tm_shape(terminals) +
-  tm_symbols(size = "capacity", col = "firebrick", alpha = 0.7) +
-  tm_layout(title = "Baltic LNG terminals by capacity")
-```
-
-## Proximity
-
-Distance from each terminal to the nearest Russian/Kaliningrad maritime
-boundary, and to the Danish Straits gate. Buffers show how much capacity sits
-within a given band of the boundary.
-
-```{r proximity}
-#| eval: false
+# Distances (km) to nearest Russian territory and to the chokepoint
 terminals <- terminals |>
   mutate(
-    dist_boundary_km   = as.numeric(st_distance(geom, st_union(boundary)))   / 1000,
-    dist_chokepoint_km = as.numeric(st_distance(geom, st_union(chokepoint))) / 1000
+    dist_russia_km     = as.numeric(st_distance(geometry, st_union(russia)))     / 1000,
+    dist_chokepoint_km = as.numeric(st_distance(geometry, st_union(chokepoint))) / 1000
   )
 
-# share of total capacity within 50 km of the boundary
-within_50 <- terminals |>
-  filter(dist_boundary_km <= 50) |>
-  summarise(cap = sum(capacity, na.rm = TRUE)) |>
-  pull(cap)
-
-total_cap <- sum(terminals$capacity, na.rm = TRUE)
-share_50  <- within_50 / total_cap
-```
-
-```{r dist-distribution}
-#| eval: false
-ggplot(terminals, aes(x = reorder(name, dist_boundary_km), y = dist_boundary_km)) +
-  geom_col() +
-  coord_flip() +
-  labs(x = NULL, y = "km to Russian/Kaliningrad maritime boundary")
-```
-
-## Dependence
-
-National energy import dependence, joined to country polygons.
-
-```{r dependence}
-#| eval: false
-dependence <- st_read(file.path(proc, "dependence.gpkg"))
-
-tm_shape(dependence) +
-  tm_polygons(col = "import_dependency", palette = "Reds",
-              title = "Import dependency (%)")
-```
-
-## Exposure index
-
-Three normalized components, combined with stated weights. Keep the weights here
-so a reader can see exactly what the index is doing.
-
-```{r index}
-#| eval: false
-# weights — stated, defensible, easy to change
-w_proximity   <- 0.4   # closer to the boundary -> higher exposure
-w_capacity    <- 0.3   # larger share of national supply -> higher exposure
-w_chokepoint  <- 0.3   # more reliant on the Danish Straits -> higher exposure
+# Exposure index — three normalized components, stated weights
+w_proximity  <- 0.4   # nearer to Russian territory  -> higher
+w_capacity   <- 0.3   # larger regas capacity         -> higher
+w_chokepoint <- 0.3   # nearer the Danish Straits gate -> higher
 
 norm <- function(x) (max(x, na.rm = TRUE) - x) /
                     (max(x, na.rm = TRUE) - min(x, na.rm = TRUE))
 
 terminals <- terminals |>
   mutate(
-    s_proximity  = norm(dist_boundary_km),      # inverted: nearer = higher
-    s_chokepoint = 1 - norm(dist_chokepoint_km),
-    s_capacity   = capacity / max(capacity, na.rm = TRUE),
+    s_proximity  = norm(dist_russia_km),         # inverted: nearer = higher
+    s_chokepoint = norm(dist_chokepoint_km),
+    s_capacity   = capacity_bcm / max(capacity_bcm, na.rm = TRUE),
     exposure     = w_proximity  * s_proximity +
                    w_capacity   * s_capacity +
                    w_chokepoint * s_chokepoint
   ) |>
   arrange(desc(exposure))
 
+# Context geometry clipped to the AOI for the static maps
+land_aoi <- world |> st_transform(laea) |> st_crop(aoi)
+```
+
+## Concentration
+
+Where the import infrastructure sits, sized by regas capacity. Russian territory
+is shaded for reference.
+
+```{r map-concentration}
+#| echo: false
+#| fig-width: 8
+#| fig-height: 7
+ggplot() +
+  geom_sf(data = land_aoi, fill = "grey95", colour = "grey80", linewidth = 0.2) +
+  geom_sf(data = st_crop(russia, aoi), fill = "grey75", colour = "grey60") +
+  geom_sf(data = terminals, aes(size = capacity_bcm, colour = exposure)) +
+  scale_size_continuous(range = c(2, 9), name = "Capacity (bcm/yr)") +
+  scale_colour_distiller(palette = "YlOrRd", direction = 1, name = "Exposure") +
+  labs(title = "Baltic LNG import terminals",
+       subtitle = "Point size = capacity; shaded = Russian territory") +
+  theme_minimal() +
+  theme(axis.text = element_blank(), panel.grid = element_blank())
+```
+
+## Proximity
+
+Distance from each terminal to the nearest Russian territory (mainland near the
+Gulf of Finland, or the Kaliningrad exclave), and the share of total capacity
+sitting within a given band.
+
+```{r proximity-buffer}
+#| echo: false
+total_cap <- sum(terminals$capacity_bcm, na.rm = TRUE)
+share_within <- function(km) {
+  near <- terminals |> filter(dist_russia_km <= km)
+  round(100 * sum(near$capacity_bcm, na.rm = TRUE) / total_cap)
+}
+```
+
+`r share_within(200)`% of total regasification capacity sits within 200 km of
+Russian territory; `r share_within(150)`% within 150 km.
+
+```{r dist-plot}
+#| echo: false
+#| fig-width: 7
+#| fig-height: 4
 terminals |>
   st_drop_geometry() |>
-  select(name, country, capacity, dist_boundary_km, exposure)
+  ggplot(aes(x = reorder(name, dist_russia_km), y = dist_russia_km)) +
+  geom_col(fill = "steelblue") +
+  coord_flip() +
+  labs(x = NULL, y = "km to nearest Russian territory",
+       title = "Proximity to Russian territory") +
+  theme_minimal()
+```
+
+## Dependence
+
+National gas import dependence, joined to country polygons. These figures are
+illustrative placeholders — replace with Eurostat actuals before citing (see the
+[Data](01-data.qmd) page).
+
+```{r dependence-map}
+#| echo: false
+#| message: false
+#| fig-width: 8
+#| fig-height: 7
+dep <- read_csv("data/processed/import_dependence.csv", show_col_types = FALSE)
+
+dependence <- land_aoi |>
+  left_join(dep, by = c("postal" = "iso_a2"))
+
+ggplot() +
+  geom_sf(data = dependence, aes(fill = gas_import_dependency_pct),
+          colour = "white", linewidth = 0.2) +
+  scale_fill_distiller(palette = "Reds", direction = 1, na.value = "grey90",
+                       name = "Gas import\ndependency (%)") +
+  labs(title = "Gas import dependence (illustrative)") +
+  theme_minimal() +
+  theme(axis.text = element_blank(), panel.grid = element_blank())
+```
+
+## Exposure ranking
+
+```{r ranking}
+#| echo: false
+terminals |>
+  st_drop_geometry() |>
+  transmute(
+    Terminal   = name,
+    Country    = country,
+    Status     = status,
+    `Capacity (bcm)`     = capacity_bcm,
+    `km to Russia`       = round(dist_russia_km),
+    `km to Straits`      = round(dist_chokepoint_km),
+    Exposure   = round(exposure, 2)
+  ) |>
+  kable()
 ```
 
 ## Interactive map
 
 ```{r leaflet}
-#| eval: false
+#| echo: false
 terminals_wgs <- st_transform(terminals, 4326)
+pal <- colorNumeric("YlOrRd", domain = terminals_wgs$exposure)
 
 leaflet(terminals_wgs) |>
   addProviderTiles("CartoDB.Positron") |>
   addCircleMarkers(
-    radius = ~scales::rescale(capacity, to = c(4, 14)),
-    color  = ~ifelse(exposure > 0.6, "firebrick", "steelblue"),
-    label  = ~paste0(name, " — exposure ", round(exposure, 2))
-  )
+    radius      = ~rescale(capacity_bcm, to = c(5, 15)),
+    color       = ~pal(exposure),
+    fillOpacity = 0.8, stroke = FALSE,
+    label       = ~paste0(name, " — exposure ", round(exposure, 2))
+  ) |>
+  addLegend("bottomright", pal = pal, values = ~exposure, title = "Exposure")
 ```
