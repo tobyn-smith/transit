@@ -22,8 +22,8 @@ Danish Straits?
 
 The website has three pages:
 
-- **Overview**: the question, the main findings in plain language, and an honest
-  list of limitations.
+- **Overview**: the question, the main findings in plain language, and a list of
+  limitations.
 - **Data**: every source, all public, with notes on what is solid and what is
   still approximate.
 - **Analysis**: the maps and the numbers. A map of the terminals sized by
