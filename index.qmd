@@ -21,25 +21,24 @@ geography. This project asks how concentrated, and how exposed:
 
 ## How to read this site
 
-- The [Data](01-data.qmd) page lists every source, all public, and is honest
-  about what is solid and what is still approximate.
+- The [Data](01-data.qmd) page lists every source, all public, and says what is
+  solid and what is still rough.
 - The [Analysis](02-analysis.qmd) page holds the maps, the distance
   measurements, and the exposure ranking.
 
 ## Findings
 
 The numbers behind these sit on the [Analysis](02-analysis.qmd) page. The
-terminal figures are compiled approximations (see the [Data](01-data.qmd) page),
-so the rankings are best read as a structured view of exposure rather than
-precise measurement.
+terminal figures are rough approximations (see the [Data](01-data.qmd) page), so
+the rankings show the broad pattern of exposure, not precise measurement.
 
 1. **Concentration.** A handful of terminals, led by Świnoujście, Klaipėda, and
    Inkoo, carry most of the region's regasification capacity. The Gulf of Finland
    and the southern Baltic each lean on only one or two assets.
 2. **Proximity.** The terminals closest to Russian territory are the Gulf of
    Finland sites and Klaipėda, which sits near the Kaliningrad exclave. Proximity
-   and capacity do not always line up, which is exactly what the exposure score
-   is meant to surface.
+   and capacity do not always line up, which is what the exposure score is built
+   to show.
 3. **Chokepoint dependence.** Every cargo bound for these terminals passes
    through the Danish Straits, so that single dependence is shared across the
    whole system. No terminal routes around it.
@@ -52,9 +51,9 @@ The score combines three things, each given a stated weight:
 - how large its share of regasification capacity is,
 - how close it is to the Danish Straits.
 
-The weights appear in plain view on the Analysis page. Keeping the score simple
-is the point. Every number can be explained out loud, and there is no model doing
-work you cannot see.
+The weights are written out on the Analysis page. The score is deliberately
+simple. There is no hidden model, and anyone can change the weights and see how
+the ranking moves.
 
 ## Limitations
 
@@ -72,5 +71,4 @@ A few specific caveats:
 - Undersea cable and pipeline incidents in the region between 2023 and 2025 are
   context for the question, not events modeled here.
 
-The honest summary: this is a structured way to see where the exposure sits, not
-a risk forecast.
+In short, this shows where the exposure sits. It is not a risk forecast.

@@ -21,7 +21,7 @@ aoi <- st_as_sfc(st_bbox(c(xmin = 9, ymin = 53, xmax = 30, ymax = 66),
   st_sf(geometry = _)
 st_write(aoi, "data/processed/aoi.gpkg", delete_dsn = TRUE, quiet = TRUE)
 
-# Russian territory (mainland + Kaliningrad), the proximity reference
+# Russian territory, including Kaliningrad
 russia <- world |>
   filter(admin == "Russia") |>
   st_transform(laea) |>

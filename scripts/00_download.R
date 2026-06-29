@@ -2,7 +2,7 @@
 # The current build does not require any manual downloads. Country geometry
 # comes from the rnaturalearth package, and the terminal and dependence tables
 # are committed under data/processed/. This script documents how to replace the
-# curated tables with primary sources when you want to harden the project.
+# curated tables with primary sources to extend the project later.
 
 # ---- Country geometry (already used directly in the analysis) ---------------
 # install.packages("rnaturalearth")

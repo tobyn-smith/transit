@@ -8,9 +8,9 @@ dependence tables are the small committed files in `data/processed/`. All
 distance work is done in a projection suited to Europe (ETRS89 / LAEA Europe,
 EPSG:3035), and the results are reported in kilometres.
 
-The terminal capacities are compiled approximations from public reporting, as
-explained on the [Data](01-data.qmd) page. Read the rankings as a structured view
-of exposure rather than authoritative figures.
+The terminal capacities are rough approximations from public reporting, as
+explained on the [Data](01-data.qmd) page. Read the rankings as a rough picture
+of exposure, not authoritative figures.
 
 ```{r setup}
 #| include: false
@@ -27,48 +27,47 @@ library(knitr)
 
 laea <- 3035
 
-# Country geometry (offline, bundled with rnaturalearthdata)
+# country borders from Natural Earth
 world <- ne_countries(scale = "medium", returnclass = "sf")
 
-# Area of interest: a box around the Baltic
+# study area: box around the Baltic
 aoi <- st_as_sfc(st_bbox(c(xmin = 9, ymin = 53, xmax = 30, ymax = 66),
                          crs = 4326)) |>
   st_transform(laea)
 
-# Russian territory (includes the Kaliningrad exclave), the proximity reference
+# Russian territory, including Kaliningrad
 russia <- world |>
   filter(admin == "Russia") |>
   st_transform(laea) |>
   st_make_valid()
 
-# Danish Straits chokepoint: a simple gate every cargo must transit
+# Danish Straits chokepoint
 chokepoint <- st_as_sfc(st_bbox(c(xmin = 10.5, ymin = 55.0, xmax = 13.0, ymax = 56.2),
                                 crs = 4326)) |>
   st_transform(laea)
 
-# Terminals
 terminals <- read_csv("data/processed/lng_terminals.csv", show_col_types = FALSE) |>
   st_as_sf(coords = c("lon", "lat"), crs = 4326) |>
   st_transform(laea)
 
-# Distances (km) to nearest Russian territory and to the chokepoint
+# distances in km
 terminals <- terminals |>
   mutate(
     dist_russia_km     = as.numeric(st_distance(geometry, st_union(russia)))     / 1000,
     dist_chokepoint_km = as.numeric(st_distance(geometry, st_union(chokepoint))) / 1000
   )
 
-# Exposure index: three normalized components, with stated weights
-w_proximity  <- 0.4   # nearer to Russian territory   -> higher
-w_capacity   <- 0.3   # larger regas capacity          -> higher
-w_chokepoint <- 0.3   # nearer the Danish Straits gate -> higher
+# exposure index weights
+w_proximity  <- 0.4   # closer to Russia, higher
+w_capacity   <- 0.3   # larger capacity, higher
+w_chokepoint <- 0.3   # closer to the straits, higher
 
 norm <- function(x) (max(x, na.rm = TRUE) - x) /
                     (max(x, na.rm = TRUE) - min(x, na.rm = TRUE))
 
 terminals <- terminals |>
   mutate(
-    s_proximity  = norm(dist_russia_km),         # inverted: nearer = higher
+    s_proximity  = norm(dist_russia_km),         # closer = higher
     s_chokepoint = norm(dist_chokepoint_km),
     s_capacity   = capacity_bcm / max(capacity_bcm, na.rm = TRUE),
     exposure     = w_proximity  * s_proximity +
@@ -77,7 +76,7 @@ terminals <- terminals |>
   ) |>
   arrange(desc(exposure))
 
-# Context geometry clipped to the AOI for the static maps
+# basemap clipped to the study area
 land_aoi <- world |> st_transform(laea) |> st_crop(aoi)
 ```
 

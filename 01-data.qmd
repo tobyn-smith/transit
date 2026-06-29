@@ -5,7 +5,7 @@ title: "Data"
 Every dataset here is public and free, with no login and no paid access. Where a
 source would normally require accepting terms or running a manual download, this
 build avoids it by using a small committed table instead, and the notes below say
-exactly what to replace if you want to harden the project.
+exactly what to replace if you want to extend the project.
 
 ## Base geography
 
@@ -38,9 +38,8 @@ in a later version.
 
 Instead of a maritime boundary line, the proximity measure uses distance to the
 nearest **Russian territory**, meaning the mainland near the Gulf of Finland plus
-the Kaliningrad exclave, taken from Natural Earth. This is fully reproducible from
-a public package and gives a clean, interpretable stand-in for proximity to a
-potential source of pressure.
+the Kaliningrad exclave, taken from Natural Earth. It is reproducible from a
+public package and easy to read: how far each terminal is from Russian soil.
 
 ## Dependence
 
