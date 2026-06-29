@@ -1,107 +1,167 @@
 /*-- scss:defaults --*/
 
-// palette
-$navy:   #16233a;
-$slate:  #5b6573;
-$rust:   #c75b12;
-$paper:  #fbfaf7;
+// editorial palette: warm paper, near-black ink, one oxblood accent
+$ink:    #17150f;
+$paper:  #f7f4ec;
+$muted:  #6b6760;
+$rule:   rgba(23, 21, 15, 0.14);
+$accent: #9e2b25;
 
-$primary:        $navy;
-$body-color:     #1f2933;
+$primary:        $ink;
+$body-color:     $ink;
 $body-bg:        $paper;
-$link-color:     $rust;
-$link-hover-color: darken($rust, 8%);
+$link-color:     $accent;
+$link-hover-color: $accent;
 
-$font-family-sans-serif: "Inter", system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-$headings-font-weight: 650;
-$h1-font-size: 2.1rem;
+// type: Newsreader (display serif), IBM Plex Sans (body), IBM Plex Mono (labels)
+$font-family-sans-serif: "IBM Plex Sans", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+$font-family-monospace:  "IBM Plex Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+$headings-font-family:   "Newsreader", Georgia, "Times New Roman", serif;
+$headings-font-weight:   500;
+$headings-color:         $ink;
 
-$navbar-bg: $navy;
-$navbar-dark-color: rgba(white, 0.78);
-$navbar-dark-hover-color: white;
+$border-radius:    0;
+$border-radius-sm: 0;
+$border-radius-lg: 0;
 
-$toc-color: $slate;
-$toc-active-border: $rust;
+$toc-color: $muted;
+$toc-active-border: $accent;
 
 /*-- scss:rules --*/
 
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Source+Serif+4:opsz,wght@8..60,400;8..60,600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Newsreader:opsz,wght@6..72,400;6..72,500;6..72,600&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&display=swap');
 
 body {
-  font-size: 1.02rem;
-  line-height: 1.65;
+  font-size: 1.03rem;
+  line-height: 1.62;
+  -webkit-font-smoothing: antialiased;
 }
 
-h1, h2, h3 {
-  letter-spacing: -0.012em;
-  color: $navy;
-}
-
+// section headings: serif, with a hairline above each major section
+h1, h2, h3 { font-family: $headings-font-family; letter-spacing: -0.01em; }
 h2 {
-  margin-top: 2.4rem;
-  padding-bottom: 0.3rem;
-  border-bottom: 2px solid rgba($navy, 0.08);
+  margin-top: 3rem;
+  padding-top: 1rem;
+  border-top: 1px solid $rule;
+  font-size: 1.6rem;
+}
+h3 { margin-top: 2rem; font-size: 1.25rem; }
+
+// title block: no banner, just strong type and a rule
+#title-block-header { margin-bottom: 2rem; }
+.quarto-title .title {
+  font-family: $headings-font-family;
+  font-weight: 600;
+  font-size: 2.7rem;
+  line-height: 1.08;
+  letter-spacing: -0.02em;
+}
+.quarto-title .subtitle {
+  font-family: $font-family-sans-serif;
+  color: $muted;
+  font-size: 1.05rem;
+  margin-top: 0.35rem;
+}
+.quarto-title-block .quarto-title-meta { color: $muted; font-size: 0.85rem; }
+
+// flat ink masthead, mono uppercase nav
+.navbar {
+  background-color: $ink !important;
+  border-bottom: 1px solid rgba(247, 244, 236, 0.1);
+}
+.navbar .navbar-title {
+  font-family: $font-family-monospace;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  font-size: 0.82rem;
+}
+.navbar .nav-link {
+  font-family: $font-family-monospace;
+  text-transform: uppercase;
+  letter-spacing: 0.09em;
+  font-size: 0.74rem;
+  color: rgba(247, 244, 236, 0.66) !important;
+}
+.navbar .nav-link:hover { color: #fff !important; }
+.navbar .nav-link.active {
+  color: #fff !important;
+  box-shadow: inset 0 -2px 0 $accent;
 }
 
-// banner behind each page title
-.quarto-title-banner {
-  background: linear-gradient(135deg, $navy 0%, #243a59 100%);
-}
-.quarto-title-banner .quarto-title .title,
-.quarto-title-banner .subtitle {
-  color: white;
-}
-.quarto-title-banner .subtitle { opacity: 0.85; }
+// body links: underline, no buttons
+a { color: $accent; text-underline-offset: 3px; text-decoration-thickness: 1px; }
 
-// the research question, styled as a pull quote
+// research question as an editorial pull quote
 blockquote {
-  font-family: "Source Serif 4", Georgia, serif;
-  font-size: 1.12rem;
-  color: $navy;
-  background: white;
-  border-left: 4px solid $rust;
-  border-radius: 0 6px 6px 0;
-  padding: 1rem 1.25rem;
-  margin: 1.5rem 0;
-  box-shadow: 0 1px 3px rgba($navy, 0.06);
+  font-family: $headings-font-family;
+  font-size: 1.32rem;
+  line-height: 1.4;
+  color: $ink;
+  border-left: 3px solid $ink;
+  padding: 0.2rem 0 0.2rem 1.4rem;
+  margin: 1.75rem 0;
 }
 
-// stat cards on the overview
+// stat strip: figures divided by hairlines, no cards, no shadows
 .stat-row {
   display: flex;
   flex-wrap: wrap;
-  gap: 1rem;
-  margin: 1.75rem 0 2.25rem;
+  border-top: 1px solid $ink;
+  border-bottom: 1px solid $rule;
+  margin: 2rem 0 2.5rem;
 }
 .stat-card {
-  flex: 1 1 160px;
-  background: white;
-  border: 1px solid rgba($navy, 0.08);
-  border-top: 3px solid $rust;
-  border-radius: 8px;
-  padding: 1.1rem 1.2rem;
-  box-shadow: 0 1px 4px rgba($navy, 0.05);
+  flex: 1 1 150px;
+  padding: 1.1rem 1.4rem 1.1rem 0;
+  margin-right: 1.4rem;
+  border-right: 1px solid $rule;
 }
+.stat-card:last-child { border-right: 0; margin-right: 0; }
 .stat-num {
+  font-family: $font-family-monospace;
   font-size: 2rem;
-  font-weight: 700;
-  color: $navy;
-  line-height: 1.1;
+  font-weight: 500;
+  color: $ink;
+  line-height: 1;
 }
 .stat-label {
-  font-size: 0.85rem;
-  color: $slate;
-  margin-top: 0.3rem;
+  font-family: $font-family-monospace;
+  text-transform: uppercase;
+  letter-spacing: 0.07em;
+  font-size: 0.7rem;
+  color: $muted;
+  margin-top: 0.55rem;
 }
 
-// tables and figures
-table {
-  font-size: 0.95rem;
-}
-.figure, figure {
-  margin: 1.5rem 0;
+// kicker / eyebrow line
+.kicker {
+  font-family: $font-family-monospace;
+  text-transform: uppercase;
+  letter-spacing: 0.16em;
+  font-size: 0.72rem;
+  color: $accent;
+  margin-bottom: 0.4rem;
 }
 
-.navbar { box-shadow: 0 1px 6px rgba($navy, 0.18); }
+// figures and captions
+figure, .figure { margin: 1.75rem 0; }
+figcaption, .figure-caption {
+  font-family: $font-family-monospace;
+  font-size: 0.72rem;
+  color: $muted;
+}
 
-a { text-underline-offset: 2px; }
+// tables: hairlines only
+table { font-size: 0.95rem; }
+
+// footer
+.nav-footer {
+  font-family: $font-family-monospace;
+  font-size: 0.72rem;
+  letter-spacing: 0.04em;
+  border-top: 1px solid $rule;
+  color: $muted;
+}
+
+// code blocks: flat, bordered, no rounding
+div.sourceCode { border: 1px solid $rule; background: #fbf9f3; }

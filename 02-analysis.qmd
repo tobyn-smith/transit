@@ -27,24 +27,28 @@ library(gt)
 
 laea <- 3035
 
-# shared styling
-exp_cols <- c("#2b8cbe", "#fec44f", "#d7301f")  # low to high exposure
+# shared styling (editorial: warm paper, ink, oxblood accent)
+ink   <- "#17150f"
+muted <- "#6b6760"
+exp_cols <- c("#e7e2d6", "#cf8a4e", "#9e2b25")  # low to high exposure, single warm ramp
 theme_transit <- function(base = 12) {
   theme_minimal(base_size = base) +
     theme(
-      plot.title    = element_text(face = "bold", colour = "#16233a", size = 15),
-      plot.subtitle = element_text(colour = "#5b6573", size = 11, margin = margin(b = 8)),
-      plot.caption  = element_text(colour = "#9aa1ac", size = 8, hjust = 0,
+      plot.title    = element_text(face = "bold", colour = ink, size = 15),
+      plot.subtitle = element_text(colour = muted, size = 11, margin = margin(b = 8)),
+      plot.caption  = element_text(colour = muted, size = 8, hjust = 0,
                                    margin = margin(t = 10)),
-      legend.title  = element_text(size = 9, colour = "#5b6573"),
-      legend.text   = element_text(size = 8)
+      legend.title  = element_text(size = 9, colour = muted),
+      legend.text   = element_text(size = 8),
+      plot.background  = element_rect(fill = "#f7f4ec", colour = NA),
+      panel.background = element_rect(fill = "#f7f4ec", colour = NA)
     )
 }
 theme_map <- function() {
   theme_transit() +
     theme(axis.text = element_blank(), axis.title = element_blank(),
           panel.grid = element_blank(),
-          panel.background = element_rect(fill = "#eaf2f7", colour = NA))
+          panel.background = element_rect(fill = "#eef0ec", colour = NA))
 }
 
 # country borders from Natural Earth
@@ -113,20 +117,20 @@ territory is shaded for reference.
 #| fig-height: 7
 choke_sf <- st_sf(geometry = chokepoint)
 ggplot() +
-  geom_sf(data = land_aoi, fill = "#f3f1ec", colour = "#d8d4cb", linewidth = 0.2) +
-  geom_sf(data = st_crop(russia, aoi), fill = "#d9b8b8", colour = "#c79da0",
+  geom_sf(data = land_aoi, fill = "#e7e2d6", colour = "#d6d0c2", linewidth = 0.2) +
+  geom_sf(data = st_crop(russia, aoi), fill = "#e3c9c3", colour = "#cdaaa3",
           linewidth = 0.2) +
-  geom_sf(data = choke_sf, fill = NA, colour = "#c75b12", linewidth = 0.6,
+  geom_sf(data = choke_sf, fill = NA, colour = ink, linewidth = 0.5,
           linetype = "31") +
   geom_sf(data = terminals, aes(size = capacity_bcm, colour = exposure)) +
-  geom_sf_text(data = terminals, aes(label = name), size = 2.6, colour = "#16233a",
+  geom_sf_text(data = terminals, aes(label = name), size = 2.6, colour = ink,
                nudge_y = 38000, check_overlap = TRUE) +
   geom_sf_text(data = choke_sf, aes(label = "Danish\nStraits"), size = 2.5,
-               colour = "#c75b12", fontface = "bold") +
+               colour = ink) +
   scale_size_continuous(range = c(2.5, 11), name = "Capacity\n(bcm/yr)") +
   scale_colour_gradientn(colours = exp_cols, name = "Exposure") +
   labs(title = "Baltic LNG import terminals",
-       subtitle = "Point size is capacity, colour is exposure; the orange box is the Danish Straits",
+       subtitle = "Point size is capacity, colour is exposure; the dashed box is the Danish Straits",
        caption = "Sources: Natural Earth; capacities from operators and Global Energy Monitor.") +
   theme_map()
 ```
@@ -156,9 +160,9 @@ Russian territory, and `r share_within(150)`% within 150 km.
 terminals |>
   st_drop_geometry() |>
   ggplot(aes(x = reorder(name, -dist_russia_km), y = dist_russia_km)) +
-  geom_col(fill = "#16233a", width = 0.7) +
+  geom_col(fill = ink, width = 0.7) +
   geom_text(aes(label = round(dist_russia_km)), hjust = -0.2, size = 3,
-            colour = "#5b6573") +
+            colour = muted) +
   coord_flip() +
   scale_y_continuous(expand = expansion(mult = c(0, 0.12))) +
   labs(x = NULL, y = "km to nearest Russian territory",
@@ -188,7 +192,7 @@ dependence <- land_aoi |>
 ggplot() +
   geom_sf(data = dependence, aes(fill = gas_import_dependency_pct),
           colour = "white", linewidth = 0.3) +
-  scale_fill_gradient(low = "#fde0d0", high = "#b4451f", na.value = "#ece9e2",
+  scale_fill_gradient(low = "#efe7d8", high = "#9e2b25", na.value = "#e6e2d8",
                       name = "Import\ndependency (%)") +
   labs(title = "Gas import dependency by country, 2023",
        subtitle = "Share of gas demand met by net imports (Eurostat nrg_ind_id)",
@@ -220,8 +224,14 @@ terminals |>
   cols_align(align = "center",
              columns = c(Capacity, `km to Russia`, `km to Straits`, Exposure)) |>
   tab_options(table.font.size = px(13), heading.title.font.size = px(15),
+              heading.align = "left",
               column_labels.font.weight = "600",
-              table.border.top.style = "none")
+              column_labels.border.top.style = "none",
+              column_labels.border.bottom.color = "#17150f",
+              column_labels.border.bottom.width = px(1.5),
+              table_body.hlines.color = "rgba(23,21,15,0.12)",
+              table.border.top.style = "none",
+              table.border.bottom.style = "none")
 ```
 
 ## Interactive map
@@ -235,15 +245,15 @@ pal <- colorNumeric(exp_cols, domain = terminals_wgs$exposure)
 
 leaflet(terminals_wgs) |>
   addProviderTiles("CartoDB.Positron") |>
-  addPolygons(data = russia_wgs, fillColor = "#b4565a", fillOpacity = 0.25,
+  addPolygons(data = russia_wgs, fillColor = "#9e2b25", fillOpacity = 0.16,
               weight = 0, group = "Russian territory") |>
   addRectangles(lng1 = choke_bb[["xmin"]], lat1 = choke_bb[["ymin"]],
                 lng2 = choke_bb[["xmax"]], lat2 = choke_bb[["ymax"]],
-                fill = FALSE, color = "#c75b12", weight = 2, dashArray = "5,5",
+                fill = FALSE, color = "#17150f", weight = 2, dashArray = "5,5",
                 group = "Danish Straits") |>
   addCircleMarkers(
     radius      = ~rescale(capacity_bcm, to = c(5, 16)),
-    color       = "#16233a", weight = 1,
+    color       = "#17150f", weight = 1,
     fillColor   = ~pal(exposure), fillOpacity = 0.85,
     popup       = ~paste0("<b>", name, "</b><br>", country,
                           "<br>Capacity: ", capacity_bcm, " bcm/yr",
