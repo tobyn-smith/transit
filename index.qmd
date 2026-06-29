@@ -32,9 +32,10 @@ The numbers behind these sit on the [Analysis](02-analysis.qmd) page. The
 terminal figures are rough approximations (see the [Data](01-data.qmd) page), so
 the rankings show the broad pattern of exposure, not precise measurement.
 
-1. **Concentration.** A handful of terminals, led by Świnoujście, Klaipėda, and
-   Inkoo, carry most of the region's regasification capacity. The Gulf of Finland
-   and the southern Baltic each lean on only one or two assets.
+1. **Concentration.** Capacity is lopsided. Two southern terminals, Mukran in
+   Germany and Świnoujście in Poland, hold most of the region's regasification
+   capacity, while the northeast leans on one or two units each: Inkoo for the
+   Gulf of Finland and Klaipėda for Lithuania.
 2. **Proximity.** The terminals closest to Russian territory are the Gulf of
    Finland sites and Klaipėda, which sits near the Kaliningrad exclave. Proximity
    and capacity do not always line up, which is what the exposure score is built
@@ -54,6 +55,18 @@ The score combines three things, each given a stated weight:
 The weights are written out on the Analysis page. The score is deliberately
 simple. There is no hidden model, and anyone can change the weights and see how
 the ranking moves.
+
+## How the weights were chosen
+
+The weights are a judgement, not a finding. Proximity to Russian territory gets
+the most weight (0.4) because the question is about exposure to pressure from one
+actor, and distance is the most direct measure the public data supports.
+Capacity and chokepoint reliance each get 0.3: a larger terminal does more damage
+if it goes down, and a terminal that can only be resupplied through the Danish
+Straits shares one point of failure with every other cargo. None of this is
+fixed. The three weights sit in plain sight on the Analysis page, and changing
+them changes the ranking. The aim is a sensible starting point for discussion,
+not a final score.
 
 ## Limitations
 

@@ -1,8 +1,7 @@
-name,country,iso_a2,lon,lat,capacity_bcm,status,type
-Swinoujscie LNG,Poland,PL,14.27,53.92,6.2,operating,onshore
-Klaipeda FSRU,Lithuania,LT,21.08,55.72,4.0,operating,fsru
-Inkoo FSRU,Finland,FI,24.00,60.05,5.0,operating,fsru
-Hamina LNG,Finland,FI,27.18,60.55,0.3,operating,small-scale
-Paldiski,Estonia,EE,24.08,59.35,2.5,operating,jetty
-Gdansk FSRU,Poland,PL,18.65,54.40,6.1,planned,fsru
-Rostock LNG,Germany,DE,12.10,54.15,0.3,operating,small-scale
+name,country,iso_a2,lon,lat,capacity_bcm,status,type,source
+Swinoujscie LNG,Poland,PL,14.27,53.92,8.3,operating,onshore,Gaz-System (8.3 bcm after 2024 third-tank expansion)
+Mukran (Deutsche Ostsee),Germany,DE,13.62,54.50,13.5,operating,fsru,Deutsche ReGas (13.5 bcm full two-FSRU capacity)
+Gdansk FSRU,Poland,PL,18.65,54.40,6.1,planned,fsru,Gaz-System (planned, over 6 bcm, operations around 2028)
+Inkoo FSRU,Finland,FI,24.00,60.05,5.0,operating,fsru,Gasgrid (FSRU Exemplar, about 5 bcm / 40 TWh)
+Klaipeda FSRU,Lithuania,LT,21.08,55.72,3.75,operating,fsru,KN Energies (FSRU Independence, 3.75 bcm)
+Hamina LNG,Finland,FI,27.18,60.55,0.3,operating,small-scale,Hamina LNG (small-scale, about 3 TWh)
