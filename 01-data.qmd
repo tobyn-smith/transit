@@ -71,6 +71,14 @@ The steps that turn the tables and geometry into analysis-ready layers live in
 
 ## Citations
 
-Add full citations with access dates as you finalise the terminal capacities.
-One entry per source above: Natural Earth, Global Energy Monitor, Eurostat, and
-EMODnet if you add line features.
+- Natural Earth. Free vector and raster map data, 1:50m cultural vectors.
+  <https://www.naturalearthdata.com> (accessed June 2026).
+- Eurostat. Energy imports dependency by products, indicator `nrg_ind_id`,
+  natural gas, 2023. <https://ec.europa.eu/eurostat> (accessed June 2026).
+- Global Energy Monitor. Global LNG Terminal Tracker.
+  <https://globalenergymonitor.org> (accessed June 2026).
+- Operator figures for capacity and status: Gaz-System, Deutsche ReGas, Gasgrid
+  Finland, KN Energies, and Hamina LNG (2024 to 2025 reporting).
+
+If you add pipelines or cables later: EMODnet Human Activities
+(<https://emodnet.ec.europa.eu/en/human-activities>) and OpenStreetMap.

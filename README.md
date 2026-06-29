@@ -1,5 +1,7 @@
 # Baltic Energy Transit Risk
 
+[![Render and Publish](https://github.com/tobyn-smith/transit-project/actions/workflows/publish.yml/badge.svg)](https://github.com/tobyn-smith/transit-project/actions/workflows/publish.yml)
+
 This project looks at a real energy security problem in the Baltic Sea region.
 Before 2022, much of the region's natural gas arrived by pipeline from Russia.
 After the invasion of Ukraine and the sabotage of the Nord Stream pipelines,
