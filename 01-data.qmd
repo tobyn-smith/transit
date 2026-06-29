@@ -15,24 +15,25 @@ package ships the data, there is nothing to download by hand.
 
 ## Energy infrastructure
 
-The current build uses a small committed table of the region's LNG import
+The infrastructure layer is a small committed table of the region's LNG import
 terminals, `data/processed/lng_terminals.csv`. It holds the name, country,
-location, approximate annual regasification capacity, and status of each
+location, annual regasification capacity, status, and a source note for each
 terminal.
 
-These capacity figures are compiled approximations drawn from public operator
-reporting and tracker summaries. They are not pulled from a live database. Before
-treating any ranking as authoritative, check the capacities against a primary
-source:
+The capacities are taken from operator reporting and the **Global Energy
+Monitor** terminal tracker, current as of 2024 to 2025. The `source` column in
+the table names the operator behind each figure. Two points worth flagging:
 
-- the **Global Energy Monitor** Global LNG Terminal tracker, which is free to
-  download after accepting its terms, and
-- operator announcements and **GIE** figures for regasification capacity.
+- Capacities move. Świnoujście reached 8.3 bcm only after its third tank came
+  online in early 2025, and Mukran's 13.5 bcm assumes both of its FSRUs running.
+- The Paldiski jetty in Estonia is left out on purpose. It is shelved, and its
+  capacity figure refers to the same FSRU (Exemplar) that now operates at Inkoo,
+  so including both would count one vessel twice.
 
-`scripts/00_download.R` documents how to swap the curated table for a Global
-Energy Monitor download. **EMODnet Human Activities** and **OpenStreetMap** (via
-the `osmdata` package) are the route to add pipelines and cables as line features
-in a later version.
+To extend the project, **EMODnet Human Activities** and **OpenStreetMap** (via
+the `osmdata` package) are the route to add pipelines and cables as line
+features, and the **Global Energy Monitor** tracker is the source to reconcile
+the capacities against in full.
 
 ## Proximity reference
 

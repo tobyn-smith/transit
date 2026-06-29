@@ -38,7 +38,7 @@ All public, no logins, no paid datasets:
 - Natural Earth, for country shapes and coastlines (loaded through an R package,
   so nothing to download by hand).
 - A small table of the region's LNG terminals (name, country, location,
-  approximate capacity, status), kept in `data/processed/lng_terminals.csv`.
+  capacity, status, source), kept in `data/processed/lng_terminals.csv`.
 - National gas import dependence from Eurostat (indicator `nrg_ind_id`), kept in
   `data/processed/import_dependence.csv` and reproduced by `scripts/03_eurostat.R`.
 
@@ -99,15 +99,16 @@ happen.
 
 ## What is solid and what to double check
 
-The structure, the maps, and the method are real and reproducible. The gas
-import dependence values in `import_dependence.csv` come from Eurostat (indicator
-`nrg_ind_id`, natural gas, 2023), and `scripts/03_eurostat.R` reproduces that
-pull. One input still needs checking before anyone treats the rankings as
-authoritative:
+The structure, the maps, and the method are real and reproducible. The data
+behind them:
 
-- The terminal capacities in `lng_terminals.csv` are compiled from public
-  reporting. Check them against the Global Energy Monitor LNG tracker and
-  operator figures.
+- Gas import dependence in `import_dependence.csv` comes from Eurostat (indicator
+  `nrg_ind_id`, natural gas, 2023), and `scripts/03_eurostat.R` reproduces the
+  pull.
+- Terminal capacities in `lng_terminals.csv` come from operator reporting and the
+  Global Energy Monitor tracker (2024 to 2025), with a source note on each row.
+  They are current to that window. Confirm the latest figures if you cite them
+  for a specific date.
 
 Both files are plain spreadsheets. You can open and edit them in Excel.
 
