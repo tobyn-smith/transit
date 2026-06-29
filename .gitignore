@@ -1,0 +1,20 @@
+# raw downloads — fetched by scripts/00_download.R, not committed
+data/raw/
+
+# R
+.Rproj.user/
+.Rhistory
+.RData
+.Ruserdata
+*.Rproj
+
+# renv library (lockfile is committed, library is not)
+renv/library/
+renv/staging/
+
+# quarto
+/.quarto/
+
+# OS
+.DS_Store
+Thumbs.db

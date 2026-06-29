@@ -1,0 +1,23 @@
+project:
+  type: website
+  output-dir: docs
+
+website:
+  title: "Baltic Energy Transit Risk"
+  navbar:
+    left:
+      - href: index.qmd
+        text: Overview
+      - href: 01-data.qmd
+        text: Data
+      - href: 02-analysis.qmd
+        text: Analysis
+  page-footer:
+    left: "Public data only. Sources cited on the Data page."
+
+format:
+  html:
+    theme: cosmo
+    toc: true
+    code-fold: true
+    code-tools: true

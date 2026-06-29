@@ -1,0 +1,67 @@
+---
+title: "Baltic Energy Transit Risk"
+subtitle: "Exposure of post-2022 Baltic energy import infrastructure"
+date: today
+---
+
+## The question
+
+Before 2022, much of the Baltic region's gas arrived by pipeline from Russia.
+After the invasion of Ukraine and the Nord Stream sabotage, that supply was cut
+or abandoned, and imports moved onto a small set of coastal LNG terminals and
+ports — Klaipėda, Świnoujście, Inkoo, and a handful of others.
+
+That shift concentrated a lot of supply onto a few fixed points of geography.
+This project asks how concentrated, and how exposed:
+
+> After 2022, Baltic energy imports shifted onto a small set of coastal LNG
+> terminals and ports. How spatially concentrated is that infrastructure, and
+> how exposed is it — measured by capacity, by proximity to the Russian and
+> Kaliningrad maritime boundary, and by dependence on the single Danish Straits
+> chokepoint?
+
+## How to read this site
+
+- **Data** lists every source, all public, with citations and the cleaning steps.
+- **Analysis** is the spatial work: the maps, the distance and buffer
+  measurements, and the exposure index.
+
+## Findings
+
+<!-- Fill in after running scripts/02_analysis.R. Keep these tied to specific
+     numbers from the analysis, not general impressions. Aim for three or four. -->
+
+1. _Concentration:_ TODO
+2. _Proximity:_ TODO
+3. _Chokepoint dependence:_ TODO
+
+## What the exposure index is
+
+The index combines three normalized components:
+
+- proximity to the Russian/Kaliningrad maritime boundary,
+- the asset's share of national supply capacity,
+- reliance on passage through the Danish Straits.
+
+The weights are stated on the Analysis page. The point of keeping it simple is
+that every number can be explained out loud — there is no model doing work you
+can't see.
+
+## Limitations
+
+This measures geographic exposure, not the probability of disruption. A terminal
+sitting close to a maritime boundary is not a prediction that anything will
+happen to it; it is a statement about geography.
+
+A few specific caveats:
+
+- The index uses proxy measures (distance, capacity share) rather than a causal
+  model. Different reasonable weights would shift the rankings.
+- It is a single-snapshot view. Capacity, routes, and terminals change.
+- Maritime boundaries and "chokepoint reliance" are simplified. Real traffic
+  routing is more complex than a single gate.
+- Undersea cable and pipeline incidents in the region (2023–2025) are context,
+  not modeled events.
+
+The honest summary: this is a structured way to see where the exposure sits, not
+a risk forecast.
