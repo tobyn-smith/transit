@@ -7,14 +7,14 @@ website:
   description: "Spatial exposure of post-2022 Baltic energy import infrastructure"
   navbar:
     background: dark
-    left:
+    title: "Baltic Transit Risk"
+    right:
       - href: index.qmd
         text: Overview
       - href: 01-data.qmd
         text: Data
       - href: 02-analysis.qmd
         text: Analysis
-    right:
       - icon: github
         href: https://github.com/tobyn-smith/transit-project
         aria-label: GitHub

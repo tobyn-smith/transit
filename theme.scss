@@ -67,25 +67,40 @@ h3 { margin-top: 2rem; font-size: 1.25rem; }
 // flat ink masthead, mono uppercase nav
 .navbar {
   background-color: $ink !important;
-  border-bottom: 1px solid rgba(247, 244, 236, 0.1);
+  border-bottom: 1px solid rgba(247, 244, 236, 0.12);
+  padding-top: 0.6rem;
+  padding-bottom: 0.6rem;
 }
-.navbar .navbar-title {
+.navbar .navbar-brand {
   font-family: $font-family-monospace;
   text-transform: uppercase;
-  letter-spacing: 0.12em;
-  font-size: 0.82rem;
+  letter-spacing: 0.16em;
+  font-size: 0.8rem;
+  font-weight: 500;
+  color: #fff !important;
 }
 .navbar .nav-link {
   font-family: $font-family-monospace;
   text-transform: uppercase;
-  letter-spacing: 0.09em;
+  letter-spacing: 0.1em;
   font-size: 0.74rem;
-  color: rgba(247, 244, 236, 0.66) !important;
+  padding-left: 0.85rem;
+  padding-right: 0.85rem;
+  color: rgba(247, 244, 236, 0.62) !important;
 }
 .navbar .nav-link:hover { color: #fff !important; }
 .navbar .nav-link.active {
   color: #fff !important;
-  box-shadow: inset 0 -2px 0 $accent;
+  position: relative;
+}
+.navbar .nav-link.active::after {
+  content: "";
+  position: absolute;
+  left: 0.85rem;
+  right: 0.85rem;
+  bottom: 0.1rem;
+  height: 2px;
+  background: $accent;
 }
 
 // body links: underline, no buttons
@@ -131,16 +146,6 @@ blockquote {
   font-size: 0.7rem;
   color: $muted;
   margin-top: 0.55rem;
-}
-
-// kicker / eyebrow line
-.kicker {
-  font-family: $font-family-monospace;
-  text-transform: uppercase;
-  letter-spacing: 0.16em;
-  font-size: 0.72rem;
-  color: $accent;
-  margin-bottom: 0.4rem;
 }
 
 // figures and captions
