@@ -28,12 +28,19 @@ This project asks how concentrated, and how exposed:
 
 ## Findings
 
-<!-- Fill in after running scripts/02_analysis.R. Keep these tied to specific
-     numbers from the analysis, not general impressions. Aim for three or four. -->
+The numbers behind these are on the [Analysis](02-analysis.qmd) page. The
+terminal figures are compiled approximations (see [Data](01-data.qmd)), so read
+the rankings as a structured view of exposure rather than precise measurement.
 
-1. _Concentration:_ TODO
-2. _Proximity:_ TODO
-3. _Chokepoint dependence:_ TODO
+1. _Concentration:_ A handful of terminals — Świnoujście, Klaipėda, Inkoo —
+   carry most of the region's regasification capacity. The Gulf of Finland and
+   the southern Baltic each lean on one or two assets.
+2. _Proximity:_ The terminals nearest Russian territory are the Gulf of Finland
+   FSRUs and Klaipėda, which sits close to Kaliningrad. Proximity and capacity
+   do not always coincide, which is what the index is meant to surface.
+3. _Chokepoint dependence:_ Every cargo to these terminals transits the Danish
+   Straits, so that single dependence is shared across the whole system — no
+   terminal routes around it.
 
 ## What the exposure index is
 

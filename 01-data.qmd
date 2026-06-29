@@ -23,19 +23,36 @@ manual step is in `scripts/00_download.R`.
 
 ### Energy infrastructure
 
-- **Global Energy Monitor** — LNG terminal locations and capacities. This is the
-  headline dataset. Free, but downloaded manually after accepting GEM's terms;
-  see the note in `scripts/00_download.R`.
-- **EMODnet Human Activities** — pipelines, cables, and ports for European seas.
-  Public downloads. Primary source for the line features.
-- **OpenStreetMap** (via `osmdata`) — fallback for any infrastructure layer that
-  EMODnet does not cover cleanly. Messier; used only where needed and flagged.
+The current build uses a small committed table of the region's LNG import
+terminals (`data/processed/lng_terminals.csv`): name, country, coordinates,
+approximate annual regasification capacity, and status. The figures are
+**compiled approximations** from public operator reporting and tracker summaries,
+not pulled live. Before treating any ranking as authoritative, verify the
+capacities against primary sources:
+
+- **Global Energy Monitor** — Global LNG Terminal tracker (free download after
+  accepting terms) is the natural source to reconcile against.
+- **GIE / operator announcements** — for regasification capacity figures.
+
+`scripts/00_download.R` documents how to swap the curated table for a GEM
+download, and **EMODnet Human Activities** / **OpenStreetMap** (`osmdata`) remain
+the route to add pipelines and cables as line features later.
+
+### Proximity reference
+
+Rather than a maritime EEZ line, the proximity measure uses distance to the
+nearest **Russian territory** (mainland near the Gulf of Finland, plus the
+Kaliningrad exclave), taken from Natural Earth. It is fully reproducible from a
+public package and is a clean, interpretable proxy for adversary proximity.
 
 ### Dependence
 
-- **Eurostat** — energy import dependency and gas import statistics, joined to
-  country polygons for the dependence layer. Public CSV / API, no key, pulled
-  with the `eurostat` package.
+The dependence layer currently uses a small committed table
+(`data/processed/import_dependence.csv`) with **illustrative placeholder**
+gas-import-dependency values per country. Replace these with actual figures from
+**Eurostat** (energy import dependency, indicator `nrg_ind_id`; public CSV / API,
+no key, pullable with the `eurostat` package) before drawing conclusions from the
+choropleth.
 
 ## A note on conflict data
 

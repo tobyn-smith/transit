@@ -6,8 +6,8 @@ on:
 name: Render and Publish
 
 # Renders the Quarto site and deploys it to GitHub Pages via the Actions
-# artifact (Pages source must be set to "GitHub Actions"). CI renders from
-# committed data only — it does not download raw data.
+# artifact (Pages source must be set to "GitHub Actions"). The analysis runs at
+# render time from committed data plus Natural Earth geometry — no downloads.
 
 permissions:
   contents: read
@@ -30,16 +30,21 @@ jobs:
         with:
           use-public-rspm: true
 
-      # Use the pinned environment once renv.lock exists. Until then, install
-      # just enough for Quarto to render the (text-only) site.
-      - name: Restore renv
-        if: ${{ hashFiles('renv.lock') != '' }}
-        uses: r-lib/actions/setup-renv@v2
-
-      - name: Minimal R deps (no lockfile yet)
-        if: ${{ hashFiles('renv.lock') == '' }}
-        run: install.packages(c("rmarkdown", "knitr"))
-        shell: Rscript {0}
+      # Installs the packages and their system requirements (GDAL/GEOS/PROJ for
+      # sf). Swap to renv once a renv.lock is committed.
+      - uses: r-lib/actions/setup-r-dependencies@v2
+        with:
+          packages: |
+            any::rmarkdown
+            any::knitr
+            any::sf
+            any::dplyr
+            any::readr
+            any::ggplot2
+            any::leaflet
+            any::rnaturalearth
+            any::rnaturalearthdata
+            any::scales
 
       - name: Render
         run: quarto render

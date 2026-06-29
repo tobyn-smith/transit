@@ -83,16 +83,24 @@ geographic exposure, not intent or probability. The limitations section in
 
 ## Project status
 
-The repo and the Quarto site build and deploy, but the analysis is not populated
-yet. A couple of things to know:
+The site is functional: the Analysis page computes distances, an exposure index,
+maps, and a ranking at render time from committed data plus Natural Earth
+geometry. CI installs the spatial packages and deploys to Pages on every push —
+no manual data downloads required to build it.
 
-- The site currently renders as text only. The analysis code chunks are set to
-  `eval: false` and there is no data committed yet, so the page is publishable
-  while empty. Once you run the R scripts locally, commit the processed layers
-  (`data/processed/*.gpkg`) and a `renv.lock`, then flip the chunks to
-  `eval: true`, the maps and tables appear on the next push.
-- The CI log shows one warning about GitHub deprecating Node 20 actions. It is
-  harmless — the actions run on Node 24 automatically. No action needed.
+What is still placeholder, and should be replaced before the results are treated
+as authoritative:
+
+- **Terminal capacities** in `data/processed/lng_terminals.csv` are compiled
+  approximations from public reporting. Reconcile against Global Energy Monitor
+  and operator figures.
+- **Gas import dependence** in `data/processed/import_dependence.csv` is
+  illustrative. Replace with Eurostat actuals (`nrg_ind_id`).
+
+Hardening still worth doing: commit a `renv.lock` (then the workflow uses the
+pinned environment instead of installing a package list), and add pipeline/cable
+line features from EMODnet. The CI log's Node 20 deprecation warning is harmless
+— the actions run on Node 24 automatically.
 
 ## License
 

@@ -1,62 +1,59 @@
 # 02_analysis.R
-# Distance and buffer measurements, plus the exposure index. Reads the processed
-# layers, writes the scored terminal table back to data/processed/ for the
-# Analysis page to display.
+# Distances, buffer share, and the exposure index. Mirrors the computation on the
+# Analysis page and writes a scored ranking to data/processed/. Run 01_clean.R
+# first, or just read the committed CSV directly as the page does.
 
 library(sf)
 library(dplyr)
 library(readr)
+library(rnaturalearth)
 
-proc <- "data/processed"
+laea <- 3035
 
-aoi        <- st_read(file.path(proc, "aoi.gpkg"))
-terminals  <- st_read(file.path(proc, "lng_terminals.gpkg"))
-boundary   <- st_read(file.path(proc, "ru_maritime_boundary.gpkg"))
-chokepoint <- st_read(file.path(proc, "danish_straits.gpkg"))
+world      <- ne_countries(scale = "medium", returnclass = "sf")
+russia     <- world |> filter(admin == "Russia") |> st_transform(laea) |> st_make_valid()
+chokepoint <- st_as_sfc(st_bbox(c(xmin = 10.5, ymin = 55.0, xmax = 13.0, ymax = 56.2),
+                                crs = 4326)) |> st_transform(laea)
 
-# ---- Distances --------------------------------------------------------------
-terminals <- terminals |>
+terminals <- read_csv("data/processed/lng_terminals.csv", show_col_types = FALSE) |>
+  st_as_sf(coords = c("lon", "lat"), crs = 4326) |>
+  st_transform(laea) |>
   mutate(
-    dist_boundary_km   = as.numeric(st_distance(geom, st_union(boundary)))   / 1000,
-    dist_chokepoint_km = as.numeric(st_distance(geom, st_union(chokepoint))) / 1000
+    dist_russia_km     = as.numeric(st_distance(geometry, st_union(russia)))     / 1000,
+    dist_chokepoint_km = as.numeric(st_distance(geometry, st_union(chokepoint))) / 1000
   )
 
-# ---- Buffer: capacity near the boundary -------------------------------------
-total_cap <- sum(terminals$capacity, na.rm = TRUE)
+# Capacity share within distance bands of Russian territory
+total_cap <- sum(terminals$capacity_bcm, na.rm = TRUE)
 share_within <- function(km) {
-  near <- terminals |> filter(dist_boundary_km <= km)
-  sum(near$capacity, na.rm = TRUE) / total_cap
+  near <- terminals |> filter(dist_russia_km <= km)
+  sum(near$capacity_bcm, na.rm = TRUE) / total_cap
 }
-share_50  <- share_within(50)
-share_100 <- share_within(100)
 
-# ---- Exposure index ---------------------------------------------------------
-# Weights are stated here and in the writeup. Easy to change, nothing hidden.
+# Exposure index — stated weights, transparent normalization
 w_proximity  <- 0.4
 w_capacity   <- 0.3
 w_chokepoint <- 0.3
-
 norm <- function(x) (max(x, na.rm = TRUE) - x) /
                     (max(x, na.rm = TRUE) - min(x, na.rm = TRUE))
 
 terminals <- terminals |>
   mutate(
-    s_proximity  = norm(dist_boundary_km),       # nearer boundary = higher
-    s_chokepoint = 1 - norm(dist_chokepoint_km), # nearer chokepoint = higher
-    s_capacity   = capacity / max(capacity, na.rm = TRUE),
-    exposure     = w_proximity  * s_proximity +
-                   w_capacity   * s_capacity +
+    s_proximity  = norm(dist_russia_km),
+    s_chokepoint = norm(dist_chokepoint_km),
+    s_capacity   = capacity_bcm / max(capacity_bcm, na.rm = TRUE),
+    exposure     = w_proximity * s_proximity +
+                   w_capacity  * s_capacity +
                    w_chokepoint * s_chokepoint
   ) |>
   arrange(desc(exposure))
 
-st_write(terminals, file.path(proc, "terminals_scored.gpkg"), delete_dsn = TRUE)
-
+st_write(terminals, "data/processed/terminals_scored.gpkg", delete_dsn = TRUE, quiet = TRUE)
 terminals |>
   st_drop_geometry() |>
-  select(name, country, capacity, dist_boundary_km, dist_chokepoint_km, exposure) |>
-  write_csv(file.path(proc, "exposure_ranking.csv"))
+  select(name, country, status, capacity_bcm, dist_russia_km, dist_chokepoint_km, exposure) |>
+  write_csv("data/processed/exposure_ranking.csv")
 
-message(sprintf("Capacity within 50 km of boundary: %.0f%%", 100 * share_50))
-message(sprintf("Capacity within 100 km of boundary: %.0f%%", 100 * share_100))
+message(sprintf("Capacity within 150 km of Russian territory: %.0f%%", 100 * share_within(150)))
+message(sprintf("Capacity within 200 km of Russian territory: %.0f%%", 100 * share_within(200)))
 message("Scored terminals written to data/processed/.")

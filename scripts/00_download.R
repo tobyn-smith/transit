@@ -1,45 +1,28 @@
 # 00_download.R
-# Pulls public source data into data/raw/. Run this locally, not in CI.
-# A couple of sources need a manual download because they require accepting
-# terms first — those are marked MANUAL below.
+# The current build does not require any manual downloads — country geometry
+# comes from the rnaturalearth package, and the terminal and dependence tables
+# are committed under data/processed/. This script documents how to replace the
+# curated tables with primary sources when you want to harden the project.
 
-library(sf)
-library(rnaturalearth)
-library(eurostat)
+# ---- Country geometry (already used directly in the analysis) ---------------
+# install.packages("rnaturalearth")
+# rnaturalearth::ne_countries(scale = "medium", returnclass = "sf")
 
-dir.create("data/raw", recursive = TRUE, showWarnings = FALSE)
+# ---- LNG terminals: reconcile against Global Energy Monitor -----------------
+# Replace data/processed/lng_terminals.csv with figures checked against the GEM
+# Global LNG Terminal tracker (free download after accepting terms):
+#   https://globalenergymonitor.org/
+# Keep the same columns: name, country, iso_a2, lon, lat, capacity_bcm, status, type
 
-# ---- Natural Earth: countries, coastline, ports -----------------------------
-# Public domain, pulled directly through the package.
-countries <- ne_countries(scale = "medium", returnclass = "sf")
-st_write(countries, "data/raw/ne_countries.gpkg", delete_dsn = TRUE)
+# ---- Dependence: replace placeholders with Eurostat actuals -----------------
+# install.packages("eurostat")
+# dep <- eurostat::get_eurostat("nrg_ind_id", time_format = "num")
+# Filter to the gas import-dependency indicator and most recent year, then write
+# data/processed/import_dependence.csv with columns: country, iso_a2, gas_import_dependency_pct
 
-ports <- ne_download(scale = "medium", type = "ports",
-                     category = "cultural", returnclass = "sf")
-st_write(ports, "data/raw/ne_ports.gpkg", delete_dsn = TRUE)
+# ---- Pipelines / cables (future line features) ------------------------------
+# EMODnet Human Activities (public downloads):
+#   https://emodnet.ec.europa.eu/en/human-activities
+# OpenStreetMap via osmdata as a fallback for missing layers.
 
-# ---- Eurostat: energy import dependency -------------------------------------
-# Public API, no key. Indicator code may need checking against the current
-# Eurostat catalogue before first run.
-dependency <- get_eurostat("nrg_ind_id", time_format = "num")
-write.csv(dependency, "data/raw/eurostat_import_dependency.csv", row.names = FALSE)
-
-# ---- Marine Regions: EEZ / maritime boundaries ------------------------------
-# MANUAL (or via mregions2). Download the World EEZ boundaries layer from
-# https://www.marineregions.org/downloads.php and save to:
-#   data/raw/eez_boundaries.gpkg
-# Cite the version DOI listed on the download page.
-
-# ---- Global Energy Monitor: LNG terminals -----------------------------------
-# MANUAL. GEM requires accepting terms before download. Get the Global LNG
-# Terminal tracker from https://globalenergymonitor.org/ and save the
-# spreadsheet to:
-#   data/raw/gem_lng_terminals.xlsx
-# Keep terminal name, country, latitude, longitude, capacity, status.
-
-# ---- EMODnet Human Activities: pipelines, cables, ports ---------------------
-# MANUAL (or via WFS). Download the relevant layers for the Baltic from
-# https://emodnet.ec.europa.eu/en/human-activities and save to data/raw/.
-# Use OpenStreetMap via osmdata only as a fallback for layers EMODnet misses.
-
-message("Done. Manual sources (Marine Regions, GEM, EMODnet) must be placed in data/raw/ by hand.")
+message("No download needed for the current build. See comments for hardening steps.")
