@@ -137,9 +137,9 @@ terminals |>
 
 ## Dependence
 
-National gas import dependence, joined to country polygons. These figures are
-illustrative placeholders. Replace them with Eurostat actuals before citing, as
-noted on the [Data](01-data.qmd) page.
+Gas import dependency by country (Eurostat `nrg_ind_id`, natural gas, 2023),
+joined to country polygons. The figure is the share of gas demand met by net
+imports, so values above 100% reflect stock draws or re-exports.
 
 ```{r dependence-map}
 #| echo: false
@@ -157,7 +157,7 @@ ggplot() +
           colour = "white", linewidth = 0.2) +
   scale_fill_distiller(palette = "Reds", direction = 1, na.value = "grey90",
                        name = "Gas import\ndependency (%)") +
-  labs(title = "Gas import dependence (illustrative)") +
+  labs(title = "Gas import dependency, 2023 (Eurostat)") +
   theme_minimal() +
   theme(axis.text = element_blank(), panel.grid = element_blank())
 ```

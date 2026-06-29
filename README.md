@@ -39,8 +39,8 @@ All public, no logins, no paid datasets:
   so nothing to download by hand).
 - A small table of the region's LNG terminals (name, country, location,
   approximate capacity, status), kept in `data/processed/lng_terminals.csv`.
-- A small table of national gas import dependence, kept in
-  `data/processed/import_dependence.csv`.
+- National gas import dependence from Eurostat (indicator `nrg_ind_id`), kept in
+  `data/processed/import_dependence.csv` and reproduced by `scripts/03_eurostat.R`.
 
 ## Run it yourself (no programming experience needed)
 
@@ -100,15 +100,15 @@ happen.
 
 ## What is solid and what to double check
 
-The structure, the maps, and the method are real and reproducible. Two inputs
-are approximations that should be replaced before anyone treats the rankings as
+The structure, the maps, and the method are real and reproducible. The gas
+import dependence values in `import_dependence.csv` come from Eurostat (indicator
+`nrg_ind_id`, natural gas, 2023), and `scripts/03_eurostat.R` reproduces that
+pull. One input still needs checking before anyone treats the rankings as
 authoritative:
 
 - The terminal capacities in `lng_terminals.csv` are compiled from public
   reporting. Check them against the Global Energy Monitor LNG tracker and
   operator figures.
-- The gas import dependence values in `import_dependence.csv` are placeholders.
-  Replace them with figures from Eurostat (indicator `nrg_ind_id`).
 
 Both files are plain spreadsheets. You can open and edit them in Excel.
 

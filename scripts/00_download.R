@@ -14,11 +14,9 @@
 #   https://globalenergymonitor.org/
 # Keep the same columns: name, country, iso_a2, lon, lat, capacity_bcm, status, type
 
-# ---- Dependence: replace placeholders with Eurostat actuals -----------------
-# install.packages("eurostat")
-# dep <- eurostat::get_eurostat("nrg_ind_id", time_format = "num")
-# Filter to the gas import-dependency indicator and most recent year, then write
-# data/processed/import_dependence.csv with columns: country, iso_a2, gas_import_dependency_pct
+# ---- Dependence: already pulled from Eurostat -------------------------------
+# data/processed/import_dependence.csv comes from Eurostat nrg_ind_id.
+# Re-run scripts/03_eurostat.R to refresh it for a newer year.
 
 # ---- Pipelines / cables (future line features) ------------------------------
 # EMODnet Human Activities (public downloads):
