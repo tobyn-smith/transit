@@ -6,7 +6,7 @@ website:
   title: "Baltic Energy Transit Risk"
   description: "Spatial exposure of post-2022 Baltic energy import infrastructure"
   navbar:
-    background: primary
+    background: dark
     left:
       - href: index.qmd
         text: Overview
@@ -20,20 +20,17 @@ website:
         aria-label: GitHub
   page-footer:
     border: false
-    left: "Public data only. Sources cited on the Data page."
-    right: "Built with R, sf, and Quarto."
+    left: "Public data only. Sources on the Data page."
+    right: "Built with R, sf and Quarto."
 
 format:
   html:
     theme: [cosmo, theme.scss]
     toc: true
     toc-title: "On this page"
-    title-block-banner: "#16233a"
-    title-block-banner-color: white
+    title-block-banner: false
     code-fold: true
-    code-tools: true
     code-summary: "Show code"
     smooth-scroll: true
     anchor-sections: true
-    link-external-newwindow: true
     fig-cap-location: bottom

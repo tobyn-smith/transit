@@ -4,6 +4,10 @@ subtitle: "Exposure of post-2022 Baltic energy import infrastructure"
 date: today
 ---
 
+::: {.kicker}
+Energy security · Spatial analysis
+:::
+
 ```{r stat-cards}
 #| echo: false
 #| output: asis
