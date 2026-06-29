@@ -1,0 +1,59 @@
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+name: Render and Publish
+
+# Renders the Quarto site and deploys it to GitHub Pages via the Actions
+# artifact (Pages source must be set to "GitHub Actions"). CI renders from
+# committed data only — it does not download raw data.
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: quarto-dev/quarto-actions/setup@v2
+
+      - uses: r-lib/actions/setup-r@v2
+        with:
+          use-public-rspm: true
+
+      # Use the pinned environment once renv.lock exists. Until then, install
+      # just enough for Quarto to render the (text-only) site.
+      - name: Restore renv
+        if: ${{ hashFiles('renv.lock') != '' }}
+        uses: r-lib/actions/setup-renv@v2
+
+      - name: Minimal R deps (no lockfile yet)
+        if: ${{ hashFiles('renv.lock') == '' }}
+        run: install.packages(c("rmarkdown", "knitr"))
+        shell: Rscript {0}
+
+      - name: Render
+        run: quarto render
+
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: docs
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4

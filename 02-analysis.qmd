@@ -1,0 +1,136 @@
+---
+title: "Analysis"
+---
+
+```{r setup}
+#| include: false
+#| eval: false
+library(sf)
+library(dplyr)
+library(readr)
+library(ggplot2)
+library(tmap)
+library(leaflet)
+library(stringr)
+
+# Processed layers are written by scripts/01_clean.R and committed to the repo,
+# so this page renders without re-running the analysis or touching the network.
+proc <- "data/processed"
+```
+
+## Area of interest
+
+All measurements are in ETRS89 / LAEA Europe (EPSG:3035) so distances are in
+metres, not degrees.
+
+```{r aoi}
+#| eval: false
+aoi        <- st_read(file.path(proc, "aoi.gpkg"))
+terminals  <- st_read(file.path(proc, "lng_terminals.gpkg"))
+boundary   <- st_read(file.path(proc, "ru_maritime_boundary.gpkg"))
+chokepoint <- st_read(file.path(proc, "danish_straits.gpkg"))
+```
+
+## Concentration
+
+Where the infrastructure sits, sized by capacity.
+
+```{r map-concentration}
+#| eval: false
+tm_shape(aoi) +
+  tm_borders() +
+  tm_shape(terminals) +
+  tm_symbols(size = "capacity", col = "firebrick", alpha = 0.7) +
+  tm_layout(title = "Baltic LNG terminals by capacity")
+```
+
+## Proximity
+
+Distance from each terminal to the nearest Russian/Kaliningrad maritime
+boundary, and to the Danish Straits gate. Buffers show how much capacity sits
+within a given band of the boundary.
+
+```{r proximity}
+#| eval: false
+terminals <- terminals |>
+  mutate(
+    dist_boundary_km   = as.numeric(st_distance(geom, st_union(boundary)))   / 1000,
+    dist_chokepoint_km = as.numeric(st_distance(geom, st_union(chokepoint))) / 1000
+  )
+
+# share of total capacity within 50 km of the boundary
+within_50 <- terminals |>
+  filter(dist_boundary_km <= 50) |>
+  summarise(cap = sum(capacity, na.rm = TRUE)) |>
+  pull(cap)
+
+total_cap <- sum(terminals$capacity, na.rm = TRUE)
+share_50  <- within_50 / total_cap
+```
+
+```{r dist-distribution}
+#| eval: false
+ggplot(terminals, aes(x = reorder(name, dist_boundary_km), y = dist_boundary_km)) +
+  geom_col() +
+  coord_flip() +
+  labs(x = NULL, y = "km to Russian/Kaliningrad maritime boundary")
+```
+
+## Dependence
+
+National energy import dependence, joined to country polygons.
+
+```{r dependence}
+#| eval: false
+dependence <- st_read(file.path(proc, "dependence.gpkg"))
+
+tm_shape(dependence) +
+  tm_polygons(col = "import_dependency", palette = "Reds",
+              title = "Import dependency (%)")
+```
+
+## Exposure index
+
+Three normalized components, combined with stated weights. Keep the weights here
+so a reader can see exactly what the index is doing.
+
+```{r index}
+#| eval: false
+# weights — stated, defensible, easy to change
+w_proximity   <- 0.4   # closer to the boundary -> higher exposure
+w_capacity    <- 0.3   # larger share of national supply -> higher exposure
+w_chokepoint  <- 0.3   # more reliant on the Danish Straits -> higher exposure
+
+norm <- function(x) (max(x, na.rm = TRUE) - x) /
+                    (max(x, na.rm = TRUE) - min(x, na.rm = TRUE))
+
+terminals <- terminals |>
+  mutate(
+    s_proximity  = norm(dist_boundary_km),      # inverted: nearer = higher
+    s_chokepoint = 1 - norm(dist_chokepoint_km),
+    s_capacity   = capacity / max(capacity, na.rm = TRUE),
+    exposure     = w_proximity  * s_proximity +
+                   w_capacity   * s_capacity +
+                   w_chokepoint * s_chokepoint
+  ) |>
+  arrange(desc(exposure))
+
+terminals |>
+  st_drop_geometry() |>
+  select(name, country, capacity, dist_boundary_km, exposure)
+```
+
+## Interactive map
+
+```{r leaflet}
+#| eval: false
+terminals_wgs <- st_transform(terminals, 4326)
+
+leaflet(terminals_wgs) |>
+  addProviderTiles("CartoDB.Positron") |>
+  addCircleMarkers(
+    radius = ~scales::rescale(capacity, to = c(4, 14)),
+    color  = ~ifelse(exposure > 0.6, "firebrick", "steelblue"),
+    label  = ~paste0(name, " — exposure ", round(exposure, 2))
+  )
+```

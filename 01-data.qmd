@@ -1,0 +1,63 @@
+---
+title: "Data"
+---
+
+Every dataset here is public and free, with no API key or registration. Where a
+source needs you to accept terms before downloading, that is noted and the
+manual step is in `scripts/00_download.R`.
+
+## Sources
+
+### Base geography
+
+- **Natural Earth** — coastlines, country polygons, populated places and ports.
+  Public domain. Pulled with the `rnaturalearth` package.
+- **Eurostat NUTS** (or **GADM**) — administrative boundaries for the choropleth.
+  NUTS pairs cleanly with Eurostat statistics.
+
+### Maritime boundaries
+
+- **Marine Regions (Flanders Marine Institute)** — Exclusive Economic Zone
+  boundaries, including the Russian and Kaliningrad maritime boundary used in the
+  proximity analysis. Free download; cite the version DOI.
+
+### Energy infrastructure
+
+- **Global Energy Monitor** — LNG terminal locations and capacities. This is the
+  headline dataset. Free, but downloaded manually after accepting GEM's terms;
+  see the note in `scripts/00_download.R`.
+- **EMODnet Human Activities** — pipelines, cables, and ports for European seas.
+  Public downloads. Primary source for the line features.
+- **OpenStreetMap** (via `osmdata`) — fallback for any infrastructure layer that
+  EMODnet does not cover cleanly. Messier; used only where needed and flagged.
+
+### Dependence
+
+- **Eurostat** — energy import dependency and gas import statistics, joined to
+  country polygons for the dependence layer. Public CSV / API, no key, pulled
+  with the `eurostat` package.
+
+## A note on conflict data
+
+This project frames the question as exposure and structural dependence, not
+active conflict — there is no battlefield on the Baltic seabed. ACLED is
+deliberately not used (it now requires registration, which breaks the
+public-data rule). If a future version needs conflict events, UCDP GED is the
+public, no-key substitute.
+
+## Cleaning
+
+The steps that turn raw downloads into analysis-ready layers live in
+`scripts/01_clean.R`:
+
+- standardize column names with `janitor::clean_names()`,
+- reproject everything to ETRS89 / LAEA Europe (EPSG:3035),
+- clip to the Baltic area of interest,
+- keep capacity and country attributes on the infrastructure layers,
+- write small derived layers to `data/processed/` (these are committed; raw data
+  is not).
+
+## Citations
+
+<!-- Add full citations with access dates and version DOIs once data is
+     downloaded. One entry per source above. -->
