@@ -7,7 +7,7 @@ name: Render and Publish
 
 # Renders the Quarto site and deploys it to GitHub Pages via the Actions
 # artifact (Pages source must be set to "GitHub Actions"). The analysis runs at
-# render time from committed data plus Natural Earth geometry — no downloads.
+# render time from committed data plus Natural Earth geometry, no downloads.
 
 permissions:
   contents: read

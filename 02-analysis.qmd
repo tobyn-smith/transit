@@ -2,14 +2,15 @@
 title: "Analysis"
 ---
 
-This page computes everything from public data at render time: country geometry
-comes from Natural Earth (via `rnaturalearth`), and the terminal and dependence
-tables are the small committed files in `data/processed/`. All distance work is
-done in ETRS89 / LAEA Europe (EPSG:3035), so measurements are in metres.
+This page computes everything from public data at render time. Country geometry
+comes from Natural Earth (via the `rnaturalearth` package), and the terminal and
+dependence tables are the small committed files in `data/processed/`. All
+distance work is done in a projection suited to Europe (ETRS89 / LAEA Europe,
+EPSG:3035), and the results are reported in kilometres.
 
-The terminal capacities are compiled approximations from public reporting — see
-the [Data](01-data.qmd) page. Treat the rankings as a structured view of
-exposure, not authoritative figures.
+The terminal capacities are compiled approximations from public reporting, as
+explained on the [Data](01-data.qmd) page. Read the rankings as a structured view
+of exposure rather than authoritative figures.
 
 ```{r setup}
 #| include: false
@@ -34,7 +35,7 @@ aoi <- st_as_sfc(st_bbox(c(xmin = 9, ymin = 53, xmax = 30, ymax = 66),
                          crs = 4326)) |>
   st_transform(laea)
 
-# Russian territory (includes the Kaliningrad exclave) — the proximity reference
+# Russian territory (includes the Kaliningrad exclave), the proximity reference
 russia <- world |>
   filter(admin == "Russia") |>
   st_transform(laea) |>
@@ -57,9 +58,9 @@ terminals <- terminals |>
     dist_chokepoint_km = as.numeric(st_distance(geometry, st_union(chokepoint))) / 1000
   )
 
-# Exposure index — three normalized components, stated weights
-w_proximity  <- 0.4   # nearer to Russian territory  -> higher
-w_capacity   <- 0.3   # larger regas capacity         -> higher
+# Exposure index: three normalized components, with stated weights
+w_proximity  <- 0.4   # nearer to Russian territory   -> higher
+w_capacity   <- 0.3   # larger regas capacity          -> higher
 w_chokepoint <- 0.3   # nearer the Danish Straits gate -> higher
 
 norm <- function(x) (max(x, na.rm = TRUE) - x) /
@@ -82,11 +83,13 @@ land_aoi <- world |> st_transform(laea) |> st_crop(aoi)
 
 ## Concentration
 
-Where the import infrastructure sits, sized by regas capacity. Russian territory
-is shaded for reference.
+Where the import infrastructure sits, sized by regasification capacity. Russian
+territory is shaded for reference.
 
 ```{r map-concentration}
 #| echo: false
+#| message: false
+#| warning: false
 #| fig-width: 8
 #| fig-height: 7
 ggplot() +
@@ -96,16 +99,16 @@ ggplot() +
   scale_size_continuous(range = c(2, 9), name = "Capacity (bcm/yr)") +
   scale_colour_distiller(palette = "YlOrRd", direction = 1, name = "Exposure") +
   labs(title = "Baltic LNG import terminals",
-       subtitle = "Point size = capacity; shaded = Russian territory") +
+       subtitle = "Point size is capacity; shaded area is Russian territory") +
   theme_minimal() +
   theme(axis.text = element_blank(), panel.grid = element_blank())
 ```
 
 ## Proximity
 
-Distance from each terminal to the nearest Russian territory (mainland near the
-Gulf of Finland, or the Kaliningrad exclave), and the share of total capacity
-sitting within a given band.
+Distance from each terminal to the nearest Russian territory, meaning the
+mainland near the Gulf of Finland or the Kaliningrad exclave, with the share of
+total capacity sitting within a given band.
 
 ```{r proximity-buffer}
 #| echo: false
@@ -117,7 +120,7 @@ share_within <- function(km) {
 ```
 
 `r share_within(200)`% of total regasification capacity sits within 200 km of
-Russian territory; `r share_within(150)`% within 150 km.
+Russian territory, and `r share_within(150)`% within 150 km.
 
 ```{r dist-plot}
 #| echo: false
@@ -136,12 +139,13 @@ terminals |>
 ## Dependence
 
 National gas import dependence, joined to country polygons. These figures are
-illustrative placeholders — replace with Eurostat actuals before citing (see the
-[Data](01-data.qmd) page).
+illustrative placeholders. Replace them with Eurostat actuals before citing, as
+noted on the [Data](01-data.qmd) page.
 
 ```{r dependence-map}
 #| echo: false
 #| message: false
+#| warning: false
 #| fig-width: 8
 #| fig-height: 7
 dep <- read_csv("data/processed/import_dependence.csv", show_col_types = FALSE)
@@ -190,7 +194,7 @@ leaflet(terminals_wgs) |>
     radius      = ~rescale(capacity_bcm, to = c(5, 15)),
     color       = ~pal(exposure),
     fillOpacity = 0.8, stroke = FALSE,
-    label       = ~paste0(name, " — exposure ", round(exposure, 2))
+    label       = ~paste0(name, ": exposure ", round(exposure, 2))
   ) |>
   addLegend("bottomright", pal = pal, values = ~exposure, title = "Exposure")
 ```

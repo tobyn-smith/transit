@@ -2,79 +2,75 @@
 title: "Data"
 ---
 
-Every dataset here is public and free, with no API key or registration. Where a
-source needs you to accept terms before downloading, that is noted and the
-manual step is in `scripts/00_download.R`.
+Every dataset here is public and free, with no login and no paid access. Where a
+source would normally require accepting terms or running a manual download, this
+build avoids it by using a small committed table instead, and the notes below say
+exactly what to replace if you want to harden the project.
 
-## Sources
+## Base geography
 
-### Base geography
+Country shapes and coastlines come from **Natural Earth**, loaded through the
+`rnaturalearth` package. Natural Earth is in the public domain, and because the
+package ships the data, there is nothing to download by hand.
 
-- **Natural Earth** — coastlines, country polygons, populated places and ports.
-  Public domain. Pulled with the `rnaturalearth` package.
-- **Eurostat NUTS** (or **GADM**) — administrative boundaries for the choropleth.
-  NUTS pairs cleanly with Eurostat statistics.
-
-### Maritime boundaries
-
-- **Marine Regions (Flanders Marine Institute)** — Exclusive Economic Zone
-  boundaries, including the Russian and Kaliningrad maritime boundary used in the
-  proximity analysis. Free download; cite the version DOI.
-
-### Energy infrastructure
+## Energy infrastructure
 
 The current build uses a small committed table of the region's LNG import
-terminals (`data/processed/lng_terminals.csv`): name, country, coordinates,
-approximate annual regasification capacity, and status. The figures are
-**compiled approximations** from public operator reporting and tracker summaries,
-not pulled live. Before treating any ranking as authoritative, verify the
-capacities against primary sources:
+terminals, `data/processed/lng_terminals.csv`. It holds the name, country,
+location, approximate annual regasification capacity, and status of each
+terminal.
 
-- **Global Energy Monitor** — Global LNG Terminal tracker (free download after
-  accepting terms) is the natural source to reconcile against.
-- **GIE / operator announcements** — for regasification capacity figures.
+These capacity figures are compiled approximations drawn from public operator
+reporting and tracker summaries. They are not pulled from a live database. Before
+treating any ranking as authoritative, check the capacities against a primary
+source:
 
-`scripts/00_download.R` documents how to swap the curated table for a GEM
-download, and **EMODnet Human Activities** / **OpenStreetMap** (`osmdata`) remain
-the route to add pipelines and cables as line features later.
+- the **Global Energy Monitor** Global LNG Terminal tracker, which is free to
+  download after accepting its terms, and
+- operator announcements and **GIE** figures for regasification capacity.
 
-### Proximity reference
+`scripts/00_download.R` documents how to swap the curated table for a Global
+Energy Monitor download. **EMODnet Human Activities** and **OpenStreetMap** (via
+the `osmdata` package) are the route to add pipelines and cables as line features
+in a later version.
 
-Rather than a maritime EEZ line, the proximity measure uses distance to the
-nearest **Russian territory** (mainland near the Gulf of Finland, plus the
-Kaliningrad exclave), taken from Natural Earth. It is fully reproducible from a
-public package and is a clean, interpretable proxy for adversary proximity.
+## Proximity reference
 
-### Dependence
+Instead of a maritime boundary line, the proximity measure uses distance to the
+nearest **Russian territory**, meaning the mainland near the Gulf of Finland plus
+the Kaliningrad exclave, taken from Natural Earth. This is fully reproducible from
+a public package and gives a clean, interpretable stand-in for proximity to a
+potential source of pressure.
 
-The dependence layer currently uses a small committed table
-(`data/processed/import_dependence.csv`) with **illustrative placeholder**
-gas-import-dependency values per country. Replace these with actual figures from
-**Eurostat** (energy import dependency, indicator `nrg_ind_id`; public CSV / API,
-no key, pullable with the `eurostat` package) before drawing conclusions from the
-choropleth.
+## Dependence
+
+The dependence layer uses a small committed table,
+`data/processed/import_dependence.csv`, with gas import dependency values per
+country. These are **illustrative placeholders**. Replace them with actual
+figures from **Eurostat** (energy import dependency, indicator `nrg_ind_id`,
+which is a free public download) before drawing conclusions from the map.
 
 ## A note on conflict data
 
 This project frames the question as exposure and structural dependence, not
-active conflict — there is no battlefield on the Baltic seabed. ACLED is
-deliberately not used (it now requires registration, which breaks the
-public-data rule). If a future version needs conflict events, UCDP GED is the
-public, no-key substitute.
+active conflict, because there is no battlefield on the Baltic seabed. ACLED is
+deliberately not used, since it now requires registration, which would break the
+public data rule. If a later version needs conflict events, UCDP GED is the
+public, no-login substitute.
 
-## Cleaning
+## How the data is prepared
 
-The steps that turn raw downloads into analysis-ready layers live in
-`scripts/01_clean.R`:
+The steps that turn the tables and geometry into analysis-ready layers live in
+`scripts/01_clean.R`, and the Analysis page repeats them at render time:
 
-- standardize column names with `janitor::clean_names()`,
-- reproject everything to ETRS89 / LAEA Europe (EPSG:3035),
-- clip to the Baltic area of interest,
-- keep capacity and country attributes on the infrastructure layers,
-- write small derived layers to `data/processed/` (these are committed; raw data
-  is not).
+- standardize the columns,
+- project everything to ETRS89 / LAEA Europe (EPSG:3035) so distances come out in
+  kilometres,
+- clip the geography to the Baltic study area,
+- keep the capacity and country information on the terminal layer.
 
 ## Citations
 
-<!-- Add full citations with access dates and version DOIs once data is
-     downloaded. One entry per source above. -->
+Add full citations with access dates once you replace the placeholder figures.
+One entry per source above: Natural Earth, Global Energy Monitor, Eurostat, and
+EMODnet if you add line features.

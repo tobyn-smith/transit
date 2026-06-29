@@ -1,5 +1,5 @@
 # 00_download.R
-# The current build does not require any manual downloads — country geometry
+# The current build does not require any manual downloads. Country geometry
 # comes from the rnaturalearth package, and the terminal and dependence tables
 # are committed under data/processed/. This script documents how to replace the
 # curated tables with primary sources when you want to harden the project.
