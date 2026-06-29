@@ -1,4 +1,4 @@
-# raw downloads — fetched by scripts/00_download.R, not committed
+# raw downloads, fetched by scripts/00_download.R, not committed
 data/raw/
 
 # R

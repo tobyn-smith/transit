@@ -2,7 +2,7 @@
 # Builds the analysis-ready spatial layers in data/processed/ from the committed
 # tables plus Natural Earth geometry. Everything is projected to ETRS89 / LAEA
 # Europe (EPSG:3035). The Analysis page recomputes these inline, so running this
-# is optional — it exists for an offline pipeline and for inspecting the layers.
+# is optional. It exists for an offline pipeline and for inspecting the layers.
 
 library(sf)
 library(dplyr)

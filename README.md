@@ -1,107 +1,141 @@
 # Baltic Energy Transit Risk
 
-A spatial analysis of how the Baltic Sea region's energy import infrastructure —
-LNG terminals, ports, and undersea pipelines — is exposed to geopolitical
-disruption after the 2022 break with Russian pipeline gas.
+This project looks at a real energy security problem in the Baltic Sea region.
+Before 2022, much of the region's natural gas arrived by pipeline from Russia.
+After the invasion of Ukraine and the sabotage of the Nord Stream pipelines,
+that supply was cut or abandoned, and imports shifted onto a small number of
+coastal LNG terminals and ports. This project maps where that infrastructure
+sits and measures how exposed it is to geopolitical pressure.
 
-## Research question
+It is built in R, uses spatial (GIS) methods, relies only on public data, and
+publishes as a small website.
+
+## The research question
 
 After 2022, Baltic energy imports shifted onto a small set of coastal LNG
-terminals and ports. How spatially concentrated is that infrastructure, and how
-exposed is it — measured by capacity, by proximity to the Russian and
-Kaliningrad maritime boundary, and by dependence on the single Danish Straits
-chokepoint?
+terminals and ports. How concentrated is that infrastructure, and how exposed is
+it, measured by capacity, by distance to Russian territory (including the
+Kaliningrad exclave), and by reliance on the single shipping route through the
+Danish Straits?
 
-The question has three measurable parts: concentration, proximity, and
-chokepoint dependence. The analysis stays close to those three.
+## What the project shows
 
-## Data
+The website has three pages:
 
-All public, no API keys, no paywalled sources. See `01-data.qmd` for the full
-list and citations.
+- **Overview**: the question, the main findings in plain language, and an honest
+  list of limitations.
+- **Data**: every source, all public, with notes on what is solid and what is
+  still approximate.
+- **Analysis**: the maps and the numbers. A map of the terminals sized by
+  capacity, a chart of how close each one is to Russian territory, a map of
+  national gas import dependence, a ranked table of exposure, and an interactive
+  map you can click through.
 
-| Layer | Source |
-|---|---|
-| Coastlines, countries, ports | Natural Earth |
-| Admin boundaries | Eurostat NUTS / GADM |
-| Maritime boundaries, EEZ | Marine Regions (Flanders Marine Institute) |
-| LNG terminals + capacity | Global Energy Monitor |
-| Pipelines, cables, ports | EMODnet Human Activities (OSM as fallback) |
-| National import dependence | Eurostat |
+## Data sources
 
-Raw downloads are not committed to the repo. Run `scripts/00_download.R` to
-fetch them, or follow the manual-download notes in that script for the few
-sources that require accepting terms.
+All public, no logins, no paid datasets:
 
-## How to run
+- Natural Earth, for country shapes and coastlines (loaded through an R package,
+  so nothing to download by hand).
+- A small table of the region's LNG terminals (name, country, location,
+  approximate capacity, status), kept in `data/processed/lng_terminals.csv`.
+- A small table of national gas import dependence, kept in
+  `data/processed/import_dependence.csv`.
 
-```r
-# from the project root, with renv restored
-source("scripts/00_download.R")   # pulls public data into data/raw/
-source("scripts/01_clean.R")      # tidies + reprojects -> data/processed/
-source("scripts/02_analysis.R")   # distances, buffers, exposure index
+## Run it yourself (no programming experience needed)
+
+You do not need to know R to build this. Follow these steps in order.
+
+1. **Install R.** Go to [https://cloud.r-project.org](https://cloud.r-project.org)
+   and install the version for your computer (Windows or Mac). R is the language
+   the analysis is written in.
+
+2. **Install RStudio.** Go to
+   [https://posit.co/download/rstudio-desktop](https://posit.co/download/rstudio-desktop)
+   and install the free version. RStudio is the program you actually open to work
+   with R.
+
+3. **Install Quarto.** Go to
+   [https://quarto.org/docs/get-started](https://quarto.org/docs/get-started)
+   and install it. Quarto is the tool that turns the analysis into a website.
+
+4. **Get the project onto your computer.** On the project's GitHub page, click
+   the green **Code** button, choose **Download ZIP**, and unzip it somewhere you
+   can find, such as your Desktop.
+
+5. **Open the project in RStudio.** Open RStudio, then go to
+   **File > Open Project**, and pick the folder you just unzipped. (If there is
+   no `.Rproj` file yet, use **File > Open Folder** instead.)
+
+6. **Install the R packages the project needs.** In RStudio, find the
+   **Console** panel (usually bottom left), paste the line below, and press
+   Enter. This downloads the tools the analysis uses. It only has to be done
+   once and may take a few minutes.
+
+   ```r
+   install.packages(c("sf", "dplyr", "readr", "ggplot2", "leaflet",
+                      "rnaturalearth", "rnaturalearthdata", "scales",
+                      "rmarkdown", "knitr"))
+   ```
+
+7. **Build the website.** Open the **Terminal** panel in RStudio (the tab next to
+   Console), type the line below, and press Enter:
+
+   ```
+   quarto render
+   ```
+
+8. **Look at the result.** A folder called `docs` now contains the finished site.
+   Open `docs/index.html` in your web browser to read it.
+
+That is the whole loop. Edit a page, run `quarto render` again, refresh the
+browser.
+
+## How it publishes online
+
+The project is set up to publish to GitHub Pages automatically. Every time the
+project is updated on GitHub, a routine in `.github/workflows/publish.yml`
+rebuilds the site and posts it online. There is nothing extra to run for this to
+happen.
+
+## What is solid and what to double check
+
+The structure, the maps, and the method are real and reproducible. Two inputs
+are approximations that should be replaced before anyone treats the rankings as
+authoritative:
+
+- The terminal capacities in `lng_terminals.csv` are compiled from public
+  reporting. Check them against the Global Energy Monitor LNG tracker and
+  operator figures.
+- The gas import dependence values in `import_dependence.csv` are placeholders.
+  Replace them with figures from Eurostat (indicator `nrg_ind_id`).
+
+Both files are plain spreadsheets. You can open and edit them in Excel.
+
+## What is in the folder
+
+```
+README.md            this file
+_quarto.yml          settings for the website
+index.qmd            the Overview page
+01-data.qmd          the Data page
+02-analysis.qmd      the Analysis page (maps and numbers)
+data/processed/      the small data tables the analysis reads
+scripts/             optional R scripts that reproduce the data layers
+docs/                the finished website (created when you build)
+.github/workflows/   the routine that publishes the site online
 ```
 
-Then render the site:
+## A note on method
 
-```bash
-quarto render
-```
-
-The rendered site lands in `docs/`.
-
-## Reproducibility
-
-Package versions are pinned with `renv`. On a fresh clone:
-
-```r
-install.packages("renv")
-renv::restore()
-```
-
-CI only renders the site — it does not download data. The small processed layers
-in `data/processed/` are committed so the site rebuilds without network access.
-
-## Method, in short
-
-1. Define the area of interest (Baltic Sea + bordering EEZs), all work in
-   ETRS89 / LAEA Europe (EPSG:3035) so distances are in metres.
-2. Assemble infrastructure points and lines with capacity attributes.
-3. Build the risk geometries: the Russian/Kaliningrad maritime boundary and the
-   Danish Straits chokepoint.
-4. Measure exposure — distance to boundary, distance to chokepoint, buffer
-   analysis on capacity.
-5. Join national import-dependence figures for the dependence layer.
-6. Combine three normalized components into a transparent exposure index with
-   weights stated in the writeup.
-
-## Limitations
-
-The exposure index uses proxy measures and a single-snapshot view. It captures
-geographic exposure, not intent or probability. The limitations section in
-`index.qmd` is the honest version of what the numbers do and don't mean.
-
-## Project status
-
-The site is functional: the Analysis page computes distances, an exposure index,
-maps, and a ranking at render time from committed data plus Natural Earth
-geometry. CI installs the spatial packages and deploys to Pages on every push —
-no manual data downloads required to build it.
-
-What is still placeholder, and should be replaced before the results are treated
-as authoritative:
-
-- **Terminal capacities** in `data/processed/lng_terminals.csv` are compiled
-  approximations from public reporting. Reconcile against Global Energy Monitor
-  and operator figures.
-- **Gas import dependence** in `data/processed/import_dependence.csv` is
-  illustrative. Replace with Eurostat actuals (`nrg_ind_id`).
-
-Hardening still worth doing: commit a `renv.lock` (then the workflow uses the
-pinned environment instead of installing a package list), and add pipeline/cable
-line features from EMODnet. The CI log's Node 20 deprecation warning is harmless
-— the actions run on Node 24 automatically.
+All distances are measured in a projection suited to Europe (ETRS89 / LAEA
+Europe), so they come out in kilometres rather than degrees. The exposure score
+combines three things, each given a stated weight: how close a terminal is to
+Russian territory, how large its capacity is, and how close it is to the Danish
+Straits. The weights are written plainly in the analysis so anyone can see, and
+change, the assumptions.
 
 ## License
 
-Code: MIT. Data: see each source's own terms, listed in `01-data.qmd`.
+Code is released under the MIT License. Each data source keeps its own terms,
+listed on the Data page.

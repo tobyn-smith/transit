@@ -7,68 +7,70 @@ date: today
 ## The question
 
 Before 2022, much of the Baltic region's gas arrived by pipeline from Russia.
-After the invasion of Ukraine and the Nord Stream sabotage, that supply was cut
-or abandoned, and imports moved onto a small set of coastal LNG terminals and
-ports — Klaipėda, Świnoujście, Inkoo, and a handful of others.
+After the invasion of Ukraine and the sabotage of the Nord Stream pipelines, that
+supply was cut or abandoned, and imports moved onto a small set of coastal LNG
+terminals and ports such as Klaipėda, Świnoujście, and Inkoo.
 
-That shift concentrated a lot of supply onto a few fixed points of geography.
-This project asks how concentrated, and how exposed:
+That shift concentrated a great deal of supply onto a few fixed points of
+geography. This project asks how concentrated, and how exposed:
 
 > After 2022, Baltic energy imports shifted onto a small set of coastal LNG
-> terminals and ports. How spatially concentrated is that infrastructure, and
-> how exposed is it — measured by capacity, by proximity to the Russian and
-> Kaliningrad maritime boundary, and by dependence on the single Danish Straits
-> chokepoint?
+> terminals and ports. How concentrated is that infrastructure, and how exposed
+> is it, measured by capacity, by distance to Russian territory, and by reliance
+> on the single shipping route through the Danish Straits?
 
 ## How to read this site
 
-- **Data** lists every source, all public, with citations and the cleaning steps.
-- **Analysis** is the spatial work: the maps, the distance and buffer
-  measurements, and the exposure index.
+- The [Data](01-data.qmd) page lists every source, all public, and is honest
+  about what is solid and what is still approximate.
+- The [Analysis](02-analysis.qmd) page holds the maps, the distance
+  measurements, and the exposure ranking.
 
 ## Findings
 
-The numbers behind these are on the [Analysis](02-analysis.qmd) page. The
-terminal figures are compiled approximations (see [Data](01-data.qmd)), so read
-the rankings as a structured view of exposure rather than precise measurement.
+The numbers behind these sit on the [Analysis](02-analysis.qmd) page. The
+terminal figures are compiled approximations (see the [Data](01-data.qmd) page),
+so the rankings are best read as a structured view of exposure rather than
+precise measurement.
 
-1. _Concentration:_ A handful of terminals — Świnoujście, Klaipėda, Inkoo —
-   carry most of the region's regasification capacity. The Gulf of Finland and
-   the southern Baltic each lean on one or two assets.
-2. _Proximity:_ The terminals nearest Russian territory are the Gulf of Finland
-   FSRUs and Klaipėda, which sits close to Kaliningrad. Proximity and capacity
-   do not always coincide, which is what the index is meant to surface.
-3. _Chokepoint dependence:_ Every cargo to these terminals transits the Danish
-   Straits, so that single dependence is shared across the whole system — no
-   terminal routes around it.
+1. **Concentration.** A handful of terminals, led by Świnoujście, Klaipėda, and
+   Inkoo, carry most of the region's regasification capacity. The Gulf of Finland
+   and the southern Baltic each lean on only one or two assets.
+2. **Proximity.** The terminals closest to Russian territory are the Gulf of
+   Finland sites and Klaipėda, which sits near the Kaliningrad exclave. Proximity
+   and capacity do not always line up, which is exactly what the exposure score
+   is meant to surface.
+3. **Chokepoint dependence.** Every cargo bound for these terminals passes
+   through the Danish Straits, so that single dependence is shared across the
+   whole system. No terminal routes around it.
 
-## What the exposure index is
+## What the exposure score is
 
-The index combines three normalized components:
+The score combines three things, each given a stated weight:
 
-- proximity to the Russian/Kaliningrad maritime boundary,
-- the asset's share of national supply capacity,
-- reliance on passage through the Danish Straits.
+- how close a terminal is to Russian territory,
+- how large its share of regasification capacity is,
+- how close it is to the Danish Straits.
 
-The weights are stated on the Analysis page. The point of keeping it simple is
-that every number can be explained out loud — there is no model doing work you
-can't see.
+The weights appear in plain view on the Analysis page. Keeping the score simple
+is the point. Every number can be explained out loud, and there is no model doing
+work you cannot see.
 
 ## Limitations
 
 This measures geographic exposure, not the probability of disruption. A terminal
-sitting close to a maritime boundary is not a prediction that anything will
-happen to it; it is a statement about geography.
+close to a maritime boundary is not a prediction that anything will happen to it.
+It is a statement about geography.
 
 A few specific caveats:
 
-- The index uses proxy measures (distance, capacity share) rather than a causal
+- The score uses proxy measures (distance, capacity share) rather than a causal
   model. Different reasonable weights would shift the rankings.
-- It is a single-snapshot view. Capacity, routes, and terminals change.
-- Maritime boundaries and "chokepoint reliance" are simplified. Real traffic
-  routing is more complex than a single gate.
-- Undersea cable and pipeline incidents in the region (2023–2025) are context,
-  not modeled events.
+- It is a single snapshot. Capacity, routes, and terminals change.
+- The terminal capacities and the dependence figures are approximations to
+  verify, not authoritative statistics. See the [Data](01-data.qmd) page.
+- Undersea cable and pipeline incidents in the region between 2023 and 2025 are
+  context for the question, not events modeled here.
 
 The honest summary: this is a structured way to see where the exposure sits, not
 a risk forecast.

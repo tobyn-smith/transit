@@ -30,7 +30,7 @@ share_within <- function(km) {
   sum(near$capacity_bcm, na.rm = TRUE) / total_cap
 }
 
-# Exposure index — stated weights, transparent normalization
+# Exposure index: stated weights, transparent normalization
 w_proximity  <- 0.4
 w_capacity   <- 0.3
 w_chokepoint <- 0.3
