@@ -4,6 +4,25 @@ subtitle: "Exposure of post-2022 Baltic energy import infrastructure"
 date: today
 ---
 
+```{r stat-cards}
+#| echo: false
+#| output: asis
+#| message: false
+library(readr)
+library(dplyr)
+t  <- read_csv("data/processed/lng_terminals.csv", show_col_types = FALSE)
+op <- t |> filter(status == "operating")
+n_term     <- nrow(t)
+op_cap     <- round(sum(op$capacity_bcm), 1)
+fsru_share <- round(100 * sum(op$capacity_bcm[op$type == "fsru"]) / sum(op$capacity_bcm))
+cat(sprintf('
+<div class="stat-row">
+  <div class="stat-card"><div class="stat-num">%d</div><div class="stat-label">LNG import terminals mapped</div></div>
+  <div class="stat-card"><div class="stat-num">%s</div><div class="stat-label">bcm / yr operating capacity</div></div>
+  <div class="stat-card"><div class="stat-num">%d%%</div><div class="stat-label">of it on floating units (FSRUs)</div></div>
+</div>', n_term, op_cap, fsru_share))
+```
+
 ## The question
 
 Before 2022, much of the Baltic region's gas arrived by pipeline from Russia.

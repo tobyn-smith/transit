@@ -23,9 +23,29 @@ library(ggplot2)
 library(leaflet)
 library(rnaturalearth)
 library(scales)
-library(knitr)
+library(gt)
 
 laea <- 3035
+
+# shared styling
+exp_cols <- c("#2b8cbe", "#fec44f", "#d7301f")  # low to high exposure
+theme_transit <- function(base = 12) {
+  theme_minimal(base_size = base) +
+    theme(
+      plot.title    = element_text(face = "bold", colour = "#16233a", size = 15),
+      plot.subtitle = element_text(colour = "#5b6573", size = 11, margin = margin(b = 8)),
+      plot.caption  = element_text(colour = "#9aa1ac", size = 8, hjust = 0,
+                                   margin = margin(t = 10)),
+      legend.title  = element_text(size = 9, colour = "#5b6573"),
+      legend.text   = element_text(size = 8)
+    )
+}
+theme_map <- function() {
+  theme_transit() +
+    theme(axis.text = element_blank(), axis.title = element_blank(),
+          panel.grid = element_blank(),
+          panel.background = element_rect(fill = "#eaf2f7", colour = NA))
+}
 
 # country borders from Natural Earth
 world <- ne_countries(scale = "medium", returnclass = "sf")
@@ -91,16 +111,24 @@ territory is shaded for reference.
 #| warning: false
 #| fig-width: 8
 #| fig-height: 7
+choke_sf <- st_sf(geometry = chokepoint)
 ggplot() +
-  geom_sf(data = land_aoi, fill = "grey95", colour = "grey80", linewidth = 0.2) +
-  geom_sf(data = st_crop(russia, aoi), fill = "grey75", colour = "grey60") +
+  geom_sf(data = land_aoi, fill = "#f3f1ec", colour = "#d8d4cb", linewidth = 0.2) +
+  geom_sf(data = st_crop(russia, aoi), fill = "#d9b8b8", colour = "#c79da0",
+          linewidth = 0.2) +
+  geom_sf(data = choke_sf, fill = NA, colour = "#c75b12", linewidth = 0.6,
+          linetype = "31") +
   geom_sf(data = terminals, aes(size = capacity_bcm, colour = exposure)) +
-  scale_size_continuous(range = c(2, 9), name = "Capacity (bcm/yr)") +
-  scale_colour_distiller(palette = "YlOrRd", direction = 1, name = "Exposure") +
+  geom_sf_text(data = terminals, aes(label = name), size = 2.6, colour = "#16233a",
+               nudge_y = 38000, check_overlap = TRUE) +
+  geom_sf_text(data = choke_sf, aes(label = "Danish\nStraits"), size = 2.5,
+               colour = "#c75b12", fontface = "bold") +
+  scale_size_continuous(range = c(2.5, 11), name = "Capacity\n(bcm/yr)") +
+  scale_colour_gradientn(colours = exp_cols, name = "Exposure") +
   labs(title = "Baltic LNG import terminals",
-       subtitle = "Point size is capacity; shaded area is Russian territory") +
-  theme_minimal() +
-  theme(axis.text = element_blank(), panel.grid = element_blank())
+       subtitle = "Point size is capacity, colour is exposure; the orange box is the Danish Straits",
+       caption = "Sources: Natural Earth; capacities from operators and Global Energy Monitor.") +
+  theme_map()
 ```
 
 ## Proximity
@@ -127,12 +155,17 @@ Russian territory, and `r share_within(150)`% within 150 km.
 #| fig-height: 4
 terminals |>
   st_drop_geometry() |>
-  ggplot(aes(x = reorder(name, dist_russia_km), y = dist_russia_km)) +
-  geom_col(fill = "steelblue") +
+  ggplot(aes(x = reorder(name, -dist_russia_km), y = dist_russia_km)) +
+  geom_col(fill = "#16233a", width = 0.7) +
+  geom_text(aes(label = round(dist_russia_km)), hjust = -0.2, size = 3,
+            colour = "#5b6573") +
   coord_flip() +
+  scale_y_continuous(expand = expansion(mult = c(0, 0.12))) +
   labs(x = NULL, y = "km to nearest Russian territory",
-       title = "Proximity to Russian territory") +
-  theme_minimal()
+       title = "How close each terminal sits to Russian territory") +
+  theme_transit() +
+  theme(panel.grid.major.y = element_blank(),
+        panel.grid.minor = element_blank())
 ```
 
 ## Dependence
@@ -154,12 +187,13 @@ dependence <- land_aoi |>
 
 ggplot() +
   geom_sf(data = dependence, aes(fill = gas_import_dependency_pct),
-          colour = "white", linewidth = 0.2) +
-  scale_fill_distiller(palette = "Reds", direction = 1, na.value = "grey90",
-                       name = "Gas import\ndependency (%)") +
-  labs(title = "Gas import dependency, 2023 (Eurostat)") +
-  theme_minimal() +
-  theme(axis.text = element_blank(), panel.grid = element_blank())
+          colour = "white", linewidth = 0.3) +
+  scale_fill_gradient(low = "#fde0d0", high = "#b4451f", na.value = "#ece9e2",
+                      name = "Import\ndependency (%)") +
+  labs(title = "Gas import dependency by country, 2023",
+       subtitle = "Share of gas demand met by net imports (Eurostat nrg_ind_id)",
+       caption = "Grey countries are outside the study set. Values above 100% reflect stock draws or re-exports.") +
+  theme_map()
 ```
 
 ## Exposure ranking
@@ -172,12 +206,22 @@ terminals |>
     Terminal   = name,
     Country    = country,
     Status     = status,
-    `Capacity (bcm)`     = capacity_bcm,
-    `km to Russia`       = round(dist_russia_km),
-    `km to Straits`      = round(dist_chokepoint_km),
+    Capacity   = capacity_bcm,
+    `km to Russia`  = round(dist_russia_km),
+    `km to Straits` = round(dist_chokepoint_km),
     Exposure   = round(exposure, 2)
   ) |>
-  kable()
+  gt() |>
+  tab_header(title = "Terminals ranked by exposure") |>
+  fmt_number(columns = Capacity, decimals = 2) |>
+  data_color(columns = Exposure, palette = exp_cols,
+             domain = range(round(terminals$exposure, 2))) |>
+  cols_label(Capacity = "Capacity (bcm)") |>
+  cols_align(align = "center",
+             columns = c(Capacity, `km to Russia`, `km to Straits`, Exposure)) |>
+  tab_options(table.font.size = px(13), heading.title.font.size = px(15),
+              column_labels.font.weight = "600",
+              table.border.top.style = "none")
 ```
 
 ## Interactive map
@@ -185,15 +229,29 @@ terminals |>
 ```{r leaflet}
 #| echo: false
 terminals_wgs <- st_transform(terminals, 4326)
-pal <- colorNumeric("YlOrRd", domain = terminals_wgs$exposure)
+russia_wgs    <- st_transform(st_crop(russia, aoi), 4326)
+choke_bb      <- st_bbox(st_transform(chokepoint, 4326))
+pal <- colorNumeric(exp_cols, domain = terminals_wgs$exposure)
 
 leaflet(terminals_wgs) |>
   addProviderTiles("CartoDB.Positron") |>
+  addPolygons(data = russia_wgs, fillColor = "#b4565a", fillOpacity = 0.25,
+              weight = 0, group = "Russian territory") |>
+  addRectangles(lng1 = choke_bb[["xmin"]], lat1 = choke_bb[["ymin"]],
+                lng2 = choke_bb[["xmax"]], lat2 = choke_bb[["ymax"]],
+                fill = FALSE, color = "#c75b12", weight = 2, dashArray = "5,5",
+                group = "Danish Straits") |>
   addCircleMarkers(
-    radius      = ~rescale(capacity_bcm, to = c(5, 15)),
-    color       = ~pal(exposure),
-    fillOpacity = 0.8, stroke = FALSE,
-    label       = ~paste0(name, ": exposure ", round(exposure, 2))
+    radius      = ~rescale(capacity_bcm, to = c(5, 16)),
+    color       = "#16233a", weight = 1,
+    fillColor   = ~pal(exposure), fillOpacity = 0.85,
+    popup       = ~paste0("<b>", name, "</b><br>", country,
+                          "<br>Capacity: ", capacity_bcm, " bcm/yr",
+                          "<br>Status: ", status,
+                          "<br>Exposure: ", round(exposure, 2))
   ) |>
-  addLegend("bottomright", pal = pal, values = ~exposure, title = "Exposure")
+  addLegend("bottomright", pal = pal, values = ~exposure, title = "Exposure",
+            opacity = 0.9) |>
+  addLayersControl(overlayGroups = c("Russian territory", "Danish Straits"),
+                   options = layersControlOptions(collapsed = FALSE))
 ```
