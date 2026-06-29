@@ -81,6 +81,19 @@ The exposure index uses proxy measures and a single-snapshot view. It captures
 geographic exposure, not intent or probability. The limitations section in
 `index.qmd` is the honest version of what the numbers do and don't mean.
 
+## Project status
+
+The repo and the Quarto site build and deploy, but the analysis is not populated
+yet. A couple of things to know:
+
+- The site currently renders as text only. The analysis code chunks are set to
+  `eval: false` and there is no data committed yet, so the page is publishable
+  while empty. Once you run the R scripts locally, commit the processed layers
+  (`data/processed/*.gpkg`) and a `renv.lock`, then flip the chunks to
+  `eval: true`, the maps and tables appear on the next push.
+- The CI log shows one warning about GitHub deprecating Node 20 actions. It is
+  harmless — the actions run on Node 24 automatically. No action needed.
+
 ## License
 
 Code: MIT. Data: see each source's own terms, listed in `01-data.qmd`.
