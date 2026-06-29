@@ -43,11 +43,11 @@ public package and easy to read: how far each terminal is from Russian soil.
 
 ## Dependence
 
-The dependence layer uses a small committed table,
-`data/processed/import_dependence.csv`, with gas import dependency values per
-country. These are **illustrative placeholders**. Replace them with actual
-figures from **Eurostat** (energy import dependency, indicator `nrg_ind_id`,
-which is a free public download) before drawing conclusions from the map.
+The dependence layer uses gas import dependency from **Eurostat** (indicator
+`nrg_ind_id`, natural gas, 2023), held in `data/processed/import_dependence.csv`.
+The figure is the share of gas demand met by net imports. Values above 100%
+reflect stock draws or re-exports in that year, and Denmark is low because of its
+own North Sea production. `scripts/03_eurostat.R` reproduces the pull.
 
 ## A note on conflict data
 
@@ -70,6 +70,6 @@ The steps that turn the tables and geometry into analysis-ready layers live in
 
 ## Citations
 
-Add full citations with access dates once you replace the placeholder figures.
+Add full citations with access dates as you finalise the terminal capacities.
 One entry per source above: Natural Earth, Global Energy Monitor, Eurostat, and
 EMODnet if you add line features.

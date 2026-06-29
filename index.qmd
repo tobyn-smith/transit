@@ -66,8 +66,9 @@ A few specific caveats:
 - The score uses proxy measures (distance, capacity share) rather than a causal
   model. Different reasonable weights would shift the rankings.
 - It is a single snapshot. Capacity, routes, and terminals change.
-- The terminal capacities and the dependence figures are approximations to
-  verify, not authoritative statistics. See the [Data](01-data.qmd) page.
+- The terminal capacities are rough approximations to verify, not authoritative
+  statistics. The dependence figures are Eurostat data for 2023. See the
+  [Data](01-data.qmd) page.
 - Undersea cable and pipeline incidents in the region between 2023 and 2025 are
   context for the question, not events modeled here.
 
