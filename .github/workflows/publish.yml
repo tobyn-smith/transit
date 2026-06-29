@@ -45,6 +45,7 @@ jobs:
             any::rnaturalearth
             any::rnaturalearthdata
             any::scales
+            any::gt
 
       - name: Render
         run: quarto render
