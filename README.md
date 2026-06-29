@@ -63,9 +63,8 @@ You do not need to know R to build this. Follow these steps in order.
    the green **Code** button, choose **Download ZIP**, and unzip it somewhere you
    can find, such as your Desktop.
 
-5. **Open the project in RStudio.** Open RStudio, then go to
-   **File > Open Project**, and pick the folder you just unzipped. (If there is
-   no `.Rproj` file yet, use **File > Open Folder** instead.)
+5. **Open the project in RStudio.** Open RStudio, go to **File > Open Project**,
+   and pick `baltic-energy-transit.Rproj` in the folder you just unzipped.
 
 6. **Install the R packages the project needs.** In RStudio, find the
    **Console** panel (usually bottom left), paste the line below, and press
@@ -115,15 +114,16 @@ Both files are plain spreadsheets. You can open and edit them in Excel.
 ## What is in the folder
 
 ```
-README.md            this file
-_quarto.yml          settings for the website
-index.qmd            the Overview page
-01-data.qmd          the Data page
-02-analysis.qmd      the Analysis page (maps and numbers)
-data/processed/      the small data tables the analysis reads
-scripts/             optional R scripts that reproduce the data layers
-docs/                the finished website (created when you build)
-.github/workflows/   the routine that publishes the site online
+README.md                      this file
+baltic-energy-transit.Rproj    the RStudio project file
+_quarto.yml                    settings for the website
+index.qmd                      the Overview page
+01-data.qmd                    the Data page
+02-analysis.qmd                the Analysis page (maps and numbers)
+data/processed/                the small data tables the analysis reads
+scripts/                       R scripts that reproduce the data layers
+docs/                          the finished website (created when you build)
+.github/workflows/             the routine that publishes the site online
 ```
 
 ## A note on method
