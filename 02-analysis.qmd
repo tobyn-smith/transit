@@ -144,14 +144,14 @@ total capacity sitting within a given band.
 
 ```{r proximity-buffer}
 #| echo: false
-total_cap <- sum(terminals$capacity_bcm, na.rm = TRUE)
+op_cap <- sum(terminals$capacity_bcm[terminals$status == "operating"], na.rm = TRUE)
 share_within <- function(km) {
-  near <- terminals |> filter(dist_russia_km <= km)
-  round(100 * sum(near$capacity_bcm, na.rm = TRUE) / total_cap)
+  near <- terminals |> filter(status == "operating", dist_russia_km <= km)
+  round(100 * sum(near$capacity_bcm, na.rm = TRUE) / op_cap)
 }
 ```
 
-`r share_within(200)`% of total regasification capacity sits within 200 km of
+`r share_within(200)`% of operating regasification capacity sits within 200 km of
 Russian territory, and `r share_within(150)`% within 150 km.
 
 ```{r dist-plot}
