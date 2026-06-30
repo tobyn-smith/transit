@@ -14,12 +14,13 @@ names_lookup <- c(EE = "Estonia", LV = "Latvia", LT = "Lithuania", FI = "Finland
 dep <- get_eurostat("nrg_ind_id",
                     filters = list(siec = "G3000", unit = "PC", geo = geos))
 
-# keep the most recent year available for each country
-# (recent eurostat versions name the time column TIME_PERIOD)
+# keep the most recent year available for each country. The time column is named
+# TIME_PERIOD in recent eurostat versions and time in older ones, so detect it.
+time_col <- intersect(c("TIME_PERIOD", "time"), names(dep))[1]
 latest <- dep |>
   filter(!is.na(values)) |>
   group_by(geo) |>
-  slice_max(TIME_PERIOD, n = 1) |>
+  slice_max(.data[[time_col]], n = 1) |>
   ungroup() |>
   transmute(
     country = names_lookup[as.character(geo)],

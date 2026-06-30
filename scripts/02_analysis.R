@@ -31,16 +31,16 @@ share_within <- function(km) {
 }
 
 # exposure index: weights and 0-1 scaling
-w_proximity  <- 0.4
-w_capacity   <- 0.3
-w_chokepoint <- 0.3
+w_proximity  <- 0.4   # closer to Russia, higher
+w_capacity   <- 0.3   # larger capacity, higher
+w_chokepoint <- 0.3   # longer voyage past the straits, higher
 norm <- function(x) (max(x, na.rm = TRUE) - x) /
                     (max(x, na.rm = TRUE) - min(x, na.rm = TRUE))
 
 terminals <- terminals |>
   mutate(
-    s_proximity  = norm(dist_russia_km),
-    s_chokepoint = norm(dist_chokepoint_km),
+    s_proximity  = norm(dist_russia_km),             # closer = higher
+    s_chokepoint = 1 - norm(dist_chokepoint_km),     # longer Baltic transit = higher
     s_capacity   = capacity_bcm / max(capacity_bcm, na.rm = TRUE),
     exposure     = w_proximity * s_proximity +
                    w_capacity  * s_capacity +
