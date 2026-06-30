@@ -1,0 +1,84 @@
+---
+title: "Data"
+---
+
+Every dataset here is public and free, with no login and no paid access. Where a
+source would normally require accepting terms or running a manual download, this
+build avoids it by using a small committed table instead, and the notes below say
+exactly what to replace if you want to extend the project.
+
+## Base geography
+
+Country shapes and coastlines come from **Natural Earth**, loaded through the
+`rnaturalearth` package. Natural Earth is in the public domain, and because the
+package ships the data, there is nothing to download by hand.
+
+## Energy infrastructure
+
+The infrastructure layer is a small committed table of the region's LNG import
+terminals, `data/processed/lng_terminals.csv`. It holds the name, country,
+location, annual regasification capacity, status, and a source note for each
+terminal.
+
+The capacities are taken from operator reporting and the **Global Energy
+Monitor** terminal tracker, current as of 2024 to 2025. The `source` column in
+the table names the operator behind each figure. Two points worth flagging:
+
+- Capacities move. Świnoujście reached 8.3 bcm only after its third tank came
+  online in early 2025, and Mukran's 13.5 bcm assumes both of its FSRUs running.
+- The Paldiski jetty in Estonia is left out on purpose. It is shelved, and its
+  capacity figure refers to the same FSRU (Exemplar) that now operates at Inkoo,
+  so including both would count one vessel twice.
+
+To extend the project, **EMODnet Human Activities** and **OpenStreetMap** (via
+the `osmdata` package) are the route to add pipelines and cables as line
+features, and the **Global Energy Monitor** tracker is the source to reconcile
+the capacities against in full.
+
+## Proximity reference
+
+Instead of a maritime boundary line, the proximity measure uses distance to the
+nearest **Russian territory**, meaning the mainland near the Gulf of Finland plus
+the Kaliningrad exclave, taken from Natural Earth. It is reproducible from a
+public package and easy to read: how far each terminal is from Russian soil.
+
+## Dependence
+
+The dependence layer uses gas import dependency from **Eurostat** (indicator
+`nrg_ind_id`, natural gas, 2023), held in `data/processed/import_dependence.csv`.
+The figure is the share of gas demand met by net imports. Values above 100%
+reflect stock draws or re-exports in that year, and Denmark is low because of its
+own North Sea production. `scripts/03_eurostat.R` reproduces the pull.
+
+## A note on conflict data
+
+This project frames the question as exposure and structural dependence, not
+active conflict, because there is no battlefield on the Baltic seabed. ACLED is
+deliberately not used, since it now requires registration, which would break the
+public data rule. If a later version needs conflict events, UCDP GED is the
+public, no-login substitute.
+
+## How the data is prepared
+
+The steps that turn the tables and geometry into analysis-ready layers live in
+`scripts/01_clean.R`, and the Analysis page repeats them at render time:
+
+- standardize the columns,
+- project everything to ETRS89 / LAEA Europe (EPSG:3035) so distances come out in
+  kilometres,
+- clip the geography to the Baltic study area,
+- keep the capacity and country information on the terminal layer.
+
+## Citations
+
+- Natural Earth. Free vector and raster map data, 1:50m cultural vectors.
+  <https://www.naturalearthdata.com> (accessed June 2026).
+- Eurostat. Energy imports dependency by products, indicator `nrg_ind_id`,
+  natural gas, 2023. <https://ec.europa.eu/eurostat> (accessed June 2026).
+- Global Energy Monitor. Global LNG Terminal Tracker.
+  <https://globalenergymonitor.org> (accessed June 2026).
+- Operator figures for capacity and status: Gaz-System, Deutsche ReGas, Gasgrid
+  Finland, KN Energies, and Hamina LNG (2024 to 2025 reporting).
+
+If you add pipelines or cables later: EMODnet Human Activities
+(<https://emodnet.ec.europa.eu/en/human-activities>) and OpenStreetMap.

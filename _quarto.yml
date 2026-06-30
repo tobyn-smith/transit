@@ -1,0 +1,36 @@
+project:
+  type: website
+  output-dir: docs
+
+website:
+  title: "Baltic Energy Transit Risk"
+  description: "Spatial exposure of post-2022 Baltic energy import infrastructure"
+  navbar:
+    background: dark
+    title: "Baltic Transit Risk"
+    right:
+      - href: index.qmd
+        text: Overview
+      - href: 01-data.qmd
+        text: Data
+      - href: 02-analysis.qmd
+        text: Analysis
+      - icon: github
+        href: https://github.com/tobyn-smith/transit-project
+        aria-label: GitHub
+  page-footer:
+    border: false
+    left: "Public data only. Sources on the Data page."
+    right: "Built with R, sf and Quarto."
+
+format:
+  html:
+    theme: [cosmo, theme.scss]
+    toc: true
+    toc-title: "On this page"
+    title-block-banner: false
+    code-fold: true
+    code-summary: "Show code"
+    smooth-scroll: true
+    anchor-sections: true
+    fig-cap-location: bottom

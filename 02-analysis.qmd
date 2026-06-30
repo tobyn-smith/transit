@@ -1,0 +1,307 @@
+---
+title: "Analysis"
+---
+
+This page computes everything from public data at render time. Country geometry
+comes from Natural Earth (via the `rnaturalearth` package), and the terminal and
+dependence tables are the small committed files in `data/processed/`. All
+distance work is done in a projection suited to Europe (ETRS89 / LAEA Europe,
+EPSG:3035), and the results are reported in kilometres.
+
+The terminal capacities come from operator reporting and the Global Energy
+Monitor tracker, current to 2024 and 2025 (see the [Data](01-data.qmd) page).
+Capacities change, so read the rankings as a picture of exposure rather than
+precise figures.
+
+```{r setup}
+#| include: false
+#| message: false
+#| warning: false
+library(sf)
+library(dplyr)
+library(readr)
+library(ggplot2)
+library(leaflet)
+library(rnaturalearth)
+library(scales)
+library(gt)
+
+laea <- 3035
+
+# shared styling (editorial: warm paper, ink, oxblood accent)
+ink   <- "#17150f"
+muted <- "#6b6760"
+exp_cols <- c("#e7e2d6", "#cf8a4e", "#9e2b25")  # low to high exposure, single warm ramp
+theme_transit <- function(base = 12) {
+  theme_minimal(base_size = base) +
+    theme(
+      plot.title    = element_text(face = "bold", colour = ink, size = 15),
+      plot.subtitle = element_text(colour = muted, size = 11, margin = margin(b = 8)),
+      plot.caption  = element_text(colour = muted, size = 8, hjust = 0,
+                                   margin = margin(t = 10)),
+      legend.title  = element_text(size = 9, colour = muted),
+      legend.text   = element_text(size = 8),
+      plot.background  = element_rect(fill = "#f7f4ec", colour = NA),
+      panel.background = element_rect(fill = "#f7f4ec", colour = NA)
+    )
+}
+theme_map <- function() {
+  theme_transit() +
+    theme(axis.text = element_blank(), axis.title = element_blank(),
+          panel.grid = element_blank(),
+          panel.background = element_rect(fill = "#eef0ec", colour = NA))
+}
+
+# country borders from Natural Earth
+world <- ne_countries(scale = "medium", returnclass = "sf")
+
+# study area: box around the Baltic
+aoi <- st_as_sfc(st_bbox(c(xmin = 9, ymin = 53, xmax = 30, ymax = 66),
+                         crs = 4326)) |>
+  st_transform(laea)
+
+# Russian territory, including Kaliningrad
+russia <- world |>
+  filter(admin == "Russia") |>
+  st_transform(laea) |>
+  st_make_valid()
+
+# Danish Straits chokepoint
+chokepoint <- st_as_sfc(st_bbox(c(xmin = 10.5, ymin = 55.0, xmax = 13.0, ymax = 56.2),
+                                crs = 4326)) |>
+  st_transform(laea)
+
+terminals <- read_csv("data/processed/lng_terminals.csv", show_col_types = FALSE) |>
+  st_as_sf(coords = c("lon", "lat"), crs = 4326) |>
+  st_transform(laea)
+
+# distances in km
+terminals <- terminals |>
+  mutate(
+    dist_russia_km     = as.numeric(st_distance(geometry, st_union(russia)))     / 1000,
+    dist_chokepoint_km = as.numeric(st_distance(geometry, st_union(chokepoint))) / 1000
+  )
+
+# exposure index weights
+w_proximity  <- 0.4   # closer to Russia, higher
+w_capacity   <- 0.3   # larger capacity, higher
+w_chokepoint <- 0.3   # longer voyage past the straits, higher
+
+norm <- function(x) (max(x, na.rm = TRUE) - x) /
+                    (max(x, na.rm = TRUE) - min(x, na.rm = TRUE))
+
+terminals <- terminals |>
+  mutate(
+    s_proximity  = norm(dist_russia_km),             # closer = higher
+    s_chokepoint = 1 - norm(dist_chokepoint_km),     # longer Baltic transit = higher
+    s_capacity   = capacity_bcm / max(capacity_bcm, na.rm = TRUE),
+    exposure     = w_proximity  * s_proximity +
+                   w_capacity   * s_capacity +
+                   w_chokepoint * s_chokepoint
+  ) |>
+  arrange(desc(exposure))
+
+# basemap clipped to the study area
+land_aoi <- world |> st_transform(laea) |> st_crop(aoi)
+```
+
+## Concentration
+
+Where the import infrastructure sits, sized by regasification capacity. Russian
+territory is shaded for reference.
+
+```{r map-concentration}
+#| echo: false
+#| message: false
+#| warning: false
+#| fig-width: 8
+#| fig-height: 7
+choke_sf <- st_sf(geometry = chokepoint)
+ggplot() +
+  geom_sf(data = land_aoi, fill = "#e7e2d6", colour = "#d6d0c2", linewidth = 0.2) +
+  geom_sf(data = st_crop(russia, aoi), fill = "#e3c9c3", colour = "#cdaaa3",
+          linewidth = 0.2) +
+  geom_sf(data = choke_sf, fill = NA, colour = ink, linewidth = 0.5,
+          linetype = "31") +
+  geom_sf(data = terminals, aes(size = capacity_bcm, colour = exposure)) +
+  geom_sf_text(data = terminals, aes(label = name), size = 2.6, colour = ink,
+               nudge_y = 38000, check_overlap = TRUE) +
+  geom_sf_text(data = choke_sf, aes(label = "Danish\nStraits"), size = 2.5,
+               colour = ink) +
+  scale_size_continuous(range = c(2.5, 11), name = "Capacity\n(bcm/yr)") +
+  scale_colour_gradientn(colours = exp_cols, name = "Exposure") +
+  labs(title = "Baltic LNG import terminals",
+       subtitle = "Point size is capacity, colour is exposure; the dashed box is the Danish Straits",
+       caption = "Sources: Natural Earth; capacities from operators and Global Energy Monitor.") +
+  theme_map()
+```
+
+## Proximity
+
+Distance from each terminal to the nearest Russian territory, meaning the
+mainland near the Gulf of Finland or the Kaliningrad exclave, with the share of
+total capacity sitting within a given band.
+
+```{r proximity-buffer}
+#| echo: false
+op_cap <- sum(terminals$capacity_bcm[terminals$status == "operating"], na.rm = TRUE)
+share_within <- function(km) {
+  near <- terminals |> filter(status == "operating", dist_russia_km <= km)
+  round(100 * sum(near$capacity_bcm, na.rm = TRUE) / op_cap)
+}
+```
+
+`r share_within(200)`% of operating regasification capacity sits within 200 km of
+Russian territory, and `r share_within(150)`% within 150 km.
+
+```{r dist-plot}
+#| echo: false
+#| fig-width: 7
+#| fig-height: 4
+terminals |>
+  st_drop_geometry() |>
+  ggplot(aes(x = reorder(name, -dist_russia_km), y = dist_russia_km)) +
+  geom_col(fill = ink, width = 0.7) +
+  geom_text(aes(label = round(dist_russia_km)), hjust = -0.2, size = 3,
+            colour = muted) +
+  coord_flip() +
+  scale_y_continuous(expand = expansion(mult = c(0, 0.12))) +
+  labs(x = NULL, y = "km to nearest Russian territory",
+       title = "How close each terminal sits to Russian territory") +
+  theme_transit() +
+  theme(panel.grid.major.y = element_blank(),
+        panel.grid.minor = element_blank())
+```
+
+## Dependence
+
+Gas import dependency by country (Eurostat `nrg_ind_id`, natural gas, 2023),
+joined to country polygons. The figure is the share of gas demand met by net
+imports, so values above 100% reflect stock draws or re-exports.
+
+```{r dependence-map}
+#| echo: false
+#| message: false
+#| warning: false
+#| fig-width: 8
+#| fig-height: 7
+dep <- read_csv("data/processed/import_dependence.csv", show_col_types = FALSE)
+
+dependence <- land_aoi |>
+  left_join(dplyr::select(dep, iso_a2, gas_import_dependency_pct),
+            by = c("postal" = "iso_a2"))
+
+ggplot() +
+  geom_sf(data = dependence, aes(fill = gas_import_dependency_pct),
+          colour = "white", linewidth = 0.3) +
+  scale_fill_gradient(low = "#efe7d8", high = "#9e2b25", na.value = "#e6e2d8",
+                      name = "Import\ndependency (%)") +
+  labs(title = "Gas import dependency by country, 2023",
+       subtitle = "Share of gas demand met by net imports (Eurostat nrg_ind_id)",
+       caption = "Grey countries are outside the study set. Values above 100% reflect stock draws or re-exports.") +
+  theme_map()
+```
+
+## Exposure ranking
+
+```{r ranking}
+#| echo: false
+terminals |>
+  st_drop_geometry() |>
+  transmute(
+    Terminal   = name,
+    Country    = country,
+    Status     = status,
+    Capacity   = capacity_bcm,
+    `km to Russia`  = round(dist_russia_km),
+    `km to Straits` = round(dist_chokepoint_km),
+    Exposure   = round(exposure, 2)
+  ) |>
+  gt() |>
+  tab_header(title = "Terminals ranked by exposure") |>
+  fmt_number(columns = Capacity, decimals = 2) |>
+  data_color(columns = Exposure, palette = exp_cols,
+             domain = range(round(terminals$exposure, 2))) |>
+  cols_label(Capacity = "Capacity (bcm)") |>
+  cols_align(align = "center",
+             columns = c(Capacity, `km to Russia`, `km to Straits`, Exposure)) |>
+  tab_options(table.font.size = px(13), heading.title.font.size = px(15),
+              heading.align = "left",
+              column_labels.font.weight = "600",
+              column_labels.border.top.style = "none",
+              column_labels.border.bottom.color = "#17150f",
+              column_labels.border.bottom.width = px(1.5),
+              table_body.hlines.color = "rgba(23,21,15,0.12)",
+              table.border.top.style = "none",
+              table.border.bottom.style = "none")
+```
+
+## How sensitive is the ranking?
+
+The weights are a choice, so it is worth seeing how much they move the result.
+The table recomputes the score under three weightings: balanced (the version used
+above), proximity-led, and capacity-led.
+
+```{r sensitivity}
+#| echo: false
+scen <- function(wp, wc, wk) {
+  d <- st_drop_geometry(terminals)
+  wp * d$s_proximity + wc * d$s_capacity + wk * d$s_chokepoint
+}
+st_drop_geometry(terminals) |>
+  transmute(Terminal = name,
+            Balanced        = round(scen(0.4, 0.3, 0.3), 2),
+            `Proximity-led` = round(scen(0.6, 0.2, 0.2), 2),
+            `Capacity-led`  = round(scen(0.2, 0.6, 0.2), 2)) |>
+  arrange(desc(Balanced)) |>
+  gt() |>
+  tab_header(title = "Exposure score under three weightings") |>
+  data_color(columns = c(Balanced, `Proximity-led`, `Capacity-led`),
+             palette = exp_cols) |>
+  cols_align(align = "center",
+             columns = c(Balanced, `Proximity-led`, `Capacity-led`)) |>
+  tab_options(table.font.size = px(13), heading.title.font.size = px(15),
+              heading.align = "left", column_labels.font.weight = "600",
+              column_labels.border.top.style = "none",
+              column_labels.border.bottom.color = "#17150f",
+              column_labels.border.bottom.width = px(1.5),
+              table_body.hlines.color = "rgba(23,21,15,0.12)",
+              table.border.top.style = "none",
+              table.border.bottom.style = "none")
+```
+
+The Gulf of Finland terminals climb under the proximity-led weighting, while
+Mukran rises to the top under the capacity-led one. The order is a function of
+the assumptions, and those assumptions are visible and easy to change.
+
+## Interactive map
+
+```{r leaflet}
+#| echo: false
+terminals_wgs <- st_transform(terminals, 4326)
+russia_wgs    <- st_transform(st_crop(russia, aoi), 4326)
+choke_bb      <- st_bbox(st_transform(chokepoint, 4326))
+pal <- colorNumeric(exp_cols, domain = terminals_wgs$exposure)
+
+leaflet(terminals_wgs) |>
+  addProviderTiles("CartoDB.Positron") |>
+  addPolygons(data = russia_wgs, fillColor = "#9e2b25", fillOpacity = 0.16,
+              weight = 0, group = "Russian territory") |>
+  addRectangles(lng1 = choke_bb[["xmin"]], lat1 = choke_bb[["ymin"]],
+                lng2 = choke_bb[["xmax"]], lat2 = choke_bb[["ymax"]],
+                fill = FALSE, color = "#17150f", weight = 2, dashArray = "5,5",
+                group = "Danish Straits") |>
+  addCircleMarkers(
+    radius      = ~rescale(capacity_bcm, to = c(5, 16)),
+    color       = "#17150f", weight = 1,
+    fillColor   = ~pal(exposure), fillOpacity = 0.85,
+    popup       = ~paste0("<b>", name, "</b><br>", country,
+                          "<br>Capacity: ", capacity_bcm, " bcm/yr",
+                          "<br>Status: ", status,
+                          "<br>Exposure: ", round(exposure, 2))
+  ) |>
+  addLegend("bottomright", pal = pal, values = ~exposure, title = "Exposure",
+            opacity = 0.9) |>
+  addLayersControl(overlayGroups = c("Russian territory", "Danish Straits"),
+                   options = layersControlOptions(collapsed = FALSE))
+```
