@@ -76,7 +76,7 @@ You do not need to know R to build this. Follow these steps in order.
    ```r
    install.packages(c("sf", "dplyr", "readr", "ggplot2", "leaflet",
                       "rnaturalearth", "rnaturalearthdata", "scales",
-                      "rmarkdown", "knitr"))
+                      "gt", "rmarkdown", "knitr"))
    ```
 
 7. **Build the website.** Open the **Terminal** panel in RStudio (the tab next to
@@ -134,9 +134,9 @@ docs/                          the finished website (created when you build)
 All distances are measured in a projection suited to Europe (ETRS89 / LAEA
 Europe), so they come out in kilometres rather than degrees. The exposure score
 combines three things, each given a stated weight: how close a terminal is to
-Russian territory, how large its capacity is, and how close it is to the Danish
-Straits. The weights are written plainly in the analysis so anyone can see, and
-change, the assumptions.
+Russian territory, how large its capacity is, and how long its supply route past
+the Danish Straits runs. The weights are written plainly in the analysis so
+anyone can see, and change, the assumptions.
 
 ## License
 
