@@ -132,7 +132,7 @@ ggplot() +
   scale_colour_gradientn(colours = exp_cols, name = "Exposure") +
   labs(title = "Baltic LNG import terminals",
        subtitle = "Point size is capacity, colour is exposure; the dashed box is the Danish Straits",
-       caption = "Sources: Natural Earth; capacities from operators and Global Energy Monitor.") +
+       caption = "Gdańsk is planned; the others are operating. Sources: Natural Earth, operators, and Global Energy Monitor.") +
   theme_map()
 ```
 
@@ -198,7 +198,7 @@ ggplot() +
                       name = "Import\ndependency (%)") +
   labs(title = "Gas import dependency by country, 2023",
        subtitle = "Share of gas demand met by net imports (Eurostat nrg_ind_id)",
-       caption = "Grey countries are outside the study set. Values above 100% reflect stock draws or re-exports.") +
+       caption = "Uncoloured countries are outside the study set. Values above 100% reflect stock draws or re-exports.") +
   theme_map()
 ```
 
