@@ -1,0 +1,122 @@
+---
+title: "Baltic Energy Transit Risk"
+subtitle: "Exposure of post-2022 Baltic energy import infrastructure"
+date: today
+---
+
+```{r stat-cards}
+#| echo: false
+#| output: asis
+t  <- read.csv("data/processed/lng_terminals.csv", stringsAsFactors = FALSE)
+op <- t[t$status == "operating", ]
+n_term     <- nrow(t)
+op_cap     <- round(sum(op$capacity_bcm), 1)
+fsru_share <- round(100 * sum(op$capacity_bcm[op$type == "fsru"]) / sum(op$capacity_bcm))
+cat(sprintf('
+<div class="stat-row">
+  <div class="stat-card"><div class="stat-num">%d</div><div class="stat-label">LNG import terminals mapped</div></div>
+  <div class="stat-card"><div class="stat-num">%s</div><div class="stat-label">bcm / yr operating capacity</div></div>
+  <div class="stat-card"><div class="stat-num">%d%%</div><div class="stat-label">of it on floating units (FSRUs)</div></div>
+</div>', n_term, op_cap, fsru_share))
+```
+
+## The question
+
+Before 2022, much of the Baltic region's gas arrived by pipeline from Russia.
+After the invasion of Ukraine and the sabotage of the Nord Stream pipelines, that
+supply was cut or abandoned, and imports moved onto a small set of coastal LNG
+terminals and ports such as Klaipėda, Świnoujście, and Inkoo.
+
+That shift concentrated a great deal of supply onto a few fixed points of
+geography. This project asks how concentrated, and how exposed:
+
+> After 2022, Baltic energy imports shifted onto a small set of coastal LNG
+> terminals and ports. How concentrated is that infrastructure, and how exposed
+> is it, measured by capacity, by distance to Russian territory, and by reliance
+> on the single shipping route through the Danish Straits?
+
+## How to read this site
+
+- The [Data](01-data.qmd) page lists every source, all public, and says what is
+  solid and what is still rough.
+- The [Analysis](02-analysis.qmd) page holds the maps, the distance
+  measurements, and the exposure ranking.
+
+## Findings
+
+The numbers behind these sit on the [Analysis](02-analysis.qmd) page. The
+terminal figures are compiled from operator reporting and Global Energy Monitor
+(see the [Data](01-data.qmd) page), so the rankings show the broad pattern of
+exposure, not precise measurement.
+
+1. **Concentration.** Capacity is lopsided. Two southern terminals, Mukran in
+   Germany and Świnoujście in Poland, hold most of the region's regasification
+   capacity, while the northeast leans on one or two units each: Inkoo for the
+   Gulf of Finland and Klaipėda for Lithuania.
+2. **Proximity.** The terminals closest to Russian territory are the Gulf of
+   Finland sites and Klaipėda, which sits near the Kaliningrad exclave. Proximity
+   and capacity do not always line up, which is what the exposure score is built
+   to show.
+3. **Transit through the Straits.** Every cargo bound for these terminals passes
+   the Danish Straits, the one maritime gate into the Baltic. The terminals
+   deepest inside the sea, in the Gulf of Finland, run the longest exposed route
+   to reach port.
+
+## What the exposure score is
+
+The score combines three things, each given a stated weight:
+
+- how close a terminal is to Russian territory,
+- how large its share of regasification capacity is,
+- how long its supply route past the Danish Straits runs.
+
+The weights are written out on the Analysis page. The score is deliberately
+simple. There is no hidden model, and anyone can change the weights and see how
+the ranking moves.
+
+## How the weights were chosen
+
+The weights are a judgement, not a finding. Proximity to Russian territory gets
+the most weight (0.4) because the question is about exposure to pressure from one
+actor, and distance is the most direct measure the public data supports.
+Capacity and transit each get 0.3: a larger terminal does more damage if it goes
+down, and a terminal deep inside the Baltic must run a longer voyage past the
+Danish Straits to be resupplied. None of this is fixed. The three weights sit in
+plain sight on the Analysis page, and changing them changes the ranking. The aim
+is a sensible starting point for discussion, not a final score.
+
+## The infrastructure has already been hit
+
+This is not hypothetical. Baltic energy and data links have been damaged several
+times since 2022, mostly by vessels dragging anchors across the seabed.
+
+| Date | Asset | What happened |
+|------|-------|---------------|
+| Sep 2022 | Nord Stream 1 and 2 | Subsea gas pipelines ruptured by underwater explosions off Bornholm. |
+| Oct 2023 | Balticconnector | The Finland–Estonia gas pipeline and a telecoms cable were damaged by a ship's anchor. |
+| Dec 2024 | Estlink 2 | The Estonia–Finland power cable and four telecoms cables were cut; a shadow-fleet tanker is the prime suspect. |
+
+These incidents are context, not events modelled here, but they are why the
+geography in this project is worth looking at closely.
+
+Sources: [Balticconnector (ERR)](https://news.err.ee/1609422658/china-admits-container-ship-newnew-polar-bear-damaged-undersea-gas-pipeline),
+[Estlink 2 incident (Wikipedia)](https://en.wikipedia.org/wiki/2024_Estlink_2_incident).
+
+## Limitations
+
+This measures geographic exposure, not the probability of disruption. A terminal
+close to a maritime boundary is not a prediction that anything will happen to it.
+It is a statement about geography.
+
+A few specific caveats:
+
+- The score uses proxy measures (distance, capacity share) rather than a causal
+  model. Different reasonable weights would shift the rankings.
+- It is a single snapshot. Capacity, routes, and terminals change.
+- The terminal capacities are compiled from operator reporting and Global Energy
+  Monitor, current to 2024 and 2025. The dependence figures are Eurostat data for
+  2023. See the [Data](01-data.qmd) page.
+- Undersea cable and pipeline incidents in the region between 2023 and 2025 are
+  context for the question, not events modeled here.
+
+In short, this shows where the exposure sits. It is not a risk forecast.
