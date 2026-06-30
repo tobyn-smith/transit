@@ -16,7 +16,7 @@ website:
       - href: 02-analysis.qmd
         text: Analysis
       - icon: github
-        href: https://github.com/tobyn-smith/transit-project
+        href: https://github.com/tobyn-smith/transit
         aria-label: GitHub
   page-footer:
     border: false
