@@ -151,8 +151,10 @@ share_within <- function(km) {
 }
 ```
 
-`r share_within(200)`% of operating regasification capacity sits within 200 km of
-Russian territory, and `r share_within(150)`% within 150 km.
+Only `r share_within(200)`% of operating regasification capacity sits within 200 km
+of Russian territory. The two largest terminals, Mukran and Świnoujście, lie more
+than 350 km back, so the exposure concentrates in the smaller terminals closest to
+the border.
 
 ```{r dist-plot}
 #| echo: false
@@ -273,9 +275,10 @@ st_drop_geometry(terminals) |>
               table.border.bottom.style = "none")
 ```
 
-The Gulf of Finland terminals climb under the proximity-led weighting, while
-Mukran rises to the top under the capacity-led one. The order is a function of
-the assumptions, and those assumptions are visible and easy to change.
+The terminals nearest Russian territory, Hamina, Klaipėda, and Gdańsk, lead under
+the proximity-led weighting, while Mukran, much the largest, rises to the top
+under the capacity-led one. The order is a function of the assumptions, and those
+assumptions are visible and easy to change.
 
 ## Interactive map
 
