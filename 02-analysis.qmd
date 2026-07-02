@@ -187,9 +187,12 @@ imports, so values above 100% reflect stock draws or re-exports.
 #| fig-height: 7
 dep <- read_csv("data/processed/import_dependence.csv", show_col_types = FALSE)
 
+# Join on ISO-2, not Natural Earth's "postal" field: postal uses non-ISO codes
+# for several countries (Germany "D", Sweden "S", Finland "FIN"), which silently
+# dropped them from the map.
 dependence <- land_aoi |>
   left_join(dplyr::select(dep, iso_a2, gas_import_dependency_pct),
-            by = c("postal" = "iso_a2"))
+            by = "iso_a2")
 
 ggplot() +
   geom_sf(data = dependence, aes(fill = gas_import_dependency_pct),
