@@ -54,10 +54,11 @@ exposure, not precise measurement.
    Germany and Świnoujście in Poland, hold most of the region's regasification
    capacity, while the northeast leans on one or two units each: Inkoo for the
    Gulf of Finland and Klaipėda for Lithuania.
-2. **Proximity.** The terminals closest to Russian territory are the Gulf of
-   Finland sites and Klaipėda, which sits near the Kaliningrad exclave. Proximity
-   and capacity do not always line up, which is what the exposure score is built
-   to show.
+2. **Proximity.** The terminals closest to Russian territory are Hamina, at the
+   eastern end of the Gulf of Finland, and Klaipėda and Gdańsk, which sit beside
+   the Kaliningrad exclave. Proximity and capacity do not always line up: the two
+   largest terminals, Mukran and Świnoujście, are among the farthest from Russia,
+   which is what the exposure score is built to show.
 3. **Transit through the Straits.** Every cargo bound for these terminals passes
    the Danish Straits, the one maritime gate into the Baltic. The terminals
    deepest inside the sea, in the Gulf of Finland, run the longest exposed route
