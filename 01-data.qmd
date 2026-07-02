@@ -63,7 +63,7 @@ public, no-login substitute.
 The steps that turn the tables and geometry into analysis-ready layers live in
 `scripts/01_clean.R`, and the Analysis page repeats them at render time:
 
-- standardize the columns,
+- standardise the columns,
 - project everything to ETRS89 / LAEA Europe (EPSG:3035) so distances come out in
   kilometres,
 - clip the geography to the Baltic study area,

@@ -2,6 +2,7 @@
 title: "Baltic Energy Transit Risk"
 subtitle: "Exposure of post-2022 Baltic energy import infrastructure"
 date: today
+date-format: "D MMMM YYYY"
 ---
 
 ```{r stat-cards}
@@ -85,10 +86,11 @@ Danish Straits to be resupplied. None of this is fixed. The three weights sit in
 plain sight on the Analysis page, and changing them changes the ranking. The aim
 is a sensible starting point for discussion, not a final score.
 
-## The infrastructure has already been hit
+## Disruption to the infrastructure since 2022
 
-This is not hypothetical. Baltic energy and data links have been damaged several
-times since 2022, mostly by vessels dragging anchors across the seabed.
+This exposure is not hypothetical. Baltic energy and data links have been damaged
+on several occasions since 2022, mostly by vessels dragging anchors across the
+seabed.
 
 | Date | Asset | What happened |
 |------|-------|---------------|
@@ -117,6 +119,6 @@ A few specific caveats:
   Monitor, current to 2024 and 2025. The dependence figures are Eurostat data for
   2023. See the [Data](01-data.qmd) page.
 - Undersea cable and pipeline incidents in the region between 2023 and 2025 are
-  context for the question, not events modeled here.
+  context for the question, not events modelled here.
 
 In short, this shows where the exposure sits. It is not a risk forecast.
