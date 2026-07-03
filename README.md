@@ -49,8 +49,8 @@ All public, no logins, no paid datasets:
 You do not need to know R to build this. Follow these steps in order.
 
 1. **Install R.** Go to [https://cloud.r-project.org](https://cloud.r-project.org)
-   and install the version for your computer (Windows or Mac). R is the language
-   the analysis is written in.
+   and install the version for your operating system. R is the language the
+   analysis is written in.
 
 2. **Install RStudio.** Go to
    [https://posit.co/download/rstudio-desktop](https://posit.co/download/rstudio-desktop)
@@ -94,10 +94,13 @@ browser.
 
 ## How it publishes online
 
-The project is set up to publish to GitHub Pages automatically. Every time the
-project is updated on GitHub, a routine in `.github/workflows/publish.yml`
-rebuilds the site and posts it online. There is nothing extra to run for this to
-happen.
+The project is set up to publish to GitHub Pages automatically. Every time it is
+updated on GitHub, the routine in `.github/workflows/publish.yml` rebuilds the
+site and posts it online.
+
+If you fork or recreate the repository, enable this once under **Settings > Pages**
+by setting the source to **GitHub Actions**. After that, there is nothing extra to
+run.
 
 ## What is solid and what to double check
 
@@ -118,8 +121,10 @@ Both files are plain spreadsheets. You can open and edit them in Excel.
 
 ```
 README.md                      this file
+LICENSE                        usage terms (MIT)
 baltic-energy-transit.Rproj    the RStudio project file
 _quarto.yml                    settings for the website
+theme.scss                     the site's visual theme
 index.qmd                      the Overview page
 01-data.qmd                    the Data page
 02-analysis.qmd                the Analysis page (maps and numbers)
