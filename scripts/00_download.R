@@ -12,7 +12,7 @@
 # Replace data/processed/lng_terminals.csv with figures checked against the GEM
 # Global LNG Terminal tracker (free download after accepting terms):
 #   https://globalenergymonitor.org/
-# Keep the same columns: name, country, iso_a2, lon, lat, capacity_bcm, status, type
+# Keep the same columns: name, country, iso_a2, lon, lat, capacity_bcm, status, type, source
 
 # ---- Dependence: already pulled from Eurostat -------------------------------
 # data/processed/import_dependence.csv comes from Eurostat nrg_ind_id.
