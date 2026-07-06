@@ -4,8 +4,8 @@ title: "Data"
 
 Every dataset here is public and free, with no login and no paid access. Where a
 source would normally require accepting terms or running a manual download, this
-build avoids it by using a small committed table instead, and the notes below say
-exactly what to replace if you want to extend the project.
+project avoids it by using a small committed table instead, and the notes below
+say exactly what to replace if you want to extend the project.
 
 ## Base geography
 
@@ -26,14 +26,14 @@ the table names the operator behind each figure. Two points worth flagging:
 
 - Capacities move. Świnoujście reached 8.3 bcm only after its third tank came
   online in early 2025, and Mukran's 13.5 bcm assumes both of its FSRUs running.
-- The Paldiski jetty in Estonia is left out on purpose. It is shelved, and its
+- The Paldiski jetty in Estonia is deliberately left out. It is shelved, and its
   capacity figure refers to the same FSRU (Exemplar) that now operates at Inkoo,
   so including both would count one vessel twice.
 
 To extend the project, **EMODnet Human Activities** and **OpenStreetMap** (via
 the `osmdata` package) are the route to add pipelines and cables as line
-features, and the **Global Energy Monitor** tracker is the source to reconcile
-the capacities against in full.
+features, and the full set of capacities can be reconciled against the **Global
+Energy Monitor** tracker.
 
 ## Proximity reference
 
@@ -73,7 +73,7 @@ The steps that turn the tables and geometry into analysis-ready layers live in
 
 - Natural Earth. Free vector and raster map data, 1:50m cultural vectors.
   <https://www.naturalearthdata.com> (accessed June 2026).
-- Eurostat. Energy imports dependency by products, indicator `nrg_ind_id`,
+- Eurostat. Energy import dependency by products, indicator `nrg_ind_id`,
   natural gas, 2023. <https://ec.europa.eu/eurostat> (accessed June 2026).
 - Global Energy Monitor. Global LNG Terminal Tracker.
   <https://globalenergymonitor.org> (accessed June 2026).
