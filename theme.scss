@@ -117,37 +117,6 @@ blockquote {
   margin: 1.75rem 0;
 }
 
-// stat strip: figures divided by hairlines, no cards, no shadows
-.stat-row {
-  display: flex;
-  flex-wrap: wrap;
-  border-top: 1px solid $ink;
-  border-bottom: 1px solid $rule;
-  margin: 2rem 0 2.5rem;
-}
-.stat-card {
-  flex: 1 1 150px;
-  padding: 1.1rem 1.4rem 1.1rem 0;
-  margin-right: 1.4rem;
-  border-right: 1px solid $rule;
-}
-.stat-card:last-child { border-right: 0; margin-right: 0; }
-.stat-num {
-  font-family: $font-family-monospace;
-  font-size: 2rem;
-  font-weight: 500;
-  color: $ink;
-  line-height: 1;
-}
-.stat-label {
-  font-family: $font-family-monospace;
-  text-transform: uppercase;
-  letter-spacing: 0.07em;
-  font-size: 0.7rem;
-  color: $muted;
-  margin-top: 0.55rem;
-}
-
 // figures and captions
 figure, .figure { margin: 1.75rem 0; }
 figcaption, .figure-caption {
