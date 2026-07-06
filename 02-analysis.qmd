@@ -288,9 +288,14 @@ terminals_wgs <- st_transform(terminals, 4326)
 russia_wgs    <- st_transform(st_crop(russia, aoi), 4326)
 choke_bb      <- st_bbox(st_transform(chokepoint, 4326))
 pal <- colorNumeric(exp_cols, domain = terminals_wgs$exposure)
+tb  <- st_bbox(terminals_wgs)
 
 leaflet(terminals_wgs) |>
   addProviderTiles("CartoDB.Positron") |>
+  # Focus the initial view on the terminals. Without this, leaflet auto-fits to
+  # all layers, and the Russia polygon stretches the view east into empty land.
+  fitBounds(tb[["xmin"]] - 1.5, tb[["ymin"]] - 0.8,
+            tb[["xmax"]] + 1.5, tb[["ymax"]] + 0.8) |>
   addPolygons(data = russia_wgs, fillColor = "#9e2b25", fillOpacity = 0.16,
               weight = 0, group = "Russian territory") |>
   addRectangles(lng1 = choke_bb[["xmin"]], lat1 = choke_bb[["ymin"]],
