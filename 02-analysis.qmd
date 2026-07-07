@@ -158,14 +158,16 @@ lines between their landing points.
 #| warning: false
 #| fig-width: 8
 #| fig-height: 7
+# label each corridor at its midpoint so labels do not collide
+transit_lab <- suppressWarnings(st_centroid(transit))
 ggplot() +
   geom_sf(data = land_aoi, fill = "#e7e2d6", colour = "#d6d0c2", linewidth = 0.2) +
   geom_sf(data = st_crop(russia, aoi), fill = "#e3c9c3", colour = "#cdaaa3",
           linewidth = 0.2) +
   geom_sf(data = terminals, colour = "#8a8578", size = 1.4) +
   geom_sf(data = transit, aes(colour = state), linewidth = 1) +
-  geom_sf_text(data = transit, aes(label = name), size = 2.5, colour = ink,
-               check_overlap = TRUE) +
+  geom_sf_text(data = transit_lab, aes(label = name), size = 2.5, colour = ink,
+               nudge_y = 22000, check_overlap = TRUE) +
   scale_colour_manual(values = corridor_cols, name = NULL) +
   labs(title = "Major energy transit corridors",
        subtitle = "Grey points are the LNG terminals; red corridors have been damaged or sabotaged since 2022",
