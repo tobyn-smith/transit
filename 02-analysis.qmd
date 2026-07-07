@@ -25,6 +25,7 @@ library(leaflet)
 library(rnaturalearth)
 library(scales)
 library(gt)
+library(reactable)
 
 laea <- 3035
 
@@ -248,36 +249,48 @@ ggplot() +
 
 ## Exposure ranking
 
+Click any column heading to re-sort the table.
+
 ```{r ranking}
 #| echo: false
-terminals |>
+rank_df <- terminals |>
   st_drop_geometry() |>
   transmute(
     Terminal   = name,
     Country    = country,
     Status     = status,
-    Capacity   = capacity_bcm,
+    Capacity   = round(capacity_bcm, 2),
     `km to Russia`  = round(dist_russia_km),
     `km to Straits` = round(dist_chokepoint_km),
     Exposure   = round(exposure, 2)
-  ) |>
-  gt() |>
-  tab_header(title = "Terminals ranked by exposure") |>
-  fmt_number(columns = Capacity, decimals = 2) |>
-  data_color(columns = Exposure, palette = exp_cols,
-             domain = range(round(terminals$exposure, 2))) |>
-  cols_label(Capacity = "Capacity (bcm)") |>
-  cols_align(align = "center",
-             columns = c(Capacity, `km to Russia`, `km to Straits`, Exposure)) |>
-  tab_options(table.font.size = px(13), heading.title.font.size = px(15),
-              heading.align = "left",
-              column_labels.font.weight = "600",
-              column_labels.border.top.style = "none",
-              column_labels.border.bottom.color = "#17150f",
-              column_labels.border.bottom.width = px(1.5),
-              table_body.hlines.color = "rgba(23,21,15,0.12)",
-              table.border.top.style = "none",
-              table.border.bottom.style = "none")
+  )
+
+exp_rng  <- range(rank_df$Exposure)
+exp_ramp <- colorRamp(exp_cols)
+
+reactable(
+  rank_df,
+  defaultSorted = list(Exposure = "desc"),
+  sortable = TRUE, highlight = TRUE, borderless = TRUE, pagination = FALSE,
+  columns = list(
+    Capacity        = colDef(name = "Capacity (bcm)", align = "center"),
+    `km to Russia`  = colDef(align = "center"),
+    `km to Straits` = colDef(align = "center"),
+    Exposure = colDef(align = "center", style = function(value) {
+      x <- (value - exp_rng[1]) / (exp_rng[2] - exp_rng[1])
+      list(background  = grDevices::rgb(exp_ramp(x), maxColorValue = 255),
+           color       = if (x > 0.55) "#ffffff" else "#17150f",
+           fontWeight  = 600)
+    })
+  ),
+  theme = reactableTheme(
+    borderColor    = "rgba(23,21,15,0.12)",
+    highlightColor = "#f0ece2",
+    headerStyle    = list(borderBottom = "1.5px solid #17150f", fontWeight = 600),
+    style          = list(fontFamily = '"IBM Plex Sans", system-ui, sans-serif',
+                          fontSize = "13px")
+  )
+)
 ```
 
 ## How sensitive is the ranking?
@@ -321,6 +334,9 @@ assumptions are visible and easy to change.
 
 ## Interactive map
 
+Toggle the layers in the top-right, hover a corridor or terminal for its name,
+and click a terminal for its figures.
+
 ```{r leaflet}
 #| echo: false
 terminals_wgs <- st_transform(terminals, 4326)
@@ -337,18 +353,22 @@ leaflet(terminals_wgs) |>
   fitBounds(tb[["xmin"]] - 1.5, tb[["ymin"]] - 0.8,
             tb[["xmax"]] + 1.5, tb[["ymax"]] + 0.8) |>
   addPolygons(data = russia_wgs, fillColor = "#9e2b25", fillOpacity = 0.16,
-              weight = 0, group = "Russian territory") |>
+              weight = 0, group = "Russian territory", label = "Russian territory",
+              highlightOptions = highlightOptions(fillOpacity = 0.32)) |>
   addRectangles(lng1 = choke_bb[["xmin"]], lat1 = choke_bb[["ymin"]],
                 lng2 = choke_bb[["xmax"]], lat2 = choke_bb[["ymax"]],
                 fill = FALSE, color = "#17150f", weight = 2, dashArray = "5,5",
-                group = "Danish Straits") |>
+                group = "Danish Straits", label = "Danish Straits") |>
   addPolylines(data = transit_wgs, color = ~corridor_cols[state], weight = 3,
                opacity = 0.9, label = ~paste0(name, " (", status, ")"),
+               highlightOptions = highlightOptions(weight = 6, opacity = 1),
                group = "Transit corridors") |>
   addCircleMarkers(
     radius      = ~rescale(capacity_bcm, to = c(5, 16)),
     color       = "#17150f", weight = 1,
     fillColor   = ~pal(exposure), fillOpacity = 0.85,
+    group       = "LNG terminals",
+    label       = ~name,
     popup       = ~paste0("<b>", name, "</b><br>", country,
                           "<br>Capacity: ", capacity_bcm, " bcm/yr",
                           "<br>Status: ", status,
@@ -356,7 +376,10 @@ leaflet(terminals_wgs) |>
   ) |>
   addLegend("bottomright", pal = pal, values = ~exposure, title = "Exposure",
             opacity = 0.9) |>
-  addLayersControl(overlayGroups = c("Transit corridors", "Russian territory",
-                                     "Danish Straits"),
-                   options = layersControlOptions(collapsed = FALSE))
+  addScaleBar(position = "bottomleft") |>
+  addMiniMap(toggleDisplay = TRUE, minimized = FALSE, width = 110, height = 110) |>
+  addLayersControl(
+    overlayGroups = c("LNG terminals", "Transit corridors",
+                      "Russian territory", "Danish Straits"),
+    options = layersControlOptions(collapsed = FALSE))
 ```

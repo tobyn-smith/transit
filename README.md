@@ -31,8 +31,8 @@ The website has three pages:
 - **Analysis**: the maps and the numbers. A map of the terminals sized by
   capacity, a map of the transit corridors and which have been disrupted, a chart
   of how close each terminal is to Russian territory, a map of national gas import
-  dependence, a ranked table of exposure, and an interactive map you can click
-  through.
+  dependence, a sortable ranked table of exposure, and an interactive map with
+  toggleable layers you can click through.
 
 ## Data sources
 
@@ -79,7 +79,7 @@ You do not need to know R to build this. Follow these steps in order.
    ```r
    install.packages(c("sf", "dplyr", "readr", "ggplot2", "leaflet",
                       "rnaturalearth", "rnaturalearthdata", "scales",
-                      "gt", "rmarkdown", "knitr"))
+                      "gt", "reactable", "rmarkdown", "knitr"))
    ```
 
 7. **Build the website.** Open the **Terminal** panel in RStudio (the tab next to
