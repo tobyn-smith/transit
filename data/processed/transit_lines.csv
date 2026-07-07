@@ -1,0 +1,5 @@
+name,type,status,lon1,lat1,lon2,lat2
+Nord Stream,gas pipeline,sabotaged 2022,28.75,60.70,13.68,54.14
+Baltic Pipe,gas pipeline,operating,12.40,55.25,15.05,54.09
+Balticconnector,gas pipeline,damaged 2023,24.02,60.05,24.08,59.36
+Estlink 2,power cable,damaged 2024,26.40,60.50,26.90,59.36

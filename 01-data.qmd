@@ -35,6 +35,16 @@ the `osmdata` package) are the route to add pipelines and cables as line
 features, and the full set of capacities can be reconciled against the **Global
 Energy Monitor** tracker.
 
+## Transit corridors
+
+The corridor map on the Analysis page uses a small committed table,
+`data/processed/transit_lines.csv`, listing the main subsea pipelines and cables
+by their landing points and status. They are drawn as **schematic straight
+lines**, not surveyed routes: the aim is to show which corridors exist and which
+have been disrupted, not their exact path. Positions and dates come from operator
+and press reporting. To map the true routes, add the line geometry from **EMODnet
+Human Activities** or **OpenStreetMap**.
+
 ## Proximity reference
 
 Instead of a maritime boundary line, the proximity measure uses distance to the

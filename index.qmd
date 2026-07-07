@@ -84,7 +84,8 @@ seabed.
 | Dec 2024 | Estlink 2 | The Estonia–Finland power cable and four telecoms cables were cut; a shadow-fleet tanker is the prime suspect. |
 
 These incidents are context, not events modelled here, but they are why the
-geography in this project is worth looking at closely.
+geography in this project is worth looking at closely. The
+[Analysis](02-analysis.qmd) page maps the main corridors and which have been hit.
 
 Sources: [Balticconnector (ERR)](https://news.err.ee/1609422658/china-admits-container-ship-newnew-polar-bear-damaged-undersea-gas-pipeline),
 [Estlink 2 incident (Wikipedia)](https://en.wikipedia.org/wiki/2024_Estlink_2_incident).
