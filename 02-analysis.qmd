@@ -102,6 +102,12 @@ terminals <- terminals |>
   ) |>
   arrange(desc(exposure))
 
+# distance band from Russian territory, for the proximity-zone map
+terminals <- terminals |>
+  mutate(zone = cut(dist_russia_km, breaks = c(0, 100, 200, 300, Inf),
+                    labels = c("Under 100 km", "100 to 200 km",
+                               "200 to 300 km", "Over 300 km")))
+
 # basemap clipped to the study area
 land_aoi <- world |> st_transform(laea) |> st_crop(aoi)
 
@@ -213,6 +219,55 @@ terminals |>
   theme_transit() +
   theme(panel.grid.major.y = element_blank(),
         panel.grid.minor = element_blank())
+```
+
+## Proximity zones
+
+The rings mark distance from Russian territory in 100 km steps. The terminals
+inside 100 km are the small ones, near Kaliningrad and at the eastern end of the
+Gulf of Finland. The largest capacity sits in the outer band, well back from the
+border.
+
+```{r map-zones}
+#| echo: false
+#| message: false
+#| warning: false
+#| fig-width: 8
+#| fig-height: 7
+ru_aoi <- st_make_valid(st_union(st_crop(russia, aoi)))
+buf <- function(km) st_make_valid(st_intersection(st_buffer(ru_aoi, km * 1000), aoi))
+b100 <- buf(100); b200 <- buf(200); b300 <- buf(300)
+ggplot() +
+  geom_sf(data = land_aoi, fill = "#e7e2d6", colour = "#d6d0c2", linewidth = 0.2) +
+  geom_sf(data = b300, fill = "#9e2b25", alpha = 0.07, colour = "#c9a9a3", linewidth = 0.2) +
+  geom_sf(data = b200, fill = "#9e2b25", alpha = 0.09, colour = "#c9a9a3", linewidth = 0.2) +
+  geom_sf(data = b100, fill = "#9e2b25", alpha = 0.11, colour = "#c9a9a3", linewidth = 0.2) +
+  geom_sf(data = st_crop(russia, aoi), fill = "#cc9a92", colour = "#b98980",
+          linewidth = 0.2) +
+  geom_sf(data = terminals, aes(size = capacity_bcm), colour = "#17150f") +
+  geom_sf_text(data = terminals, aes(label = name), size = 2.5, colour = ink,
+               nudge_y = 38000, check_overlap = TRUE) +
+  scale_size_continuous(range = c(2, 9), name = "Capacity\n(bcm/yr)") +
+  labs(title = "Distance from Russian territory",
+       subtitle = "Rings at 100, 200 and 300 km; darker shading is closer to Russia",
+       caption = "Buffers around Russian territory near the Baltic. Source: Natural Earth.") +
+  theme_map()
+```
+
+```{r zone-table}
+#| echo: false
+terminals |>
+  st_drop_geometry() |>
+  group_by(Band = zone) |>
+  summarise(Terminals = dplyr::n(),
+            `Capacity (bcm)` = round(sum(capacity_bcm), 1), .groups = "drop") |>
+  gt() |>
+  tab_options(table.font.size = px(13), column_labels.font.weight = "600",
+              column_labels.border.top.style = "none",
+              column_labels.border.bottom.color = "#17150f",
+              column_labels.border.bottom.width = px(1.5),
+              table_body.hlines.color = "rgba(23,21,15,0.12)",
+              table.border.top.style = "none", table.border.bottom.style = "none")
 ```
 
 ## Dependence
