@@ -148,7 +148,7 @@ ggplot() +
 
 ## Transit corridors
 
-The terminals did not appear in isolation. They replaced, or now sit alongside, a
+The terminals are only part of the picture. They replaced, or now sit alongside, a
 network of subsea pipelines and cables, several of which have been damaged or
 sabotaged since 2022. The map shows the main corridors as schematic straight
 lines between their landing points.
@@ -295,8 +295,8 @@ reactable(
 
 ## How sensitive is the ranking?
 
-The weights are a choice, so it is worth seeing how much they move the result.
-The table recomputes the score under three weightings: balanced (the version used
+The weights are a choice, so it helps to see how much they change the result. The
+table recomputes the score under three weightings: balanced (the version used
 above), proximity-led, and capacity-led.
 
 ```{r sensitivity}
@@ -329,8 +329,8 @@ st_drop_geometry(terminals) |>
 
 The terminals nearest Russian territory, Hamina, Klaipėda, and Gdańsk, lead under
 the proximity-led weighting, while Mukran, much the largest, rises to the top
-under the capacity-led one. The order is a function of the assumptions, and those
-assumptions are visible and easy to change.
+under the capacity-led one. The order depends on the weights, which are easy to
+change.
 
 ## Interactive map
 

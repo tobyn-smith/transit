@@ -12,8 +12,8 @@ After the invasion of Ukraine and the sabotage of the Nord Stream pipelines, tha
 supply was cut or abandoned, and imports moved onto a small set of coastal LNG
 terminals and ports such as Klaipėda, Świnoujście, and Inkoo.
 
-That shift concentrated a great deal of supply onto a few fixed points of
-geography. This project asks how concentrated, and how exposed:
+That shift concentrated a great deal of supply onto a handful of coastal sites.
+This project asks how concentrated, and how exposed:
 
 > After 2022, Baltic energy imports shifted onto a small set of coastal LNG
 > terminals and ports. How concentrated is that infrastructure, and how exposed
@@ -67,9 +67,9 @@ the most weight (0.4) because the question is about exposure to pressure from on
 actor, and distance is the most direct measure the public data supports.
 Capacity and transit each get 0.3: a larger terminal does more damage if it goes
 down, and a terminal deep inside the Baltic must run a longer voyage past the
-Danish Straits to be resupplied. None of this is fixed. The three weights sit in
-plain sight on the Analysis page, and changing them changes the ranking. The aim
-is a sensible starting point for discussion, not a final score.
+Danish Straits to be resupplied. None of this is fixed. The three weights are on
+the Analysis page, and changing them changes the ranking. It is a starting point,
+not a final score.
 
 ## Disruption to the infrastructure since 2022
 
@@ -107,4 +107,4 @@ A few specific caveats:
 - Undersea cable and pipeline incidents in the region between 2023 and 2025 are
   context for the question, not events modelled here.
 
-In short, this shows where the exposure sits. It is not a risk forecast.
+This shows where the exposure sits. It is not a risk forecast.
