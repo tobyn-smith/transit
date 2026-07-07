@@ -103,6 +103,15 @@ terminals <- terminals |>
 
 # basemap clipped to the study area
 land_aoi <- world |> st_transform(laea) |> st_crop(aoi)
+
+# transit corridors: schematic straight lines between landing points
+tl <- read_csv("data/processed/transit_lines.csv", show_col_types = FALSE)
+line_geom <- lapply(seq_len(nrow(tl)), function(i)
+  st_linestring(matrix(c(tl$lon1[i], tl$lon2[i], tl$lat1[i], tl$lat2[i]), ncol = 2)))
+transit <- st_sf(tl, geometry = st_sfc(line_geom, crs = 4326)) |>
+  mutate(state = ifelse(status == "operating", "Operating", "Disrupted since 2022")) |>
+  st_transform(laea)
+corridor_cols <- c("Operating" = "#4a6a7a", "Disrupted since 2022" = "#9e2b25")
 ```
 
 ## Concentration
@@ -133,6 +142,34 @@ ggplot() +
   labs(title = "Baltic LNG import terminals",
        subtitle = "Point size is capacity, colour is exposure; the dashed box is the Danish Straits",
        caption = "Gdansk is planned; the others are operating. Sources: Natural Earth, operators, and Global Energy Monitor.") +
+  theme_map()
+```
+
+## Transit corridors
+
+The terminals did not appear in isolation. They replaced, or now sit alongside, a
+network of subsea pipelines and cables, several of which have been damaged or
+sabotaged since 2022. The map shows the main corridors as schematic straight
+lines between their landing points.
+
+```{r map-corridors}
+#| echo: false
+#| message: false
+#| warning: false
+#| fig-width: 8
+#| fig-height: 7
+ggplot() +
+  geom_sf(data = land_aoi, fill = "#e7e2d6", colour = "#d6d0c2", linewidth = 0.2) +
+  geom_sf(data = st_crop(russia, aoi), fill = "#e3c9c3", colour = "#cdaaa3",
+          linewidth = 0.2) +
+  geom_sf(data = terminals, colour = "#8a8578", size = 1.4) +
+  geom_sf(data = transit, aes(colour = state), linewidth = 1) +
+  geom_sf_text(data = transit, aes(label = name), size = 2.5, colour = ink,
+               check_overlap = TRUE) +
+  scale_colour_manual(values = corridor_cols, name = NULL) +
+  labs(title = "Major energy transit corridors",
+       subtitle = "Grey points are the LNG terminals; red corridors have been damaged or sabotaged since 2022",
+       caption = "Schematic straight lines between landing points, not surveyed routes. Sources: operator and press reporting.") +
   theme_map()
 ```
 
@@ -286,6 +323,7 @@ assumptions are visible and easy to change.
 #| echo: false
 terminals_wgs <- st_transform(terminals, 4326)
 russia_wgs    <- st_transform(st_crop(russia, aoi), 4326)
+transit_wgs   <- st_transform(transit, 4326)
 choke_bb      <- st_bbox(st_transform(chokepoint, 4326))
 pal <- colorNumeric(exp_cols, domain = terminals_wgs$exposure)
 tb  <- st_bbox(terminals_wgs)
@@ -302,6 +340,9 @@ leaflet(terminals_wgs) |>
                 lng2 = choke_bb[["xmax"]], lat2 = choke_bb[["ymax"]],
                 fill = FALSE, color = "#17150f", weight = 2, dashArray = "5,5",
                 group = "Danish Straits") |>
+  addPolylines(data = transit_wgs, color = ~corridor_cols[state], weight = 3,
+               opacity = 0.9, label = ~paste0(name, " (", status, ")"),
+               group = "Transit corridors") |>
   addCircleMarkers(
     radius      = ~rescale(capacity_bcm, to = c(5, 16)),
     color       = "#17150f", weight = 1,
@@ -313,6 +354,7 @@ leaflet(terminals_wgs) |>
   ) |>
   addLegend("bottomright", pal = pal, values = ~exposure, title = "Exposure",
             opacity = 0.9) |>
-  addLayersControl(overlayGroups = c("Russian territory", "Danish Straits"),
+  addLayersControl(overlayGroups = c("Transit corridors", "Russian territory",
+                                     "Danish Straits"),
                    options = layersControlOptions(collapsed = FALSE))
 ```

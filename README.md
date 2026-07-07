@@ -29,9 +29,10 @@ The website has three pages:
 - **Data**: every source, all public, with notes on what is solid and what is
   still approximate.
 - **Analysis**: the maps and the numbers. A map of the terminals sized by
-  capacity, a chart of how close each one is to Russian territory, a map of
-  national gas import dependence, a ranked table of exposure, and an interactive
-  map you can click through.
+  capacity, a map of the transit corridors and which have been disrupted, a chart
+  of how close each terminal is to Russian territory, a map of national gas import
+  dependence, a ranked table of exposure, and an interactive map you can click
+  through.
 
 ## Data sources
 
@@ -43,6 +44,8 @@ All public, no logins, no paid datasets:
   capacity, status, source), kept in `data/processed/lng_terminals.csv`.
 - National gas import dependence from Eurostat (indicator `nrg_ind_id`), kept in
   `data/processed/import_dependence.csv` and reproduced by `scripts/03_eurostat.R`.
+- A small table of the main subsea transit corridors (pipelines and cables) with
+  their landing points and status, kept in `data/processed/transit_lines.csv`.
 
 ## Run it yourself (no programming experience needed)
 
