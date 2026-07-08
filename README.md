@@ -47,7 +47,7 @@ All public, no logins, no paid datasets:
 - A small table of the main subsea transit corridors (pipelines and cables) with
   their landing points and status, kept in `data/processed/transit_lines.csv`.
 
-## Run it yourself (no programming experience needed)
+## Run it yourself 
 
 You do not need to know R to build this. Follow these steps in order.
 
