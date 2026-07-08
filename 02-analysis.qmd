@@ -26,6 +26,7 @@ library(rnaturalearth)
 library(scales)
 library(gt)
 library(reactable)
+library(ggrepel)
 
 laea <- 3035
 
@@ -140,8 +141,10 @@ ggplot() +
   geom_sf(data = choke_sf, fill = NA, colour = ink, linewidth = 0.5,
           linetype = "31") +
   geom_sf(data = terminals, aes(size = capacity_bcm, colour = exposure)) +
-  geom_sf_text(data = terminals, aes(label = name), size = 2.6, colour = ink,
-               nudge_y = 38000, check_overlap = TRUE) +
+  geom_text_repel(data = terminals, aes(label = name, geometry = geometry),
+                  stat = "sf_coordinates", size = 2.6, colour = ink, seed = 1,
+                  min.segment.length = 0, segment.colour = "#8a8578",
+                  segment.size = 0.2, box.padding = 0.4, max.overlaps = Inf) +
   geom_sf_text(data = choke_sf, aes(label = "Danish\nStraits"), size = 2.5,
                colour = ink) +
   scale_size_continuous(range = c(2.5, 11), name = "Capacity\n(bcm/yr)") +
@@ -245,8 +248,10 @@ ggplot() +
   geom_sf(data = st_crop(russia, aoi), fill = "#cc9a92", colour = "#b98980",
           linewidth = 0.2) +
   geom_sf(data = terminals, aes(size = capacity_bcm), colour = "#17150f") +
-  geom_sf_text(data = terminals, aes(label = name), size = 2.5, colour = ink,
-               nudge_y = 38000, check_overlap = TRUE) +
+  geom_text_repel(data = terminals, aes(label = name, geometry = geometry),
+                  stat = "sf_coordinates", size = 2.5, colour = ink, seed = 1,
+                  min.segment.length = 0, segment.colour = "#8a8578",
+                  segment.size = 0.2, box.padding = 0.4, max.overlaps = Inf) +
   scale_size_continuous(range = c(2, 9), name = "Capacity\n(bcm/yr)") +
   labs(title = "Distance from Russian territory",
        subtitle = "Rings at 100, 200 and 300 km; darker shading is closer to Russia",

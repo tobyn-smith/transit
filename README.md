@@ -79,7 +79,7 @@ You do not need to know R to build this. Follow these steps in order.
    ```r
    install.packages(c("sf", "dplyr", "readr", "ggplot2", "leaflet",
                       "rnaturalearth", "rnaturalearthdata", "scales",
-                      "gt", "reactable", "rmarkdown", "knitr"))
+                      "gt", "reactable", "ggrepel", "rmarkdown", "knitr"))
    ```
 
 7. **Build the website.** Open the **Terminal** panel in RStudio (the tab next to
