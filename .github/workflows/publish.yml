@@ -47,6 +47,7 @@ jobs:
             any::scales
             any::gt
             any::reactable
+            any::ggrepel
 
       - name: Render
         run: quarto render
