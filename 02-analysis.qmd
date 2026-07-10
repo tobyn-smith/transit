@@ -133,6 +133,7 @@ territory is shaded for reference.
 #| warning: false
 #| fig-width: 8
 #| fig-height: 7
+#| fig-alt: "Map of the Baltic Sea showing LNG import terminals as points sized by capacity and coloured by exposure, with Russian territory shaded and the Danish Straits marked by a dashed box."
 choke_sf <- st_sf(geometry = chokepoint)
 ggplot() +
   geom_sf(data = land_aoi, fill = "#e7e2d6", colour = "#d6d0c2", linewidth = 0.2) +
@@ -168,6 +169,7 @@ lines between their landing points.
 #| warning: false
 #| fig-width: 8
 #| fig-height: 7
+#| fig-alt: "Map of the Baltic showing the main subsea pipelines and cables as lines, coloured blue where operating and red where damaged or sabotaged since 2022, with LNG terminals as grey points."
 # label each corridor at its midpoint so labels do not collide
 transit_lab <- suppressWarnings(st_centroid(transit))
 ggplot() +
@@ -209,6 +211,7 @@ the border.
 #| echo: false
 #| fig-width: 7
 #| fig-height: 4
+#| fig-alt: "Bar chart of each terminal's distance to the nearest Russian territory, ranging from Hamina at about 34 km to Mukran at about 388 km."
 terminals |>
   st_drop_geometry() |>
   ggplot(aes(x = reorder(name, -dist_russia_km), y = dist_russia_km)) +
@@ -237,6 +240,7 @@ border.
 #| warning: false
 #| fig-width: 8
 #| fig-height: 7
+#| fig-alt: "Map of the Baltic with distance rings at 100, 200 and 300 km around Russian territory, shaded darker closer to Russia, showing which terminals fall in each band."
 ru_aoi <- st_make_valid(st_union(st_crop(russia, aoi)))
 buf <- function(km) st_make_valid(st_intersection(st_buffer(ru_aoi, km * 1000), aoi))
 b100 <- buf(100); b200 <- buf(200); b300 <- buf(300)
@@ -287,6 +291,7 @@ imports, so values above 100% reflect stock draws or re-exports.
 #| warning: false
 #| fig-width: 8
 #| fig-height: 7
+#| fig-alt: "Choropleth map of Baltic countries shaded by gas import dependency in 2023, with most of the region near 100 percent and Denmark much lower."
 dep <- read_csv("data/processed/import_dependence.csv", show_col_types = FALSE)
 
 # Join on ISO-2, not Natural Earth's "postal" field: postal uses non-ISO codes
