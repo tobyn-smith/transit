@@ -139,3 +139,7 @@ table { font-size: 0.95rem; }
 
 // code blocks: flat, bordered, no rounding
 div.sourceCode { border: 1px solid $rule; background: #fbf9f3; }
+
+// keep wide content from overflowing on small screens
+img { max-width: 100%; height: auto; }
+.cell-output-display { overflow-x: auto; }
