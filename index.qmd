@@ -18,7 +18,7 @@ This project asks how concentrated, and how exposed:
 > After 2022, Baltic energy imports shifted onto a small set of coastal LNG
 > terminals and ports. How concentrated is that infrastructure, and how exposed
 > is it, measured by capacity, by distance to Russian territory, and by reliance
-> on the single shipping route through the Danish Straits?
+> on passage through the Danish Straits?
 
 ## How to read this site
 
@@ -43,10 +43,11 @@ exposure, not precise measurement.
    the Kaliningrad exclave. Proximity and capacity do not always line up: the two
    largest terminals, Mukran and Świnoujście, are among the farthest from Russia,
    which is what the exposure score is built to show.
-3. **Transit through the Straits.** Every cargo bound for these terminals passes
-   the Danish Straits, the one maritime gate into the Baltic. The terminals
-   deepest inside the sea, in the Gulf of Finland, run the longest exposed route
-   to reach port.
+3. **Transit through the Straits.** Every LNG cargo bound for these terminals
+   passes the Danish Straits. The Kiel Canal is the only other way in, and it is
+   far too small for LNG carriers, so the Straits are the effective entrance. The
+   terminals deepest inside the sea, in the Gulf of Finland, run the longest
+   exposed route to reach port.
 
 ## What the exposure score is
 

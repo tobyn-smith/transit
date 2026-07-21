@@ -17,8 +17,7 @@ publishes as a small website.
 After 2022, Baltic energy imports shifted onto a small set of coastal LNG
 terminals and ports. How concentrated is that infrastructure, and how exposed is
 it, measured by capacity, by distance to Russian territory (including the
-Kaliningrad exclave), and by reliance on the single shipping route through the
-Danish Straits?
+Kaliningrad exclave), and by reliance on passage through the Danish Straits?
 
 ## What the project shows
 
