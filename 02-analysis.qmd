@@ -1,5 +1,8 @@
 ---
 title: "Analysis"
+execute:
+  warning: false
+  message: false
 ---
 
 This page computes everything from public data at render time. Country geometry
@@ -424,7 +427,7 @@ leaflet(terminals_wgs) |>
                 lng2 = choke_bb[["xmax"]], lat2 = choke_bb[["ymax"]],
                 fill = FALSE, color = "#17150f", weight = 2, dashArray = "5,5",
                 group = "Danish Straits", label = "Danish Straits") |>
-  addPolylines(data = transit_wgs, color = ~corridor_cols[state], weight = 3,
+  addPolylines(data = transit_wgs, color = ~unname(corridor_cols[state]), weight = 3,
                opacity = 0.9, label = ~paste0(name, " (", status, ")"),
                highlightOptions = highlightOptions(weight = 6, opacity = 1),
                group = "Transit corridors") |>
