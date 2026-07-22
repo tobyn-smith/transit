@@ -81,8 +81,8 @@ seabed.
 | Date | Asset | What happened |
 |------|-------|---------------|
 | Sep 2022 | Nord Stream 1 and 2 | Subsea gas pipelines ruptured by underwater explosions off Bornholm. |
-| Oct 2023 | Balticconnector | The Finland–Estonia gas pipeline and a telecoms cable were damaged by a ship's anchor; the pipeline was repaired in 2024. |
-| Dec 2024 | Estlink 2 | The Estonia–Finland power cable and four telecoms cables were cut; a shadow-fleet tanker is the prime suspect. The cable was back in service in 2025. |
+| Oct 2023 | Balticconnector | The Finland-Estonia gas pipeline and a telecoms cable were damaged by a ship's anchor; the pipeline was repaired in 2024. |
+| Dec 2024 | Estlink 2 | The Estonia-Finland power cable and four telecoms cables were cut; a shadow-fleet tanker is the prime suspect. The cable was back in service in 2025. |
 
 These incidents are context, not events modelled here, but they are why the
 geography in this project is worth looking at closely. The
