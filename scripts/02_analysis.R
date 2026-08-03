@@ -1,6 +1,6 @@
 # 02_analysis.R
-# Distances, buffer share, and the exposure index. Mirrors the computation on the
-# Analysis page and writes a scored ranking to data/processed/. Run 01_clean.R
+# Distances, distance bands, and the exposure index. Mirrors the computation on
+# the Analysis page and writes a scored ranking to data/processed/. Run 01_clean.R
 # first, or just read the committed CSV directly as the page does.
 
 library(sf)
@@ -44,14 +44,18 @@ terminals <- terminals |>
     s_capacity   = capacity_bcm / max(capacity_bcm, na.rm = TRUE),
     exposure     = w_proximity * s_proximity +
                    w_capacity  * s_capacity +
-                   w_chokepoint * s_chokepoint
+                   w_chokepoint * s_chokepoint,
+    zone         = cut(dist_russia_km, breaks = c(0, 100, 200, 300, Inf),
+                       labels = c("Under 100 km", "100 to 200 km",
+                                  "200 to 300 km", "Over 300 km"))
   ) |>
   arrange(desc(exposure))
 
 st_write(terminals, "data/processed/terminals_scored.gpkg", delete_dsn = TRUE, quiet = TRUE)
 terminals |>
   st_drop_geometry() |>
-  select(name, country, status, capacity_bcm, dist_russia_km, dist_chokepoint_km, exposure) |>
+  select(name, country, status, capacity_bcm, dist_russia_km, dist_chokepoint_km,
+         zone, exposure) |>
   write_csv("data/processed/exposure_ranking.csv")
 
 message(sprintf("Capacity within 150 km of Russian territory: %.0f%%", 100 * share_within(150)))
