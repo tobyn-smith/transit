@@ -41,4 +41,12 @@ terminals <- read_csv("data/processed/lng_terminals.csv", show_col_types = FALSE
   st_transform(laea)
 st_write(terminals, "data/processed/lng_terminals.gpkg", delete_dsn = TRUE, quiet = TRUE)
 
+# Transit corridors: schematic straight lines between landing points
+tl <- read_csv("data/processed/transit_lines.csv", show_col_types = FALSE)
+line_geom <- lapply(seq_len(nrow(tl)), function(i)
+  st_linestring(matrix(c(tl$lon1[i], tl$lon2[i], tl$lat1[i], tl$lat2[i]), ncol = 2)))
+transit <- st_sf(tl, geometry = st_sfc(line_geom, crs = 4326)) |>
+  st_transform(laea)
+st_write(transit, "data/processed/transit_lines.gpkg", delete_dsn = TRUE, quiet = TRUE)
+
 message("Processed layers written to data/processed/.")
