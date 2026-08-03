@@ -299,16 +299,23 @@ dep <- read_csv("data/processed/import_dependence.csv", show_col_types = FALSE)
 
 # Join on ISO-2, not Natural Earth's "postal" field: postal uses non-ISO codes
 # for several countries (Germany "D", Sweden "S", Finland "FIN"), which silently
-# dropped them from the map.
-dependence <- land_aoi |>
-  left_join(dplyr::select(dep, iso_a2, gas_import_dependency_pct),
-            by = "iso_a2")
+# dropped them from the map. Use full country shapes, not the clipped basemap, so
+# Germany and Denmark are not cut off by the study box.
+dep_map <- world |>
+  st_transform(laea) |>
+  left_join(dplyr::select(dep, iso_a2, gas_import_dependency_pct), by = "iso_a2")
+
+# frame wide enough to show the study countries in full
+frame <- st_bbox(st_transform(
+  st_as_sfc(st_bbox(c(xmin = 6, ymin = 47, xmax = 31, ymax = 66), crs = 4326)), laea))
 
 ggplot() +
-  geom_sf(data = dependence, aes(fill = gas_import_dependency_pct),
+  geom_sf(data = dep_map, aes(fill = gas_import_dependency_pct),
           colour = "white", linewidth = 0.3) +
   scale_fill_gradient(low = "#efe7d8", high = "#9e2b25", na.value = "#e6e2d8",
                       name = "Import\ndependency (%)") +
+  coord_sf(xlim = c(frame[["xmin"]], frame[["xmax"]]),
+           ylim = c(frame[["ymin"]], frame[["ymax"]]), expand = FALSE) +
   labs(title = "Gas import dependency by country, 2023",
        subtitle = "Share of gas demand met by net imports (Eurostat nrg_ind_id)",
        caption = "Uncoloured countries are outside the study set. Values above 100% reflect stock draws or re-exports.") +
