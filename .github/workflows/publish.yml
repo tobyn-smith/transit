@@ -68,10 +68,12 @@ jobs:
       - id: deployment
         uses: actions/deploy-pages@v4
         continue-on-error: true
+        timeout-minutes: 6
 
-      # If the first attempt failed, wait briefly and try once more.
+      # If the first attempt failed or hung past the timeout, wait and try again.
       - if: steps.deployment.outcome == 'failure'
-        run: sleep 15
+        run: sleep 20
       - id: deployment-retry
         if: steps.deployment.outcome == 'failure'
         uses: actions/deploy-pages@v4
+        timeout-minutes: 6
