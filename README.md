@@ -30,8 +30,9 @@ The website has three pages:
 - **Analysis**: the maps and the numbers. A map of the terminals sized by
   capacity, a map of the transit corridors and which have been disrupted, a chart
   of how close each terminal is to Russian territory, a proximity-zone map with
-  distance rings, a map of national gas import dependence, a sortable ranked table
-  of exposure, and an interactive map with toggleable layers you can click through.
+  distance rings, a map of national gas import dependence, a country-level table
+  of import capacity, a sortable ranked table of exposure, and an interactive map
+  with toggleable layers you can click through.
 
 ## Data sources
 
