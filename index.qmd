@@ -9,8 +9,10 @@ date-format: "D MMMM YYYY"
 
 Before 2022, much of the Baltic region's gas arrived by pipeline from Russia.
 After the invasion of Ukraine and the sabotage of the Nord Stream pipelines, that
-supply was cut or abandoned, and imports moved onto a small set of coastal LNG
-terminals and ports such as Klaipėda, Świnoujście, and Inkoo.
+supply was cut or abandoned, and imports moved onto a small set of coastal
+terminals for liquefied natural gas (LNG), such as Klaipėda, Świnoujście, and
+Inkoo. These are the sites where tankers unload gas that has been chilled to a
+liquid for shipping, and turn it back into gas for the pipeline network.
 
 That shift concentrated a great deal of supply onto a handful of coastal sites.
 This project asks how concentrated, and how exposed:
@@ -27,6 +29,21 @@ This project asks how concentrated, and how exposed:
 - The [Analysis](02-analysis.qmd) page holds the maps, the distance
   measurements, and the exposure ranking.
 
+You do not need any technical background to read it. The code behind each chart is
+tucked away and can be ignored.
+
+## A few terms
+
+- **LNG (liquefied natural gas):** natural gas chilled to a liquid so it can be
+  carried by ship rather than a pipeline.
+- **LNG terminal:** the coastal site where those ships unload and the cargo is
+  turned back into gas for the pipeline network. Some are built on land; some are
+  a moored ship, known as an FSRU (a floating storage and regasification unit).
+- **Capacity (bcm):** how much gas a terminal can bring in over a year, measured
+  in billion cubic metres.
+- **Import dependency:** the share of a country's gas that comes from abroad
+  rather than from its own production.
+
 ## Findings
 
 The numbers behind these sit on the [Analysis](02-analysis.qmd) page. The
@@ -35,9 +52,9 @@ terminal figures are compiled from operator reporting and Global Energy Monitor
 exposure, not precise measurement.
 
 1. **Concentration.** Capacity is lopsided. Two southern terminals, Mukran in
-   Germany and Świnoujście in Poland, hold most of the region's regasification
-   capacity, while the northeast leans on one or two units each: Inkoo for the
-   Gulf of Finland and Klaipėda for Lithuania.
+   Germany and Świnoujście in Poland, hold most of the region's import capacity,
+   while the northeast leans on one or two terminals each: Inkoo for the Gulf of
+   Finland and Klaipėda for Lithuania.
 2. **Proximity.** The terminals closest to Russian territory are Hamina, at the
    eastern end of the Gulf of Finland, and Klaipėda and Gdańsk, which sit beside
    the Kaliningrad exclave. Proximity and capacity do not always line up: the two
@@ -54,7 +71,7 @@ exposure, not precise measurement.
 The score combines three things, each given a stated weight:
 
 - how close a terminal is to Russian territory,
-- how large its share of regasification capacity is,
+- how much of the region's import capacity it holds,
 - how long its supply route past the Danish Straits runs.
 
 The weights are written out on the Analysis page. The score is deliberately

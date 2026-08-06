@@ -5,11 +5,10 @@ execute:
   message: false
 ---
 
-This page computes everything from public data at render time. Country geometry
-comes from Natural Earth (via the `rnaturalearth` package), and the terminal and
-dependence tables are the small committed files in `data/processed/`. All
-distance work is done in a projection suited to Europe (ETRS89 / LAEA Europe,
-EPSG:3035), and the results are reported in kilometres.
+Every map and figure on this page is built from the public data listed on the
+[Data](01-data.qmd) page, and all distances are reported in kilometres. Each chart
+has a "Show code" toggle if you want to see how it was made, but you do not need
+to read any code to follow the analysis.
 
 The terminal capacities come from operator reporting and the Global Energy
 Monitor tracker, current to 2024 and 2025 (see the [Data](01-data.qmd) page).
@@ -127,8 +126,8 @@ corridor_cols <- c("Operating" = "#4a6a7a", "Disrupted since 2022" = "#9e2b25")
 
 ## Concentration
 
-Where the import infrastructure sits, sized by regasification capacity. Russian
-territory is shaded for reference.
+Where the import terminals sit, with each point sized by how much gas it can bring
+in. Russian territory is shaded for reference.
 
 ```{r map-concentration}
 #| echo: false
@@ -205,10 +204,10 @@ share_within <- function(km) {
 }
 ```
 
-Only `r share_within(200)`% of operating regasification capacity sits within 200 km
-of Russian territory. The two largest terminals, Mukran and Świnoujście, lie more
-than 350 km back, so the exposure concentrates in the smaller terminals closest to
-the border.
+Only `r share_within(200)`% of the region's operating import capacity sits within
+200 km of Russian territory. The two largest terminals, Mukran and Świnoujście,
+lie more than 350 km back, so the exposure concentrates in the smaller terminals
+closest to the border.
 
 ```{r dist-plot}
 #| echo: false
@@ -284,9 +283,9 @@ terminals |>
 
 ## Dependence
 
-Gas import dependency by country (Eurostat `nrg_ind_id`, natural gas, 2023),
-joined to country polygons. The figure is the share of gas demand met by net
-imports, so values above 100% reflect stock draws or re-exports.
+Gas import dependency for each country (Eurostat `nrg_ind_id`, natural gas, 2023).
+The figure is the share of a country's gas demand met by imports rather than its
+own production, so values above 100% reflect stock draws or re-exports.
 
 ```{r dependence-map}
 #| echo: false

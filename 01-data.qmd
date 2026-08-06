@@ -4,8 +4,8 @@ title: "Data"
 
 Every dataset here is public and free, with no login and no paid access. Where a
 source would normally require accepting terms or running a manual download, this
-project avoids it by using a small committed table instead, and the notes below
-say exactly what to replace if you want to extend the project.
+project avoids it by using a small table stored with the project instead, and the
+notes below say exactly what to replace if you want to extend the project.
 
 ## Base geography
 
@@ -15,35 +15,36 @@ package ships the data, there is nothing to download by hand.
 
 ## Energy infrastructure
 
-The infrastructure layer is a small committed table of the region's LNG import
-terminals, `data/processed/lng_terminals.csv`. It holds the name, country,
-location, annual regasification capacity, status, and a source note for each
-terminal.
+The infrastructure layer is a small table of the region's LNG import terminals,
+`data/processed/lng_terminals.csv`. It holds the name, country, location, annual
+import capacity (in billion cubic metres, or bcm), status, and a source note for
+each terminal.
 
 The capacities are taken from operator reporting and the **Global Energy
 Monitor** terminal tracker, current as of 2024 to 2025. The `source` column in
 the table names the operator behind each figure. Two points worth flagging:
 
 - Capacities move. Świnoujście reached 8.3 bcm only after its third tank came
-  online in early 2025, and Mukran's 13.5 bcm assumes both of its FSRUs running.
+  online in early 2025, and Mukran's 13.5 bcm assumes both of its FSRUs — the
+  moored ships that store and re-gasify LNG — are running.
 - The Paldiski jetty in Estonia is deliberately left out. It is shelved, and its
-  capacity figure refers to the same FSRU (Exemplar) that now operates at Inkoo,
-  so including both would count one vessel twice.
+  capacity figure refers to the same ship (the Exemplar) that now operates at
+  Inkoo, so including both would count one vessel twice.
 
 To extend the project, **EMODnet Human Activities** and **OpenStreetMap** (via
-the `osmdata` package) are the route to add pipelines and cables as line
-features, and the full set of capacities can be reconciled against the **Global
+the `osmdata` package) are the route to add the pipelines and cables as mapped
+routes, and the full set of capacities can be reconciled against the **Global
 Energy Monitor** tracker.
 
 ## Transit corridors
 
-The corridor map on the Analysis page uses a small committed table,
+The corridor map on the Analysis page uses a small table,
 `data/processed/transit_lines.csv`, listing the main subsea pipelines and cables
 by their landing points and status. They are drawn as **schematic straight
 lines**, not surveyed routes: the aim is to show which corridors exist and which
 have been disrupted, not their exact path. Positions and dates come from operator
-and press reporting. To map the true routes, add the line geometry from **EMODnet
-Human Activities** or **OpenStreetMap**.
+and press reporting. To map the true routes, add the actual route lines from
+**EMODnet Human Activities** or **OpenStreetMap**.
 
 ## Proximity reference
 
@@ -70,14 +71,14 @@ public, no-login substitute.
 
 ## How the data is prepared
 
-The steps that turn the tables and geometry into analysis-ready layers live in
-`scripts/01_clean.R`, and the Analysis page repeats them at render time:
+The steps that turn the raw tables and map data into the layers behind the maps
+live in `scripts/01_clean.R`, and the Analysis page repeats them when it builds:
 
-- standardise the columns,
-- project everything to ETRS89 / LAEA Europe (EPSG:3035) so distances come out in
-  kilometres,
-- clip the geography to the Baltic study area,
-- keep the capacity and country information on the terminal layer.
+- tidy up the columns,
+- put everything on a map projection suited to Europe, so distances come out in
+  kilometres rather than degrees,
+- trim the map to the Baltic study area,
+- keep the capacity and country information attached to each terminal.
 
 ## Citations
 
