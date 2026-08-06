@@ -322,6 +322,49 @@ ggplot() +
   theme_map()
 ```
 
+## Import capacity by country
+
+Not every country has its own terminal. This rolls the operating terminals up by
+country, next to each country's gas import dependency.
+
+```{r country-view}
+#| echo: false
+dep_tbl <- read_csv("data/processed/import_dependence.csv", show_col_types = FALSE)
+
+by_country <- terminals |>
+  st_drop_geometry() |>
+  filter(status == "operating") |>
+  group_by(country) |>
+  summarise(terminals = dplyr::n(),
+            capacity  = round(sum(capacity_bcm), 1), .groups = "drop")
+
+dep_tbl |>
+  left_join(by_country, by = "country") |>
+  mutate(terminals = coalesce(terminals, 0L),
+         capacity  = coalesce(capacity, 0)) |>
+  arrange(desc(gas_import_dependency_pct), desc(capacity)) |>
+  transmute(Country = country,
+            `Operating terminals` = terminals,
+            `Capacity (bcm)` = capacity,
+            `Import dependency (%)` = gas_import_dependency_pct) |>
+  gt() |>
+  cols_align(align = "center",
+             columns = c(`Operating terminals`, `Capacity (bcm)`,
+                         `Import dependency (%)`)) |>
+  tab_options(table.font.size = px(13), column_labels.font.weight = "600",
+              column_labels.border.top.style = "none",
+              column_labels.border.bottom.color = "#17150f",
+              column_labels.border.bottom.width = px(1.5),
+              table_body.hlines.color = "rgba(23,21,15,0.12)",
+              table.border.top.style = "none", table.border.bottom.style = "none")
+```
+
+Estonia, Latvia and Sweden have no terminal of their own, yet almost all their
+gas is imported; they lean on neighbours through the Balticconnector and regional
+pipelines. Lithuania, Germany and Poland each run a single terminal, so that one
+asset carries the country's seaborne supply. Denmark stands apart, with low
+dependency on the back of its North Sea production.
+
 ## Exposure ranking
 
 Click any column heading to re-sort the table.
