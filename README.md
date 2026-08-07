@@ -21,18 +21,21 @@ Kaliningrad exclave), and by reliance on passage through the Danish Straits?
 
 ## What the project shows
 
-The website has three pages:
+The site has three pages and a slide deck:
 
-- **Overview**: the question, the main findings in plain language, and a list of
-  limitations.
+- **Overview**: the question, the main findings in plain language, a clickable map
+  of the terminals, and a list of limitations.
 - **Data**: every source, all public, with notes on what is solid and what is
-  still approximate.
+  still approximate, and the terminal and dependence figures shown as sortable,
+  searchable tables.
 - **Analysis**: the maps and the numbers. A map of the terminals sized by
   capacity, a map of the transit corridors and which have been disrupted, a chart
   of how close each terminal is to Russian territory, a proximity-zone map with
   distance rings, a map of national gas import dependence, a country-level table
   of import capacity, a sortable ranked table of exposure, and an interactive map
   with toggleable layers you can click through.
+- **Slides**: a short, navigable presentation of the whole thing for a general
+  audience, with the terminal map embedded in a slide.
 
 ## Data sources
 
@@ -47,7 +50,7 @@ All public, no logins, no paid datasets:
 - A small table of the main subsea transit corridors (pipelines and cables) with
   their landing points and status, kept in `data/processed/transit_lines.csv`.
 
-## Run it yourself 
+## Run it yourself
 
 You do not need to know R to build this. Follow these steps in order.
 
@@ -128,9 +131,11 @@ LICENSE                        usage terms (MIT)
 baltic-energy-transit.Rproj    the RStudio project file
 _quarto.yml                    settings for the website
 theme.scss                     the site's visual theme
+slides.scss                    the slide deck's theme
 index.qmd                      the Overview page
 01-data.qmd                    the Data page
 02-analysis.qmd                the Analysis page (maps and numbers)
+slides.qmd                     the slide deck
 data/processed/                the small data tables the analysis reads
 scripts/                       R scripts that reproduce the data layers
 docs/                          the finished website (created when you build)
