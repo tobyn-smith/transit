@@ -99,6 +99,33 @@ read_csv("data/processed/import_dependence.csv", show_col_types = FALSE) |>
             pagination = FALSE, theme = rtheme)
 ```
 
+The table above is committed 2023 data. For comparison, the figure below is pulled
+live from the Eurostat API in your browser when this page loads:
+
+::: {#live-dependency style="font-size:0.95em;color:#6b6760;margin-top:0.5rem"}
+Checking Eurostat for the latest EU-wide figure...
+:::
+
+```{=html}
+<script>
+(function () {
+  var el = document.getElementById('live-dependency');
+  if (!el) return;
+  var url = 'https://ec.europa.eu/eurostat/api/dissemination/statistics/1.0/data/nrg_ind_id'
+          + '?format=JSON&lang=EN&freq=A&siec=G3000&unit=PC&geo=EU27_2020&lastTimePeriod=1';
+  fetch(url).then(function (r) { return r.json(); }).then(function (d) {
+    var year = Object.values(d.dimension.time.category.label)[0];
+    var val  = Object.values(d.value)[0];
+    el.textContent = "Live from Eurostat: the EU's gas import dependency for natural "
+                   + "gas in " + year + " was " + val.toFixed(1) + "%.";
+  }).catch(function () {
+    el.textContent = "The live Eurostat figure is unavailable right now; the table "
+                   + "above shows the committed 2023 data.";
+  });
+})();
+</script>
+```
+
 ## A note on conflict data
 
 This project frames the question as exposure and structural dependence, not
