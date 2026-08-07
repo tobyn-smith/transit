@@ -1,0 +1,30 @@
+/*-- scss:defaults --*/
+
+$body-bg:      #f7f4ec;
+$body-color:   #17150f;
+$link-color:   #9e2b25;
+
+$font-family-sans-serif: "IBM Plex Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
+$presentation-heading-font: "Newsreader", Georgia, "Times New Roman", serif;
+$presentation-heading-color: #17150f;
+$presentation-heading-font-weight: 600;
+$presentation-font-size-root: 30px;
+
+/*-- scss:rules --*/
+
+@import url('https://fonts.googleapis.com/css2?family=Newsreader:wght@500;600&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap');
+
+.reveal .slides section { text-align: left; }
+.reveal h1, .reveal h2, .reveal h3 { letter-spacing: -0.01em; }
+.reveal h2 { border-bottom: 1px solid rgba(23, 21, 15, 0.14); padding-bottom: 0.2em; }
+
+.reveal strong { color: #9e2b25; }
+
+.reveal table { font-size: 0.7em; }
+.reveal table th { border-bottom: 1.5px solid #17150f; }
+
+.reveal .slide-number { font-family: "IBM Plex Mono", monospace; }
+
+// subtle mono kicker for the title block
+.reveal .title { letter-spacing: -0.02em; }
+.reveal .subtitle { color: #6b6760; }
