@@ -1,9 +1,9 @@
 country,iso_a2,gas_import_dependency_pct
-Germany,DE,91.6
-Denmark,DK,-17.5
+Germany,DE,93.7
+Denmark,DK,13.5
 Estonia,EE,100
-Finland,FI,100.5
-Lithuania,LT,99.2
+Finland,FI,103.5
+Lithuania,LT,96
 Latvia,LV,100.1
-Poland,PL,78.7
-Sweden,SE,99.1
+Poland,PL,81.3
+Sweden,SE,102.3
