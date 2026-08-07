@@ -108,6 +108,11 @@ If you fork or recreate the repository, enable this once under **Settings > Page
 by setting the source to **GitHub Actions**. After that, there is nothing extra to
 run.
 
+A separate scheduled job (`.github/workflows/refresh-data.yml`) re-pulls the
+Eurostat dependence figures on the first of each month and rebuilds the site if
+they have changed. The Data page also shows one figure pulled live from the
+Eurostat API in the browser when the page loads.
+
 ## What is solid and what to double check
 
 The structure, the maps, and the method are real and reproducible. The data
