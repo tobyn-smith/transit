@@ -1,6 +1,23 @@
 ---
 title: "Data"
+execute:
+  warning: false
+  message: false
 ---
+
+```{r setup}
+#| include: false
+library(readr)
+library(dplyr)
+library(reactable)
+
+rtheme <- reactableTheme(
+  borderColor    = "rgba(23,21,15,0.12)",
+  highlightColor = "#f0ece2",
+  headerStyle    = list(borderBottom = "1.5px solid #17150f", fontWeight = 600),
+  style          = list(fontFamily = '"IBM Plex Sans", system-ui, sans-serif',
+                        fontSize = "13px"))
+```
 
 Every dataset here is public and free, with no login and no paid access. Where a
 source would normally require accepting terms or running a manual download, this
@@ -18,7 +35,18 @@ package ships the data, there is nothing to download by hand.
 The infrastructure layer is a small table of the region's LNG import terminals,
 `data/processed/lng_terminals.csv`. It holds the name, country, location, annual
 import capacity (in billion cubic metres, or bcm), status, and a source note for
-each terminal.
+each terminal. You can sort or search it here:
+
+```{r terminals-table}
+#| echo: false
+read_csv("data/processed/lng_terminals.csv", show_col_types = FALSE) |>
+  transmute(Terminal = name, Country = country,
+            `Capacity (bcm)` = capacity_bcm, Status = status,
+            Type = type, Source = source) |>
+  reactable(sortable = TRUE, searchable = TRUE, highlight = TRUE,
+            borderless = TRUE, pagination = FALSE, theme = rtheme,
+            columns = list(Source = colDef(minWidth = 220)))
+```
 
 The capacities are taken from operator reporting and the **Global Energy
 Monitor** terminal tracker, current as of 2024 to 2025. The `source` column in
@@ -60,6 +88,16 @@ The dependence layer uses gas import dependency from **Eurostat** (indicator
 The figure is the share of gas demand met by net imports. Values above 100%
 reflect stock draws or re-exports in that year, and Denmark is low because of its
 own North Sea production. `scripts/03_eurostat.R` reproduces the pull.
+
+```{r dependence-table}
+#| echo: false
+read_csv("data/processed/import_dependence.csv", show_col_types = FALSE) |>
+  transmute(Country = country,
+            `Import dependency (%)` = gas_import_dependency_pct) |>
+  arrange(desc(`Import dependency (%)`)) |>
+  reactable(sortable = TRUE, highlight = TRUE, borderless = TRUE,
+            pagination = FALSE, theme = rtheme)
+```
 
 ## A note on conflict data
 

@@ -3,7 +3,21 @@ title: "Baltic Energy Transit Risk"
 subtitle: "Exposure of post-2022 Baltic energy import infrastructure"
 date: today
 date-format: "D MMMM YYYY"
+execute:
+  warning: false
+  message: false
 ---
+
+```{r setup}
+#| include: false
+library(sf)
+library(readr)
+library(leaflet)
+library(scales)
+
+terminals <- read_csv("data/processed/lng_terminals.csv", show_col_types = FALSE) |>
+  st_as_sf(coords = c("lon", "lat"), crs = 4326)
+```
 
 ## The question
 
@@ -21,6 +35,22 @@ This project asks how concentrated, and how exposed:
 > terminals and ports. How concentrated is that infrastructure, and how exposed
 > is it, measured by capacity, by distance to Russian territory, and by reliance
 > on passage through the Danish Straits?
+
+The terminals, at a glance. Hover for a name, click for the detail; each point is
+sized by capacity.
+
+```{r overview-map}
+#| echo: false
+leaflet(terminals) |>
+  addProviderTiles("CartoDB.Positron") |>
+  addCircleMarkers(
+    radius      = ~rescale(capacity_bcm, to = c(5, 15)),
+    color       = "#17150f", weight = 1,
+    fillColor   = "#9e2b25", fillOpacity = 0.8,
+    label       = ~name,
+    popup       = ~paste0("<b>", name, "</b><br>", country,
+                          "<br>", capacity_bcm, " bcm/yr<br>", status))
+```
 
 ## How to read this site
 
