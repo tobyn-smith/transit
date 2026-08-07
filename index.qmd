@@ -58,6 +58,8 @@ leaflet(terminals) |>
   solid and what is still rough.
 - The [Analysis](02-analysis.qmd) page holds the maps, the distance
   measurements, and the exposure ranking.
+- In a hurry? The [Slides](slides.qmd) walk through the whole thing as a short,
+  navigable deck.
 
 You do not need any technical background to read it. The code behind each chart is
 tucked away and can be ignored.

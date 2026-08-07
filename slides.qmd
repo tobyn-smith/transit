@@ -1,0 +1,133 @@
+---
+title: "Baltic Energy Transit Risk"
+subtitle: "Exposure of post-2022 energy import infrastructure"
+author: "Tobyn Smith"
+date: today
+date-format: "D MMMM YYYY"
+format:
+  revealjs:
+    theme: [default, slides.scss]
+    slide-number: c/t
+    transition: fade
+    progress: true
+    controls: true
+    hash: true
+    width: 1100
+execute:
+  warning: false
+  message: false
+---
+
+```{r setup}
+#| include: false
+library(sf)
+library(readr)
+library(leaflet)
+library(scales)
+
+terminals <- read_csv("data/processed/lng_terminals.csv", show_col_types = FALSE) |>
+  st_as_sf(coords = c("lon", "lat"), crs = 4326)
+```
+
+## The question
+
+Before 2022, most of the Baltic region's gas came by pipeline from Russia.
+
+After the invasion of Ukraine and the sabotage of the Nord Stream pipelines, that
+supply was cut. Imports moved onto a handful of coastal terminals for liquefied
+natural gas (LNG).
+
+**How concentrated is that infrastructure, and how exposed is it?**
+
+## The terminals
+
+```{r}
+#| echo: false
+leaflet(terminals, height = 480) |>
+  addProviderTiles("CartoDB.Positron") |>
+  addCircleMarkers(
+    radius      = ~rescale(capacity_bcm, to = c(6, 18)),
+    color       = "#17150f", weight = 1,
+    fillColor   = "#9e2b25", fillOpacity = 0.8,
+    label       = ~name,
+    popup       = ~paste0("<b>", name, "</b><br>", country,
+                          "<br>", capacity_bcm, " bcm/yr<br>", status))
+```
+
+::: {style="font-size:0.7em;color:#6b6760"}
+Hover for a name, click for the detail. Each point is sized by capacity.
+:::
+
+## What the project measures
+
+An **exposure score** for each terminal, from three plain ingredients:
+
+- how close it sits to Russian territory,
+- how much of the region's import capacity it holds,
+- how long its supply route past the Danish Straits runs.
+
+The weights are a stated judgement, not a result. Anyone can change them.
+
+## Finding 1 — concentration
+
+Import capacity is lopsided.
+
+- Two southern terminals, **Mukran** (Germany) and **Świnoujście** (Poland), hold
+  most of the region's capacity.
+- The northeast leans on one or two terminals each: Inkoo for the Gulf of Finland,
+  Klaipėda for Lithuania.
+
+## Finding 2 — proximity
+
+The terminals closest to Russia are the **small** ones:
+
+- **Hamina**, at the eastern end of the Gulf of Finland,
+- **Klaipėda** and **Gdańsk**, beside the Kaliningrad exclave.
+
+The two largest terminals sit farthest from Russia. Size and proximity do not line
+up, which is what the score is built to show.
+
+## Finding 3 — one way in
+
+Every LNG cargo passes the **Danish Straits**.
+
+The Kiel Canal is the only other entrance, and it is far too small for LNG
+carriers, so the Straits are the effective door.
+
+Terminals deep in the Gulf of Finland run the longest exposed route to reach port.
+
+## This is not hypothetical
+
+| Date | Asset | What happened |
+|------|-------|---------------|
+| Sep 2022 | Nord Stream 1 & 2 | Pipelines sabotaged off Bornholm |
+| Oct 2023 | Balticconnector | Pipeline and cable damaged by an anchor; repaired 2024 |
+| Dec 2024 | Estlink 2 | Power and telecoms cables cut; back in service 2025 |
+
+Baltic energy and data links have been hit repeatedly, mostly by ships dragging
+anchors across the seabed.
+
+## Who leans on whom
+
+Not every country has its own terminal.
+
+- **Estonia, Latvia, Sweden:** no terminal — they depend on neighbours through the
+  Balticconnector and regional pipelines.
+- **Lithuania, Germany, Poland:** a single terminal each — one point of failure.
+- **Denmark:** low dependency, on the back of its own North Sea gas.
+
+## Limitations
+
+- This measures **geographic exposure**, not the probability of disruption.
+- The score uses proxies (distance, capacity share), not a causal model.
+- It is a single snapshot; capacity, routes and terminals change.
+
+It shows where the exposure sits. It is not a risk forecast.
+
+## Explore the full project
+
+The maps, the data, and the exposure ranking, all built from public sources:
+
+[**tobyn-smith.github.io/transit**](https://tobyn-smith.github.io/transit/)
+
+Code and open issues on [GitHub](https://github.com/tobyn-smith/transit).
