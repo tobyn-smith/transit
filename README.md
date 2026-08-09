@@ -24,7 +24,8 @@ Kaliningrad exclave), and by reliance on passage through the Danish Straits?
 The site has three pages and a slide deck:
 
 - **Overview**: the question, the main findings in plain language, a clickable map
-  of the terminals, and a list of limitations.
+  of the terminals, what follows from the findings for policy, and a list of
+  limitations.
 - **Data**: every source, all public, with notes on what is solid and what is
   still approximate, and the terminal and dependence figures shown as sortable,
   searchable tables.
