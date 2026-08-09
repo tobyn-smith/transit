@@ -5,6 +5,7 @@ project:
 website:
   title: "Baltic Energy Transit Risk"
   description: "Spatial exposure of post-2022 Baltic energy import infrastructure"
+  favicon: favicon.svg
   navbar:
     background: dark
     title: "Baltic Transit Risk"
