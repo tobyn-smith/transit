@@ -1,8 +1,6 @@
 ---
 title: "Baltic Energy Transit Risk"
 subtitle: "Exposure of post-2022 Baltic energy import infrastructure"
-date: today
-date-format: "D MMMM YYYY"
 execute:
   warning: false
   message: false
@@ -29,6 +27,9 @@ Straits. Three things stand out: capacity is concentrated in two southern
 terminals, the terminals nearest Russia are the small ones, and every cargo
 enters through a single strait. The infrastructure has already been hit several
 times since 2022, so none of this is abstract.
+
+Terminal capacities are current to 2024 and 2025; gas import dependency is
+Eurostat data for 2023. Every source is listed on the [Data](01-data.qmd) page.
 
 ## The question
 
@@ -63,36 +64,7 @@ leaflet(terminals) |>
                           "<br>", capacity_bcm, " bcm/yr<br>", status))
 ```
 
-## How to read this site
-
-- The [Data](01-data.qmd) page lists every source, all public, and says what is
-  solid and what is still rough.
-- The [Analysis](02-analysis.qmd) page holds the maps, the distance
-  measurements, and the exposure ranking.
-- In a hurry? The [Slides](slides.qmd) walk through the whole thing as a short,
-  navigable deck.
-
-You do not need any technical background to read it. The code behind each chart is
-tucked away and can be ignored.
-
-## A few terms
-
-- **LNG (liquefied natural gas):** natural gas chilled to a liquid so it can be
-  carried by ship rather than a pipeline.
-- **LNG terminal:** the coastal site where those ships unload and the cargo is
-  turned back into gas for the pipeline network. Some are built on land; some are
-  a moored ship, known as an FSRU (a floating storage and regasification unit).
-- **Capacity (bcm):** how much gas a terminal can bring in over a year, measured
-  in billion cubic metres.
-- **Import dependency:** the share of a country's gas that comes from abroad
-  rather than from its own production.
-
 ## Findings
-
-The numbers behind these sit on the [Analysis](02-analysis.qmd) page. The
-terminal figures are compiled from operator reporting and Global Energy Monitor
-(see the [Data](01-data.qmd) page), so the rankings show the broad pattern of
-exposure, not precise measurement.
 
 1. **Concentration.** Capacity is lopsided. Two southern terminals, Mukran in
    Germany and Świnoujście in Poland, hold most of the region's import capacity,
@@ -185,3 +157,26 @@ A few specific caveats:
   context for the question, not events modelled here.
 
 This shows where the exposure sits. It is not a risk forecast.
+
+## Terms used here
+
+- **LNG (liquefied natural gas):** natural gas chilled to a liquid so it can be
+  carried by ship rather than a pipeline.
+- **LNG terminal:** the coastal site where those ships unload and the cargo is
+  turned back into gas for the pipeline network. Some are built on land; some are
+  a moored ship, known as an FSRU (a floating storage and regasification unit).
+- **Capacity (bcm):** how much gas a terminal can bring in over a year, measured
+  in billion cubic metres.
+- **Import dependency:** the share of a country's gas that comes from abroad
+  rather than from its own production.
+
+## Where to look next
+
+- The [Data](01-data.qmd) page lists every source, all public, and says what is
+  solid and what is still rough.
+- The [Analysis](02-analysis.qmd) page holds the maps, the distance measurements,
+  and the exposure ranking.
+- The [Slides](slides.qmd) walk through the whole argument as a short deck.
+
+No technical background is needed for any of it. The code behind each chart is
+tucked away and can be ignored.
