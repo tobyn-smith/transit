@@ -138,6 +138,7 @@ baltic-energy-transit.Rproj    the RStudio project file
 _quarto.yml                    settings for the website
 theme.scss                     the site's visual theme
 slides.scss                    the slide deck's theme
+favicon.svg                    the browser tab icon
 index.qmd                      the Overview page
 01-data.qmd                    the Data page
 02-analysis.qmd                the Analysis page (maps and numbers)
