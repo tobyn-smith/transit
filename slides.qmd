@@ -12,6 +12,7 @@ format:
     progress: true
     controls: true
     hash: true
+    center: false
     width: 1100
 execute:
   warning: false
