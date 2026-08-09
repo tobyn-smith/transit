@@ -19,6 +19,17 @@ terminals <- read_csv("data/processed/lng_terminals.csv", show_col_types = FALSE
   st_as_sf(coords = c("lon", "lat"), crs = 4326)
 ```
 
+## In brief
+
+After 2022 the Baltic region swapped Russian pipeline gas for seaborne LNG,
+landed at a handful of coastal terminals. This project maps that infrastructure
+and scores how exposed each terminal is, using distance to Russian territory,
+share of import capacity, and the length of the supply run past the Danish
+Straits. Three things stand out: capacity is concentrated in two southern
+terminals, the terminals nearest Russia are the small ones, and every cargo
+enters through a single strait. The infrastructure has already been hit several
+times since 2022, so none of this is abstract.
+
 ## The question
 
 Before 2022, much of the Baltic region's gas arrived by pipeline from Russia.
@@ -98,28 +109,24 @@ exposure, not precise measurement.
    terminals deepest inside the sea, in the Gulf of Finland, run the longest
    exposed route to reach port.
 
-## What the exposure score is
+## The exposure score
 
-The score combines three things, each given a stated weight:
+Each terminal gets a score built from three things, each with a stated weight:
 
-- how close a terminal is to Russian territory,
-- how much of the region's import capacity it holds,
-- how long its supply route past the Danish Straits runs.
+- how close it is to Russian territory (weight 0.4),
+- how much of the region's import capacity it holds (0.3),
+- how long its supply route past the Danish Straits runs (0.3).
 
-The weights are written out on the Analysis page. The score is deliberately
-simple. There is no hidden model, and anyone can change the weights and see how
-the ranking moves.
+Proximity gets the most weight because the question is about exposure to pressure
+from one actor, and distance is the most direct measure the public data supports.
+Capacity matters because a larger terminal does more damage if it goes down, and
+transit matters because a terminal deep inside the Baltic runs a longer voyage to
+be resupplied.
 
-## How the weights were chosen
-
-The weights are a judgement, not a finding. Proximity to Russian territory gets
-the most weight (0.4) because the question is about exposure to pressure from one
-actor, and distance is the most direct measure the public data supports.
-Capacity and transit each get 0.3: a larger terminal does more damage if it goes
-down, and a terminal deep inside the Baltic must run a longer voyage past the
-Danish Straits to be resupplied. None of this is fixed. The three weights are on
-the Analysis page, and changing them changes the ranking. It is a starting point,
-not a final score.
+The weights are a judgement, not a finding. They sit in plain view on the
+Analysis page, changing them changes the ranking, and the sensitivity table there
+shows by how much. There is no hidden model. It is a starting point, not a final
+score.
 
 ## Disruption to the infrastructure since 2022
 
@@ -139,6 +146,26 @@ geography in this project is worth looking at closely. The
 
 Sources: [Balticconnector (ERR)](https://news.err.ee/1609422658/china-admits-container-ship-newnew-polar-bear-damaged-undersea-gas-pipeline),
 [Estlink 2 incident (Wikipedia)](https://en.wikipedia.org/wiki/2024_Estlink_2_incident).
+
+## What follows for policy
+
+Four points come out of the maps rather than out of theory:
+
+1. **The north-east has no spare door.** Finland and Lithuania each lean on a
+   single large terminal. An outage at Inkoo or Klaipėda, planned or otherwise,
+   has no local substitute; backup arrives by pipeline from neighbours, over
+   exactly the links that have been damaged since 2022.
+2. **The connectors matter as much as the terminals.** Estonia, Latvia and Sweden
+   import through neighbours rather than terminals of their own, so their supply
+   runs on pipes and cables like the Balticconnector. The incidents above hit
+   precisely that layer.
+3. **The Danish Straits are a shared dependency.** Every cargo for all eight
+   countries passes one entrance, so monitoring and patrol arrangements there, of
+   the kind NATO stood up after the December 2024 cable cuts, protect the whole
+   region at once.
+4. **Floating terminals cut both ways.** FSRUs were quick to add and can be moved
+   to where they are needed, but they are few, chartered, and easy to count. Much
+   of the region's flexibility rests on a handful of ships.
 
 ## Limitations
 
