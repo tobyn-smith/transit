@@ -2,8 +2,6 @@
 title: "Baltic Energy Transit Risk"
 subtitle: "Exposure of post-2022 energy import infrastructure"
 author: "Tobyn Smith"
-date: today
-date-format: "D MMMM YYYY"
 format:
   revealjs:
     theme: [default, slides.scss]
