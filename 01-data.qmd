@@ -53,8 +53,8 @@ Monitor** terminal tracker, current as of 2024 to 2025. The `source` column in
 the table names the operator behind each figure. Two points worth flagging:
 
 - Capacities move. Świnoujście reached 8.3 bcm only after its third tank came
-  online in early 2025, and Mukran's 13.5 bcm assumes both of its FSRUs — the
-  moored ships that store and re-gasify LNG — are running.
+  online in early 2025, and Mukran's 13.5 bcm assumes both of its FSRUs (the
+  moored ships that store and re-gasify LNG) are running.
 - The Paldiski jetty in Estonia is deliberately left out. It is shelved, and its
   capacity figure refers to the same ship (the Exemplar) that now operates at
   Inkoo, so including both would count one vessel twice.

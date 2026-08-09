@@ -68,7 +68,7 @@ An **exposure score** for each terminal, from three plain ingredients:
 
 The weights are a stated judgement, not a result. Anyone can change them.
 
-## Finding 1 — concentration
+## Finding 1: concentration
 
 Import capacity is lopsided.
 
@@ -77,7 +77,7 @@ Import capacity is lopsided.
 - The northeast leans on one or two terminals each: Inkoo for the Gulf of Finland,
   Klaipėda for Lithuania.
 
-## Finding 2 — proximity
+## Finding 2: proximity
 
 The terminals closest to Russia are the **small** ones:
 
@@ -87,7 +87,7 @@ The terminals closest to Russia are the **small** ones:
 The two largest terminals sit farthest from Russia. Size and proximity do not line
 up, which is what the score is built to show.
 
-## Finding 3 — one way in
+## Finding 3: one way in
 
 Every LNG cargo passes the **Danish Straits**.
 
@@ -111,10 +111,20 @@ anchors across the seabed.
 
 Not every country has its own terminal.
 
-- **Estonia, Latvia, Sweden:** no terminal — they depend on neighbours through the
+- **Estonia, Latvia, Sweden:** no terminal; they depend on neighbours through the
   Balticconnector and regional pipelines.
-- **Lithuania, Germany, Poland:** a single terminal each — one point of failure.
+- **Lithuania, Germany, Poland:** a single terminal each, one point of failure.
 - **Denmark:** low dependency, on the back of its own North Sea gas.
+
+## What follows for policy
+
+- **No spare door in the north-east:** Finland and Lithuania each lean on one
+  terminal; the fallback is the very pipelines that have been hit.
+- **The connectors are the soft layer:** Estonia, Latvia and Sweden import
+  through neighbours, not terminals of their own.
+- **The Straits are shared:** one entrance for all eight countries, so patrols
+  there protect everyone at once.
+- **FSRUs cut both ways:** quick to add and movable, but few and chartered.
 
 ## Limitations
 
