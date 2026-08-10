@@ -38,6 +38,17 @@ natural gas (LNG).
 
 **How concentrated is that infrastructure, and how exposed is it?**
 
+## The size of the hole
+
+Russian pipeline gas into these eight countries:
+
+- **2021:** about 70 bcm
+- **2023:** about 0.3 bcm, essentially nothing
+
+Operating LNG capacity built in the region: **around 23 bcm**, roughly a third of
+what stopped arriving. The rest closed through lower demand and pipeline gas from
+the west and north.
+
 ## The terminals
 
 ```{r}

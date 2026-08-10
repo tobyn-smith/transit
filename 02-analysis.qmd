@@ -135,6 +135,60 @@ transit <- st_sf(tl, geometry = st_sfc(line_geom, crs = 4326)) |>
 corridor_cols <- c("Operating" = "#2c5d7c", "Disrupted since 2022" = "#8f1d17")
 ```
 
+## What was replaced
+
+Before looking at where the terminals sit, it is worth seeing the size of the hole
+they were built to fill. Russian pipeline gas into these eight countries has all
+but stopped, and the LNG capacity built since covers only part of what went.
+
+```{r swap}
+#| echo: false
+#| message: false
+#| warning: false
+#| fig-width: 7.5
+#| fig-height: 3.1
+#| fig-alt: "Bar chart comparing 70.1 bcm of Russian pipeline gas imported in 2021 with 0.3 bcm in 2023 and 23.4 bcm of operating LNG import capacity today."
+ru <- read_csv("data/processed/russian_imports.csv", show_col_types = FALSE)
+ru_21 <- sum(ru$russian_gas_bcm[ru$year == 2021])
+ru_23 <- sum(ru$russian_gas_bcm[ru$year == 2023])
+lng_cap <- sum(terminals$capacity_bcm[terminals$status == "operating"])
+
+swap <- data.frame(
+  what = factor(c("Russian pipeline gas, 2021",
+                  "Russian pipeline gas, 2023",
+                  "Operating LNG capacity now"),
+                levels = c("Operating LNG capacity now",
+                           "Russian pipeline gas, 2023",
+                           "Russian pipeline gas, 2021")),
+  bcm  = c(ru_21, ru_23, lng_cap),
+  kind = c("gone", "gone", "built"))
+
+ggplot(swap, aes(x = what, y = bcm, fill = kind)) +
+  geom_col(width = 0.6) +
+  geom_text(aes(label = paste0(format(round(bcm, 1), nsmall = 1), " bcm")),
+            hjust = -0.12, size = 3.2, colour = muted) +
+  scale_fill_manual(values = c(gone = "#8f1d17", built = "#2c5d7c"), guide = "none") +
+  scale_y_continuous(expand = expansion(mult = c(0, 0.22))) +
+  coord_flip() +
+  labs(x = NULL, y = "Billion cubic metres per year",
+       title = "A large hole, partly filled",
+       caption = "Russian pipeline imports, Eurostat nrg_ti_gas. LNG capacity is operating terminals only.") +
+  theme_transit() +
+  theme(panel.grid.major.y = element_blank(), panel.grid.minor = element_blank())
+```
+
+In 2021 these countries took `r round(ru_21, 1)` bcm of gas from Russia by
+pipeline. By 2023 that was `r round(ru_23, 1)` bcm, essentially nothing, and only
+Finland and Sweden recorded any at all. Germany alone accounted for
+`r round(ru$russian_gas_bcm[ru$iso_a2 == "DE" & ru$year == 2021], 1)` bcm of the
+2021 total and Poland `r round(ru$russian_gas_bcm[ru$iso_a2 == "PL" & ru$year == 2021], 1)` bcm.
+
+The operating LNG terminals amount to `r round(lng_cap, 1)` bcm a year, roughly a
+third of what stopped arriving. The gap did not close through terminals alone. It
+closed through lower demand, Norwegian pipeline gas, and imports arriving overland
+from the west, which is worth remembering before reading these terminals as the
+whole of the region's answer.
+
 ## Concentration
 
 Where the import terminals sit, with each point sized by how much gas it can bring

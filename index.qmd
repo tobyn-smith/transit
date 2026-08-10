@@ -19,8 +19,10 @@ terminals <- read_csv("data/processed/lng_terminals.csv", show_col_types = FALSE
 
 ## In brief
 
-After 2022 the Baltic region swapped Russian pipeline gas for seaborne LNG,
-landed at a handful of coastal terminals. This project maps that infrastructure
+Russian pipeline gas into the eight Baltic littoral countries fell from about
+70 bcm in 2021 to almost nothing by 2023. In its place the region leans on seaborne
+LNG, landed at a handful of coastal terminals whose combined capacity is roughly a
+third of what stopped arriving. This project maps that infrastructure
 and scores how exposed each terminal is, using distance to Russian territory,
 share of import capacity, and the length of the supply run past the Danish
 Straits. Three things stand out: capacity is concentrated in two southern

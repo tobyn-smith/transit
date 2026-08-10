@@ -149,6 +149,19 @@ Checking Eurostat for the latest EU-wide figure...
 </script>
 ```
 
+## Russian pipeline imports
+
+The before and after comparison uses imports of natural gas from Russia by
+pipeline, from **Eurostat** (indicator `nrg_ti_gas`, partner Russia, natural gas),
+for 2021 and 2023, held in `data/processed/russian_imports.csv` and converted to
+bcm. 2021 is used as the last full year before the invasion.
+
+These are recorded imports, not pipeline capacity, which is the fairer comparison:
+capacity figures for pipelines like Nord Stream describe what could have flowed
+rather than what these particular countries actually took.
+
+[Download this table as a CSV](data/processed/russian_imports.csv)
+
 ## A note on conflict data
 
 This project frames the question as exposure and structural dependence, not
@@ -177,6 +190,9 @@ live in `scripts/01_clean.R`, and the Analysis page repeats them when it builds:
 - Eurostat. Supply, transformation and consumption of gas, indicator
   `nrg_cb_gas`, inland consumption, natural gas, 2023.
   <https://ec.europa.eu/eurostat> (accessed August 2026).
+- Eurostat. Imports of natural gas by partner country, indicator `nrg_ti_gas`,
+  partner Russia, 2021 and 2023. <https://ec.europa.eu/eurostat>
+  (accessed August 2026).
 - Global Energy Monitor. Global LNG Terminal Tracker.
   <https://globalenergymonitor.org> (accessed June 2026).
 - Operator figures for capacity and status: Gaz-System, Deutsche ReGas, Gasgrid
