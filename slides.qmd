@@ -138,6 +138,17 @@ Capacity only means something next to demand.
 
 The most exposed terminals are also the ones carrying the region's spare capacity.
 
+## Lose one terminal
+
+Applying the logic of the EU's N-1 standard to seaborne capacity alone:
+
+- **Finland** falls from over three times its demand to about a fifth, on Hamina
+  alone.
+- **Lithuania, Poland and Germany** fall to zero seaborne capacity.
+
+They are not failing the real N-1 test, which counts pipelines and storage too.
+But the fallback is precisely the pipelines and cables that have been cut.
+
 ## What follows for policy
 
 - **No spare door in the north-east:** Finland and Lithuania each lean on one

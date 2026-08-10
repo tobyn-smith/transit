@@ -133,12 +133,13 @@ Sources: [Balticconnector return to service (Gasgrid)](https://gasgrid.fi/en/202
 
 Four points come out of the maps rather than out of theory:
 
-1. **The north-east has no spare door.** Finland and Lithuania each lean on a
-   single large terminal. An outage at Inkoo or Klaipėda, planned or otherwise,
-   has no local substitute; backup arrives by pipeline from neighbours, over
-   exactly the links that have been damaged since 2022. Because those two
-   terminals also carry the spare capacity the region leans on, an outage there is
-   not only a national problem.
+1. **The north-east has no spare door.** Borrowing the logic of the EU's N-1
+   standard and removing each country's largest terminal, the cover vanishes.
+   Finland is left with Hamina, covering about a fifth of demand; Lithuania,
+   Poland and Germany are left with no seaborne capacity at all. Backup then
+   arrives by pipeline from neighbours, over exactly the links that have been
+   damaged since 2022. Because Inkoo and Klaipėda also carry the spare capacity
+   the region leans on, an outage there is not only a national problem.
 2. **The connectors matter as much as the terminals.** Estonia, Latvia and Sweden
    import through neighbours rather than terminals of their own, so their supply
    runs on pipes and cables like the Balticconnector. The incidents above hit
