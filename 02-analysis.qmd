@@ -521,11 +521,14 @@ n1_long$scenario <- factor(n1_long$scenario,
 
 ggplot(n1_long, aes(x = reorder(country, coverage), y = coverage, fill = scenario)) +
   geom_col(position = position_dodge(width = 0.72), width = 0.66) +
+  geom_text(aes(label = paste0(round(coverage), "%")),
+            position = position_dodge(width = 0.72),
+            hjust = -0.18, size = 2.7, colour = muted) +
   geom_hline(yintercept = 100, linetype = "31", colour = ink, linewidth = 0.4) +
   scale_fill_manual(values = c("All terminals running" = "#2c5d7c",
                                "Largest terminal offline" = "#8f1d17"),
                     name = NULL) +
-  scale_y_continuous(expand = expansion(mult = c(0, 0.08))) +
+  scale_y_continuous(expand = expansion(mult = c(0, 0.14))) +
   coord_flip() +
   labs(x = NULL, y = "Seaborne capacity as a share of national gas demand (%)",
        title = "Lose one terminal, and the cover disappears",
