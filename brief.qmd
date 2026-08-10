@@ -1,0 +1,189 @@
+---
+title: "Baltic Energy Transit Risk"
+subtitle: "Exposure of post-2022 energy import infrastructure"
+author: "Tobyn Smith"
+format:
+  pdf:
+    pdf-engine: xelatex
+    documentclass: article
+    geometry:
+      - margin=2.4cm
+    fontsize: 10pt
+    colorlinks: true
+    linkcolor: RoyalBlue
+    urlcolor: RoyalBlue
+    include-in-header:
+      text: |
+        \usepackage{sectsty}
+        \sectionfont{\color[HTML]{12263F}}
+        \subsectionfont{\color[HTML]{12263F}}
+execute:
+  warning: false
+  message: false
+  echo: false
+---
+
+```{r setup}
+library(sf)
+library(dplyr)
+library(readr)
+library(ggplot2)
+library(rnaturalearth)
+library(knitr)
+
+laea <- 3035
+ink   <- "#12263f"
+muted <- "#5a6675"
+land  <- "#e6ebf0"
+sea   <- "#f7f9fb"
+exp_cols <- c("#e9eef2", "#cf8f6a", "#8f1d17")
+
+theme_brief <- function() {
+  theme_minimal(base_size = 9) +
+    theme(plot.title    = element_text(face = "bold", colour = ink, size = 11),
+          plot.subtitle = element_text(colour = muted, size = 8),
+          plot.caption  = element_text(colour = muted, size = 6.5, hjust = 0),
+          legend.title  = element_text(size = 7, colour = muted),
+          legend.text   = element_text(size = 6.5))
+}
+
+world  <- ne_countries(scale = "medium", returnclass = "sf")
+aoi    <- st_as_sfc(st_bbox(c(xmin = 9, ymin = 53, xmax = 30, ymax = 66),
+                            crs = 4326)) |> st_transform(laea)
+russia <- world |> filter(admin == "Russia") |> st_transform(laea) |> st_make_valid()
+chokepoint <- st_as_sfc(st_bbox(c(xmin = 10.5, ymin = 55.0, xmax = 13.0, ymax = 56.2),
+                                crs = 4326)) |> st_transform(laea)
+
+terminals <- read_csv("data/processed/lng_terminals.csv", show_col_types = FALSE) |>
+  st_as_sf(coords = c("lon", "lat"), crs = 4326) |>
+  st_transform(laea) |>
+  mutate(dist_russia_km = as.numeric(st_distance(geometry, st_union(russia))) / 1000,
+         dist_chokepoint_km = as.numeric(st_distance(geometry, st_union(chokepoint))) / 1000)
+
+norm <- function(x) (max(x, na.rm = TRUE) - x) /
+                    (max(x, na.rm = TRUE) - min(x, na.rm = TRUE))
+terminals <- terminals |>
+  mutate(s_proximity  = norm(dist_russia_km),
+         s_chokepoint = 1 - norm(dist_chokepoint_km),
+         s_capacity   = capacity_bcm / max(capacity_bcm, na.rm = TRUE),
+         exposure     = 0.4 * s_proximity + 0.3 * s_capacity + 0.3 * s_chokepoint) |>
+  arrange(desc(exposure))
+
+land_aoi <- world |> st_transform(laea) |> st_crop(aoi)
+
+ru      <- read_csv("data/processed/russian_imports.csv", show_col_types = FALSE)
+demand  <- read_csv("data/processed/gas_demand.csv", show_col_types = FALSE)
+ru_21   <- sum(ru$russian_gas_bcm[ru$year == 2021])
+ru_23   <- sum(ru$russian_gas_bcm[ru$year == 2023])
+lng_cap <- sum(terminals$capacity_bcm[terminals$status == "operating"])
+reg_cov <- round(100 * lng_cap / sum(demand$gas_demand_bcm))
+```
+
+## The problem
+
+Before 2022 most of the Baltic region's gas arrived by pipeline from Russia. After
+the invasion of Ukraine and the sabotage of the Nord Stream pipelines that supply
+stopped. Russian pipeline gas into the eight Baltic littoral countries fell from
+about `r round(ru_21)` bcm in 2021 to `r round(ru_23, 1)` bcm in 2023. In its place
+the region now leans on seaborne liquefied natural gas, landed at a handful of
+coastal terminals.
+
+Those terminals hold roughly `r round(lng_cap, 1)` bcm a year of operating
+capacity, about a third of what stopped arriving. The rest of the gap closed
+through lower demand and pipeline gas from the west and north. This brief asks how
+concentrated that remaining infrastructure is, and how exposed.
+
+## Where the terminals sit
+
+```{r map, fig.width = 6.4, fig.height = 5.2}
+ggplot() +
+  geom_sf(data = land_aoi, fill = land, colour = "#d3dae1", linewidth = 0.18) +
+  geom_sf(data = st_crop(russia, aoi), fill = "#dfd0cf", colour = "#c9b4b2",
+          linewidth = 0.18) +
+  geom_sf(data = st_sf(geometry = chokepoint), fill = NA, colour = ink,
+          linewidth = 0.4, linetype = "31") +
+  geom_sf(data = terminals, aes(size = capacity_bcm, colour = exposure)) +
+  scale_size_continuous(range = c(1.6, 7), name = "Capacity\n(bcm/yr)") +
+  scale_colour_gradientn(colours = exp_cols, name = "Exposure") +
+  labs(title = "Baltic LNG import terminals",
+       subtitle = "Point size is capacity, colour is exposure; dashed box is the Danish Straits",
+       caption = "Sources: Natural Earth; operator reporting and Global Energy Monitor.") +
+  theme_brief() +
+  theme(axis.text = element_blank(), axis.title = element_blank(),
+        panel.grid = element_blank(),
+        panel.background = element_rect(fill = sea, colour = NA))
+```
+
+## Findings
+
+**Capacity is concentrated in the south.** Świnoujście in Poland and Mukran in
+Germany hold about three fifths of the region's operating import capacity. The
+northeast leans on one or two terminals each, Inkoo for the Gulf of Finland and
+Klaipėda for Lithuania.
+
+**The terminals nearest Russia are the small ones.** Hamina, at the eastern end of
+the Gulf of Finland, and Klaipėda and Gdańsk beside the Kaliningrad exclave sit
+closest. The two largest terminals are among the farthest away. Size and proximity
+do not line up, which is what the exposure score is built to show.
+
+**Every cargo enters through one strait.** All LNG bound for these terminals
+passes the Danish Straits. The Kiel Canal is the only other way in and is far too
+small for LNG carriers. The terminals deepest inside the sea run the longest
+exposed route to port.
+
+**The small states overbuilt on purpose.** Set against what each country actually
+burns, Finland and Lithuania hold capacity worth several times their own demand,
+while Germany and Poland cover only part of theirs by sea. Across the eight
+countries the terminals could land `r reg_cov`% of annual consumption.
+
+```{r ranking}
+terminals |>
+  st_drop_geometry() |>
+  transmute(Terminal = name, Country = country, Status = status,
+            `Capacity (bcm)` = capacity_bcm,
+            `km to Russia` = round(dist_russia_km),
+            Exposure = round(exposure, 2)) |>
+  kable(booktabs = TRUE, caption = "Terminals ranked by exposure score.")
+```
+
+## What follows for policy
+
+1. **The northeast has no spare door.** Finland and Lithuania each lean on a single
+   large terminal with no local substitute. Because those same terminals carry the
+   spare capacity the region draws on, an outage there is not only a national
+   problem.
+2. **The connectors matter as much as the terminals.** Estonia, Latvia and Sweden
+   import through neighbours rather than terminals of their own, over links such as
+   the Balticconnector that have already been damaged.
+3. **The Danish Straits are a shared dependency.** One entrance serves all eight
+   countries, so surveillance and patrol arrangements there protect the whole
+   region at once.
+4. **Floating terminals cut both ways.** They were quick to add and can be moved,
+   but they are few and chartered. Mukran lost half its capacity when a charter
+   ended.
+
+## This is not hypothetical
+
+| Date | Asset | What happened |
+|:-----|:------|:--------------|
+| Sep 2022 | Nord Stream 1 and 2 | Pipelines ruptured by underwater explosions off Bornholm |
+| Oct 2023 | Balticconnector | Pipeline and cable damaged by a ship's anchor; back in service 22 April 2024 |
+| Dec 2024 | Estlink 2 | Power and telecoms cables cut; back in service 20 June 2025 |
+
+## Limitations
+
+This measures geographic exposure, not the probability of disruption. The score
+uses proxies rather than a causal model, and different reasonable weights shift the
+ranking. It is a single snapshot: capacities move, and headline figures often
+describe planned rather than operating capacity. Demand in 2023 was itself
+depressed by high prices and mild weather, so coverage in a colder year would look
+less comfortable.
+
+## Sources
+
+All public. Terminal locations and capacities from operator reporting and the
+Global Energy Monitor LNG tracker, current to 2024 and 2025. Gas import dependency
+(`nrg_ind_id`), inland consumption (`nrg_cb_gas`) and imports from Russia
+(`nrg_ti_gas`) from Eurostat. Country geography from Natural Earth.
+
+Full data, methods and interactive maps: <https://tobyn-smith.github.io/transit>
