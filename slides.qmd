@@ -71,7 +71,7 @@ The weights are a stated judgement, not a result. Anyone can change them.
 
 Import capacity is lopsided.
 
-- Two southern terminals, **Mukran** (Germany) and **Świnoujście** (Poland), hold
+- Two southern terminals, **Świnoujście** (Poland) and **Mukran** (Germany), hold
   most of the region's capacity.
 - The northeast leans on one or two terminals each: Inkoo for the Gulf of Finland,
   Klaipėda for Lithuania.

@@ -68,14 +68,14 @@ leaflet(terminals) |>
 
 ## Findings
 
-1. **Concentration.** Capacity is lopsided. Two southern terminals, Mukran in
-   Germany and Świnoujście in Poland, hold most of the region's import capacity,
-   while the northeast leans on one or two terminals each: Inkoo for the Gulf of
-   Finland and Klaipėda for Lithuania.
+1. **Concentration.** Capacity is lopsided. Two southern terminals, Świnoujście
+   in Poland and Mukran in Germany, hold about three fifths of the region's
+   operating import capacity, while the northeast leans on one or two terminals
+   each: Inkoo for the Gulf of Finland and Klaipėda for Lithuania.
 2. **Proximity.** The terminals closest to Russian territory are Hamina, at the
    eastern end of the Gulf of Finland, and Klaipėda and Gdańsk, which sit beside
    the Kaliningrad exclave. Proximity and capacity do not always line up: the two
-   largest terminals, Mukran and Świnoujście, are among the farthest from Russia,
+   largest terminals, Świnoujście and Mukran, are among the farthest from Russia,
    which is what the exposure score is built to show.
 3. **Transit through the Straits.** Every LNG cargo bound for these terminals
    passes the Danish Straits. The Kiel Canal is the only other way in, and it is
@@ -116,14 +116,15 @@ seabed.
 | Date | Asset | What happened |
 |------|-------|---------------|
 | Sep 2022 | Nord Stream 1 and 2 | Subsea gas pipelines ruptured by underwater explosions off Bornholm. |
-| Oct 2023 | Balticconnector | The Finland-Estonia gas pipeline and a telecoms cable were damaged by a ship's anchor; the pipeline was repaired in 2024. |
-| Dec 2024 | Estlink 2 | The Estonia-Finland power cable and four telecoms cables were cut; a shadow-fleet tanker is the prime suspect. The cable was back in service in 2025. |
+| Oct 2023 | Balticconnector | The Finland-Estonia gas pipeline and a telecoms cable were damaged by a ship's anchor. The pipeline was shut for six months and returned to commercial use on 22 April 2024. |
+| Dec 2024 | Estlink 2 | The Estonia-Finland power cable and four telecoms cables were cut on Christmas Day; a shadow-fleet tanker is the prime suspect. Repairs ran into 2025 and the link returned to commercial use on 20 June 2025. |
 
 These incidents are context, not events modelled here, but they are why the
 geography in this project is worth looking at closely. The
 [Analysis](02-analysis.qmd) page maps the main corridors and which have been hit.
 
-Sources: [Balticconnector (ERR)](https://news.err.ee/1609422658/china-admits-container-ship-newnew-polar-bear-damaged-undersea-gas-pipeline),
+Sources: [Balticconnector return to service (Gasgrid)](https://gasgrid.fi/en/2024/04/19/balticconnector-in-commercial-use-from-monday-22-april-onwards/),
+[Estlink 2 return to service (Fingrid)](https://www.fingrid.fi/en/news/news/2025/estlink-2-electricity-transmission-link-returns-to-commercial-use/),
 [Estlink 2 incident (Wikipedia)](https://en.wikipedia.org/wiki/2024_Estlink_2_incident).
 
 ## What follows for policy
