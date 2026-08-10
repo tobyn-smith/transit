@@ -487,6 +487,68 @@ closest to Russian territory are the small ones, but two of them, Klaipėda and
 Inkoo, are precisely the assets carrying spare capacity for their neighbours. The
 most exposed sites are also the ones the region's fallback depends on.
 
+## What if the biggest terminal goes down?
+
+EU gas security rules use an idea called the N-1 standard: can a country still meet
+demand if its single largest piece of supply infrastructure fails? The test below
+borrows that logic and applies it to seaborne capacity alone, removing each
+country's largest terminal and asking what the rest could still land.
+
+```{r n1}
+#| echo: false
+#| message: false
+#| warning: false
+#| fig-width: 7.5
+#| fig-height: 3.6
+#| fig-alt: "Grouped bar chart showing that with all terminals running Finland and Lithuania exceed their demand, but with the largest terminal offline Finland falls to about 20 percent and Lithuania, Poland and Germany fall to zero."
+n1 <- terminals |>
+  st_drop_geometry() |>
+  filter(status == "operating") |>
+  group_by(country) |>
+  summarise(cap_all = sum(capacity_bcm),
+            cap_n1  = sum(capacity_bcm) - max(capacity_bcm), .groups = "drop") |>
+  left_join(demand, by = "country") |>
+  mutate(cov_all = 100 * cap_all / gas_demand_bcm,
+         cov_n1  = 100 * cap_n1  / gas_demand_bcm)
+
+n1_long <- rbind(
+  data.frame(country = n1$country, scenario = "All terminals running",
+             coverage = n1$cov_all),
+  data.frame(country = n1$country, scenario = "Largest terminal offline",
+             coverage = n1$cov_n1))
+n1_long$scenario <- factor(n1_long$scenario,
+  levels = c("All terminals running", "Largest terminal offline"))
+
+ggplot(n1_long, aes(x = reorder(country, coverage), y = coverage, fill = scenario)) +
+  geom_col(position = position_dodge(width = 0.72), width = 0.66) +
+  geom_hline(yintercept = 100, linetype = "31", colour = ink, linewidth = 0.4) +
+  scale_fill_manual(values = c("All terminals running" = "#2c5d7c",
+                               "Largest terminal offline" = "#8f1d17"),
+                    name = NULL) +
+  scale_y_continuous(expand = expansion(mult = c(0, 0.08))) +
+  coord_flip() +
+  labs(x = NULL, y = "Seaborne capacity as a share of national gas demand (%)",
+       title = "Lose one terminal, and the cover disappears",
+       subtitle = "Dashed line is 100% of annual demand",
+       caption = "Operating terminals only. Pipelines, storage and domestic production are not counted.") +
+  theme_transit() +
+  theme(panel.grid.major.y = element_blank(), panel.grid.minor = element_blank(),
+        legend.position = "top")
+```
+
+The result is stark. Finland and Lithuania comfortably clear their own demand while
+everything is running, but each depends on one large terminal. Take Inkoo out and
+Finland is left with Hamina, a small-scale site covering about a fifth of demand.
+Take out Klaipėda, Świnoujście or Mukran and Lithuania, Poland and Germany have no
+seaborne capacity at all.
+
+Two caveats matter here. The real N-1 standard counts every source of supply,
+including pipelines, storage and domestic production, so these countries are not
+failing the actual regulatory test. They have other ways to get gas, which is the
+point: lose a terminal and you fall back onto exactly the pipelines and
+interconnectors that have been damaged since 2022. And this compares against annual
+demand, while a failure in January would bite harder than the average suggests.
+
 ## Exposure ranking
 
 Click any column heading to re-sort the table.

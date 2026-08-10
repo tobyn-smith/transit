@@ -48,6 +48,7 @@ terminals for liquefied natural gas.
 | **Small and close** | The terminals nearest Russian territory are the smallest ones. The two largest sit farthest away. |
 | **One way in** | Every cargo passes the Danish Straits. The Kiel Canal is far too small for LNG carriers. |
 | **Deliberate overbuild** | Finland and Lithuania hold capacity worth several times their own demand. They built a regional buffer. |
+| **One deep** | Remove each country's largest terminal and the cover vanishes: Finland drops to a fifth of demand, Lithuania, Poland and Germany to nothing. |
 
 ## What is on the site
 

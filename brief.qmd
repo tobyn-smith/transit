@@ -159,10 +159,12 @@ terminals |>
 
 ## What follows for policy
 
-1. **The northeast has no spare door.** Finland and Lithuania each lean on a single
-   large terminal with no local substitute. Because those same terminals carry the
-   spare capacity the region draws on, an outage there is not only a national
-   problem.
+1. **The northeast has no spare door.** Borrowing the logic of the EU's N-1
+   standard and removing each country's largest terminal, Finland is left covering
+   about a fifth of its demand and Lithuania, Poland and Germany are left with no
+   seaborne capacity at all. They are not failing the real test, which counts
+   pipelines and storage too, but the fallback is exactly the links that have been
+   damaged since 2022.
 2. **The connectors matter as much as the terminals.** Estonia, Latvia and Sweden
    import through neighbours rather than terminals of their own, over links such as
    the Balticconnector that have already been damaged.
