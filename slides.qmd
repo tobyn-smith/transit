@@ -115,6 +115,18 @@ Not every country has its own terminal.
 - **Lithuania, Germany, Poland:** a single terminal each, one point of failure.
 - **Denmark:** low dependency, on the back of its own North Sea gas.
 
+## Is the capacity enough?
+
+Capacity only means something next to demand.
+
+- **Finland and Lithuania** hold several times their own annual consumption. They
+  built a regional buffer, not just national supply.
+- **Germany and Poland** cover only part of much larger demand by sea, and still
+  lean on pipelines from the west and north.
+- **Estonia, Latvia, Sweden** have no terminal at all.
+
+The most exposed terminals are also the ones carrying the region's spare capacity.
+
 ## What follows for policy
 
 - **No spare door in the north-east:** Finland and Lithuania each lean on one

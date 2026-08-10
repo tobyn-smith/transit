@@ -25,8 +25,10 @@ and scores how exposed each terminal is, using distance to Russian territory,
 share of import capacity, and the length of the supply run past the Danish
 Straits. Three things stand out: capacity is concentrated in two southern
 terminals, the terminals nearest Russia are the small ones, and every cargo
-enters through a single strait. The infrastructure has already been hit several
-times since 2022, so none of this is abstract.
+enters through a single strait. Measured against what each country burns, the
+small northeastern states built far more capacity than they need while the large
+consumers cover only part of theirs by sea. The infrastructure has already been
+hit several times since 2022, so none of this is abstract.
 
 Terminal capacities are current to 2024 and 2025; gas import dependency is
 Eurostat data for 2023. Every source is listed on the [Data](01-data.qmd) page.
@@ -80,6 +82,11 @@ leaflet(terminals) |>
    far too small for LNG carriers, so the Straits are the effective entrance. The
    terminals deepest inside the sea, in the Gulf of Finland, run the longest
    exposed route to reach port.
+4. **The small states overbuilt on purpose.** Set against what each country
+   actually burns, Finland and Lithuania hold terminal capacity worth several
+   times their own demand, while Germany and Poland cover only part of theirs by
+   sea. The northeast did not build to meet its own consumption. It built a
+   buffer, and its neighbours draw on it.
 
 ## The exposure score
 
@@ -126,7 +133,9 @@ Four points come out of the maps rather than out of theory:
 1. **The north-east has no spare door.** Finland and Lithuania each lean on a
    single large terminal. An outage at Inkoo or Klaipėda, planned or otherwise,
    has no local substitute; backup arrives by pipeline from neighbours, over
-   exactly the links that have been damaged since 2022.
+   exactly the links that have been damaged since 2022. Because those two
+   terminals also carry the spare capacity the region leans on, an outage there is
+   not only a national problem.
 2. **The connectors matter as much as the terminals.** Estonia, Latvia and Sweden
    import through neighbours rather than terminals of their own, so their supply
    runs on pipes and cables like the Balticconnector. The incidents above hit

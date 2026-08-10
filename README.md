@@ -33,7 +33,8 @@ The site has three pages and a slide deck:
   capacity, a map of the transit corridors and which have been disrupted, a chart
   of how close each terminal is to Russian territory, a proximity-zone map with
   distance rings, a map of national gas import dependence, a country-level table
-  of import capacity, a sortable ranked table of exposure, a set of sliders that
+  of import capacity, a chart setting terminal capacity against what each country
+  actually burns, a sortable ranked table of exposure, a set of sliders that
   recompute the exposure ranking as you change the weights, and an interactive map
   with toggleable layers you can click through.
 - **Slides**: a short, navigable presentation of the whole thing for a general
@@ -49,6 +50,8 @@ All public, no logins, no paid datasets:
   capacity, status, source), kept in `data/processed/lng_terminals.csv`.
 - National gas import dependence from Eurostat (indicator `nrg_ind_id`), kept in
   `data/processed/import_dependence.csv` and reproduced by `scripts/03_eurostat.R`.
+- National gas demand from Eurostat (indicator `nrg_cb_gas`, inland consumption),
+  kept in `data/processed/gas_demand.csv` and pulled by the same script.
 - A small table of the main subsea transit corridors (pipelines and cables) with
   their landing points and status, kept in `data/processed/transit_lines.csv`.
 
