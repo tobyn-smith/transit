@@ -421,8 +421,12 @@ gas the region burns in a year. That regional figure hides the more interesting
 split. Finland and Lithuania built capacity well beyond their own consumption, so
 their terminals are not just national supply but a regional buffer that neighbours
 can draw on. Poland and Germany, with far larger demand, cover only part of it by
-sea and still lean on pipelines from the west and north. Estonia, Latvia and Sweden
-have no terminal at all.
+sea and still lean on pipelines from the west and north.
+
+Four countries show no terminal, but they are not in the same position. Estonia,
+Latvia and Sweden import all their gas through neighbours, so the empty bar is a
+dependency. Denmark's empty bar is not: it produces its own gas from the North Sea
+and is the one country here that does not need a terminal.
 
 Read alongside the exposure score, this sharpens the picture. The terminals sitting
 closest to Russian territory are the small ones, but two of them, Klaipėda and
