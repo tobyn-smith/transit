@@ -10,6 +10,7 @@ website:
   favicon: favicon.svg
   site-url: https://tobyn-smith.github.io/transit
   search: true
+  image: 02-analysis_files/figure-html/map-concentration-1.png
   open-graph: true
   twitter-card:
     card-style: summary_large_image
