@@ -46,14 +46,14 @@ leaflet(terminals, height = 480) |>
   addProviderTiles("CartoDB.Positron") |>
   addCircleMarkers(
     radius      = ~rescale(capacity_bcm, to = c(6, 18)),
-    color       = "#17150f", weight = 1,
-    fillColor   = "#9e2b25", fillOpacity = 0.8,
+    color       = "#12263f", weight = 1,
+    fillColor   = "#8f1d17", fillOpacity = 0.8,
     label       = ~name,
     popup       = ~paste0("<b>", name, "</b><br>", country,
                           "<br>", capacity_bcm, " bcm/yr<br>", status))
 ```
 
-::: {style="font-size:0.7em;color:#6b6760"}
+::: {style="font-size:0.7em;color:#5a6675"}
 Hover for a name, click for the detail. Each point is sized by capacity.
 :::
 

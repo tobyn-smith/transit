@@ -57,8 +57,8 @@ leaflet(terminals) |>
   addProviderTiles("CartoDB.Positron") |>
   addCircleMarkers(
     radius      = ~rescale(capacity_bcm, to = c(5, 15)),
-    color       = "#17150f", weight = 1,
-    fillColor   = "#9e2b25", fillOpacity = 0.8,
+    color       = "#12263f", weight = 1,
+    fillColor   = "#8f1d17", fillOpacity = 0.8,
     label       = ~name,
     popup       = ~paste0("<b>", name, "</b><br>", country,
                           "<br>", capacity_bcm, " bcm/yr<br>", status))
