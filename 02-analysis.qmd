@@ -371,6 +371,64 @@ pipelines. Lithuania, Germany and Poland each run a single terminal, so that one
 asset carries the country's seaborne supply. Denmark stands apart, with low
 dependency on the back of its North Sea production.
 
+## Is the capacity enough?
+
+Capacity only means something next to demand. This compares each country's
+operating terminal capacity with the gas it actually burned in 2023, so a bar at
+100% means the terminals alone could cover a normal year's consumption.
+
+```{r coverage}
+#| echo: false
+#| message: false
+#| warning: false
+#| fig-width: 7.5
+#| fig-height: 4.2
+#| fig-alt: "Bar chart of terminal capacity as a share of national gas demand, with Finland and Lithuania far above 100 percent, Poland and Germany well below, and Estonia, Latvia, Sweden and Denmark at zero."
+demand <- read_csv("data/processed/gas_demand.csv", show_col_types = FALSE)
+
+cover <- demand |>
+  left_join(by_country, by = "country") |>
+  mutate(capacity = coalesce(capacity, 0),
+         coverage = 100 * capacity / gas_demand_bcm)
+
+ggplot(cover, aes(x = reorder(country, coverage), y = coverage)) +
+  geom_col(aes(fill = coverage >= 100), width = 0.68) +
+  geom_hline(yintercept = 100, linetype = "31", colour = ink, linewidth = 0.4) +
+  geom_text(aes(label = ifelse(coverage == 0, "no terminal",
+                               paste0(round(coverage), "%"))),
+            hjust = -0.12, size = 3, colour = muted) +
+  scale_fill_manual(values = c(`TRUE` = "#2c5d7c", `FALSE` = "#8f1d17"),
+                    guide = "none") +
+  scale_y_continuous(expand = expansion(mult = c(0, 0.22))) +
+  coord_flip() +
+  labs(x = NULL, y = "Terminal capacity as a share of national gas demand (%)",
+       title = "Can the terminals cover what each country burns?",
+       subtitle = "Dashed line is 100%; blue clears it, red falls short",
+       caption = "Operating terminals only. Demand is inland consumption, 2023 (Eurostat nrg_cb_gas).") +
+  theme_transit() +
+  theme(panel.grid.major.y = element_blank(), panel.grid.minor = element_blank())
+```
+
+```{r coverage-numbers}
+#| echo: false
+tot_cap <- sum(cover$capacity)
+tot_dem <- sum(cover$gas_demand_bcm)
+reg_cov <- round(100 * tot_cap / tot_dem)
+```
+
+Across the eight countries the operating terminals could land `r reg_cov`% of the
+gas the region burns in a year. That regional figure hides the more interesting
+split. Finland and Lithuania built capacity well beyond their own consumption, so
+their terminals are not just national supply but a regional buffer that neighbours
+can draw on. Poland and Germany, with far larger demand, cover only part of it by
+sea and still lean on pipelines from the west and north. Estonia, Latvia and Sweden
+have no terminal at all.
+
+Read alongside the exposure score, this sharpens the picture. The terminals sitting
+closest to Russian territory are the small ones, but two of them, Klaipėda and
+Inkoo, are precisely the assets carrying spare capacity for their neighbours. The
+most exposed sites are also the ones the region's fallback depends on.
+
 ## Exposure ranking
 
 Click any column heading to re-sort the table.

@@ -103,7 +103,22 @@ read_csv("data/processed/import_dependence.csv", show_col_types = FALSE) |>
 
 [Download this table as a CSV](data/processed/import_dependence.csv)
 
-The table above is committed 2023 data. For comparison, the figure below is pulled
+## Gas demand
+
+To judge whether the terminals are large enough, the analysis compares their
+capacity with what each country actually burns. That demand figure is inland gas
+consumption from **Eurostat** (indicator `nrg_cb_gas`, natural gas, 2023), held in
+`data/processed/gas_demand.csv` and converted from million cubic metres to bcm so
+it sits on the same scale as terminal capacity. `scripts/03_eurostat.R` pulls it
+alongside the dependency figures.
+
+One caveat worth stating: 2023 demand was itself depressed by high prices and
+mild weather across much of Europe, so coverage against a colder, higher demand
+year would look less comfortable.
+
+[Download this table as a CSV](data/processed/gas_demand.csv)
+
+The dependency table above is committed 2023 data. For comparison, the figure below is pulled
 live from the Eurostat API in your browser when this page loads:
 
 ::: {#live-dependency style="font-size:0.95em;color:#5a6675;margin-top:0.5rem"}
@@ -155,6 +170,9 @@ live in `scripts/01_clean.R`, and the Analysis page repeats them when it builds:
   <https://www.naturalearthdata.com> (accessed June 2026).
 - Eurostat. Energy import dependency by products, indicator `nrg_ind_id`,
   natural gas, 2023. <https://ec.europa.eu/eurostat> (accessed June 2026).
+- Eurostat. Supply, transformation and consumption of gas, indicator
+  `nrg_cb_gas`, inland consumption, natural gas, 2023.
+  <https://ec.europa.eu/eurostat> (accessed August 2026).
 - Global Energy Monitor. Global LNG Terminal Tracker.
   <https://globalenergymonitor.org> (accessed June 2026).
 - Operator figures for capacity and status: Gaz-System, Deutsche ReGas, Gasgrid

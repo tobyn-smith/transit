@@ -1,7 +1,8 @@
 # 03_eurostat.R
-# Pulls natural gas import dependency from Eurostat (indicator nrg_ind_id) for the
-# study year and writes data/processed/import_dependence.csv. Public data, no key.
-# siec = G3000 is natural gas; unit = PC is percent.
+# Pulls two Eurostat series for the study year and writes them to data/processed/:
+#   import_dependence.csv  gas import dependency   (nrg_ind_id, unit PC)
+#   gas_demand.csv         inland gas consumption  (nrg_cb_gas, unit MIO_M3)
+# Public data, no key. siec = G3000 is natural gas.
 #
 # The analysis is a snapshot of one year, so the year is pinned here rather than
 # always taking the latest. To move the whole study to a newer year, change
@@ -36,4 +37,26 @@ out <- dep |>
 
 write_csv(out, "data/processed/import_dependence.csv")
 message(sprintf("Wrote data/processed/import_dependence.csv (Eurostat nrg_ind_id, %d).",
+                study_year))
+
+# inland gas consumption, converted from million cubic metres to bcm
+dem <- get_eurostat("nrg_cb_gas",
+                    filters = list(nrg_bal = "IC_OBS", siec = "G3000",
+                                   unit = "MIO_M3", geo = geos))
+
+dem_time <- intersect(c("TIME_PERIOD", "time"), names(dem))[1]
+dem_year <- suppressWarnings(as.integer(substr(as.character(dem[[dem_time]]), 1, 4)))
+
+demand <- dem |>
+  mutate(.year = dem_year) |>
+  filter(!is.na(values), .year == study_year) |>
+  transmute(
+    country = names_lookup[as.character(geo)],
+    iso_a2  = as.character(geo),
+    gas_demand_bcm = round(values / 1000, 1)
+  ) |>
+  arrange(iso_a2)
+
+write_csv(demand, "data/processed/gas_demand.csv")
+message(sprintf("Wrote data/processed/gas_demand.csv (Eurostat nrg_cb_gas, %d).",
                 study_year))
