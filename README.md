@@ -1,168 +1,158 @@
-# Baltic Energy Transit Risk
+<h1 align="center">Baltic Energy Transit Risk</h1>
 
-[![Render and Publish](https://github.com/tobyn-smith/transit/actions/workflows/publish.yml/badge.svg)](https://github.com/tobyn-smith/transit/actions/workflows/publish.yml)
+<p align="center">
+  <em>Mapping how exposed the Baltic region's energy import infrastructure became after 2022</em>
+</p>
 
-This project looks at a real energy security problem in the Baltic Sea region.
-Before 2022, much of the region's natural gas arrived by pipeline from Russia.
-After the invasion of Ukraine and the sabotage of the Nord Stream pipelines,
-that supply was cut or abandoned, and imports shifted onto a small number of
-coastal LNG terminals and ports. This project maps where that infrastructure
-sits and measures how exposed it is to geopolitical pressure.
+<p align="center">
+  <a href="https://tobyn-smith.github.io/transit/"><strong>Read the site</strong></a> ·
+  <a href="https://tobyn-smith.github.io/transit/slides.html">Slides</a> ·
+  <a href="https://tobyn-smith.github.io/transit/02-analysis.html">Analysis</a> ·
+  <a href="https://tobyn-smith.github.io/transit/01-data.html">Data</a>
+</p>
 
-It is built in R, uses spatial (GIS) methods, relies only on public data, and
-publishes as a small website.
+<p align="center">
+  <a href="https://github.com/tobyn-smith/transit/actions/workflows/publish.yml">
+    <img src="https://github.com/tobyn-smith/transit/actions/workflows/publish.yml/badge.svg" alt="Build status"></a>
+  <img src="https://img.shields.io/badge/R-spatial%20(sf)-1b4f72" alt="Built with R and sf">
+  <img src="https://img.shields.io/badge/site-Quarto-12263f" alt="Built with Quarto">
+  <img src="https://img.shields.io/badge/data-public%20only-8f1d17" alt="Public data only">
+  <img src="https://img.shields.io/badge/licence-MIT-5a6675" alt="MIT licence">
+</p>
 
-## The research question
+<p align="center">
+  <img src="https://tobyn-smith.github.io/transit/02-analysis_files/figure-html/map-concentration-1.png"
+       alt="Map of Baltic LNG import terminals sized by capacity and coloured by exposure" width="620">
+</p>
 
-After 2022, Baltic energy imports shifted onto a small set of coastal LNG
-terminals and ports. How concentrated is that infrastructure, and how exposed is
-it, measured by capacity, by distance to Russian territory (including the
-Kaliningrad exclave), and by reliance on passage through the Danish Straits?
+---
 
-## What the project shows
+## The question
 
-The site has three pages and a slide deck:
+Before 2022 most of the Baltic region's gas arrived by pipeline from Russia. After
+the invasion of Ukraine and the sabotage of the Nord Stream pipelines, that supply
+stopped: Russian pipeline gas into the eight littoral countries fell from about
+70 bcm in 2021 to almost nothing by 2023. Imports moved onto a handful of coastal
+terminals for liquefied natural gas.
 
-- **Overview**: the question, the main findings in plain language, a clickable map
-  of the terminals, what follows from the findings for policy, and a list of
-  limitations.
-- **Data**: every source, all public, with notes on what is solid and what is
-  still approximate, and the terminal and dependence figures shown as sortable,
-  searchable tables.
-- **Analysis**: the maps and the numbers. A map of the terminals sized by
-  capacity, a map of the transit corridors and which have been disrupted, a chart
-  of how close each terminal is to Russian territory, a proximity-zone map with
-  distance rings, a map of national gas import dependence, a country-level table
-  of import capacity, a chart setting terminal capacity against what each country
-  actually burns, a sortable ranked table of exposure, a set of sliders that
-  recompute the exposure ranking as you change the weights, and an interactive map
-  with toggleable layers you can click through.
-- **Slides**: a short, navigable presentation of the whole thing for a general
-  audience, with the terminal map embedded in a slide.
+> How concentrated is that infrastructure, and how exposed is it, measured by
+> capacity, by distance to Russian territory, and by reliance on passage through
+> the Danish Straits?
 
-## Data sources
+## What it finds
 
-All public, no logins, no paid datasets:
+| | |
+|:--|:--|
+| **Partly filled** | The terminals hold about 23 bcm of operating capacity, roughly a third of what stopped arriving. The rest closed through lower demand and pipeline gas from the west. |
+| **Lopsided** | Świnoujście and Mukran hold about three fifths of operating capacity; the northeast leans on one or two terminals each. |
+| **Small and close** | The terminals nearest Russian territory are the smallest ones. The two largest sit farthest away. |
+| **One way in** | Every cargo passes the Danish Straits. The Kiel Canal is far too small for LNG carriers. |
+| **Deliberate overbuild** | Finland and Lithuania hold capacity worth several times their own demand. They built a regional buffer. |
 
-- Natural Earth, for country shapes and coastlines (loaded through an R package,
-  so nothing to download by hand).
-- A small table of the region's LNG terminals (name, country, location,
-  capacity, status, source), kept in `data/processed/lng_terminals.csv`.
-- National gas import dependence from Eurostat (indicator `nrg_ind_id`), kept in
-  `data/processed/import_dependence.csv` and reproduced by `scripts/03_eurostat.R`.
-- National gas demand from Eurostat (indicator `nrg_cb_gas`, inland consumption),
-  kept in `data/processed/gas_demand.csv` and pulled by the same script.
-- A small table of the main subsea transit corridors (pipelines and cables) with
-  their landing points and status, kept in `data/processed/transit_lines.csv`.
+## What is on the site
+
+- **Overview** &mdash; the question, findings in plain language, what follows for policy, and limitations.
+- **Data** &mdash; every source, with the tables sortable, searchable and downloadable.
+- **Analysis** &mdash; six maps and charts, a ranked exposure table, and sliders that recompute the ranking as you change the weights.
+- **Slides** &mdash; a short navigable deck of the whole argument.
+- **Brief** &mdash; a printable PDF version.
+
+## Data
+
+All public, no logins, no paid sources.
+
+| Source | Used for | File |
+|:--|:--|:--|
+| [Natural Earth](https://www.naturalearthdata.com) | Country shapes, coastlines, proximity reference | loaded via `rnaturalearth` |
+| Operator reporting and [Global Energy Monitor](https://globalenergymonitor.org) | Terminal locations, capacity, status | `lng_terminals.csv` |
+| [Eurostat](https://ec.europa.eu/eurostat) `nrg_ind_id` | Gas import dependency | `import_dependence.csv` |
+| [Eurostat](https://ec.europa.eu/eurostat) `nrg_cb_gas` | Inland gas consumption | `gas_demand.csv` |
+| [Eurostat](https://ec.europa.eu/eurostat) `nrg_ti_gas` | Imports from Russia, 2021 and 2023 | `russian_imports.csv` |
+| Operator and press reporting | Subsea corridors and incident dates | `transit_lines.csv` |
+
+A scheduled job re-pulls the Eurostat series each month and rebuilds the site if
+the figures change. The Data page also shows one figure fetched live from the
+Eurostat API when the page loads.
+
+## Method
+
+Distances are measured in a projection suited to Europe (ETRS89 / LAEA Europe), so
+they come out in kilometres rather than degrees. The exposure score combines three
+things, each with a stated weight: proximity to Russian territory (0.4), share of
+the region's import capacity (0.3), and the length of the supply route past the
+Danish Straits (0.3). The weights are a judgement, not a finding, and the Analysis
+page lets any reader change them and watch the ranking move.
 
 ## Run it yourself
 
-You do not need to know R to build this. Follow these steps in order.
+<details>
+<summary>Step by step, no R experience needed</summary>
 
-1. **Install R.** Go to [https://cloud.r-project.org](https://cloud.r-project.org)
-   and install the version for your operating system. R is the language the
-   analysis is written in.
+<br>
 
-2. **Install RStudio.** Go to
-   [https://posit.co/download/rstudio-desktop](https://posit.co/download/rstudio-desktop)
-   and install the free version. RStudio is the program you actually open to work
-   with R.
-
-3. **Install Quarto.** Go to
-   [https://quarto.org/docs/get-started](https://quarto.org/docs/get-started)
-   and install it. Quarto is the tool that turns the analysis into a website.
-
-4. **Get the project onto your computer.** On the project's GitHub page, click
-   the green **Code** button, choose **Download ZIP**, and unzip it somewhere you
-   can find, such as your Desktop.
-
-5. **Open the project in RStudio.** Open RStudio, go to **File > Open Project**,
-   and pick `baltic-energy-transit.Rproj` in the folder you just unzipped.
-
-6. **Install the R packages the project needs.** In RStudio, find the
-   **Console** panel (usually bottom left), paste the line below, and press
-   Enter. This downloads the tools the analysis uses. It only has to be done
-   once and may take a few minutes.
+1. **Install R** from [cloud.r-project.org](https://cloud.r-project.org).
+2. **Install RStudio** from [posit.co](https://posit.co/download/rstudio-desktop). This is the program you actually open.
+3. **Install Quarto** from [quarto.org](https://quarto.org/docs/get-started). This turns the analysis into the website.
+4. **Download the project**: green **Code** button above, then **Download ZIP**, and unzip it.
+5. **Open** `baltic-energy-transit.Rproj` in RStudio.
+6. **Install the packages.** In the Console panel, paste this and press Enter:
 
    ```r
    install.packages(c("sf", "dplyr", "readr", "ggplot2", "leaflet",
                       "rnaturalearth", "rnaturalearthdata", "scales",
-                      "gt", "reactable", "ggrepel", "rmarkdown", "knitr"))
+                      "gt", "reactable", "ggrepel", "jsonlite",
+                      "rmarkdown", "knitr"))
    ```
 
-7. **Build the website.** Open the **Terminal** panel in RStudio (the tab next to
-   Console), type the line below, and press Enter:
+7. **Build the site.** In the Terminal panel, run:
 
    ```
    quarto render
    ```
 
-8. **Look at the result.** A folder called `docs` now contains the finished site.
-   Open `docs/index.html` in your web browser to read it.
+8. **Open** `docs/index.html` in a browser.
 
-That is the whole loop. Edit a page, run `quarto render` again, refresh the
-browser.
+Edit a page, run `quarto render` again, refresh. That is the whole loop.
 
-## How it publishes online
+</details>
 
-The project is set up to publish to GitHub Pages automatically. Every time it is
-updated on GitHub, the routine in `.github/workflows/publish.yml` rebuilds the
-site and posts it online.
+<details>
+<summary>Repository layout</summary>
 
-If you fork or recreate the repository, enable this once under **Settings > Pages**
-by setting the source to **GitHub Actions**. After that, there is nothing extra to
-run.
-
-A separate scheduled job (`.github/workflows/refresh-data.yml`) re-pulls the
-Eurostat dependence figures on the first of each month and rebuilds the site if
-they have changed. The Data page also shows one figure pulled live from the
-Eurostat API in the browser when the page loads.
-
-## What is solid and what to double check
-
-The structure, the maps, and the method are real and reproducible. The data
-behind them:
-
-- Gas import dependence in `import_dependence.csv` comes from Eurostat (indicator
-  `nrg_ind_id`, natural gas, 2023), and `scripts/03_eurostat.R` reproduces the
-  pull.
-- Terminal capacities in `lng_terminals.csv` come from operator reporting and the
-  Global Energy Monitor tracker (2024 to 2025), with a source note on each row.
-  They are current to that window. Confirm the latest figures if you cite them
-  for a specific date.
-
-Both files are plain spreadsheets. You can open and edit them in Excel.
-
-## What is in the folder
+<br>
 
 ```
-README.md                      this file
-LICENSE                        usage terms (MIT)
-baltic-energy-transit.Rproj    the RStudio project file
-_quarto.yml                    settings for the website
-theme.scss                     the site's visual theme
-slides.scss                    the slide deck's theme
-favicon.svg                    the browser tab icon
-index.qmd                      the Overview page
-01-data.qmd                    the Data page
-02-analysis.qmd                the Analysis page (maps and numbers)
-slides.qmd                     the slide deck
-data/processed/                the small data tables the analysis reads
+index.qmd                      Overview page
+01-data.qmd                    Data page
+02-analysis.qmd                Analysis page (maps and numbers)
+slides.qmd                     Slide deck
+brief.qmd                      Printable PDF brief
+_quarto.yml                    Site settings
+theme.scss / slides.scss       Visual themes
+data/processed/                The data tables the analysis reads
 scripts/                       R scripts that reproduce the data layers
-docs/                          the finished website (created when you build)
-.github/workflows/             the routine that publishes the site online
+docs/                          Built site (created by quarto render)
+.github/workflows/             Build, publish, and monthly data refresh
 ```
 
-## A note on method
+</details>
 
-All distances are measured in a projection suited to Europe (ETRS89 / LAEA
-Europe), so they come out in kilometres rather than degrees. The exposure score
-combines three things, each given a stated weight: how close a terminal is to
-Russian territory, how large its capacity is, and how long its supply route past
-the Danish Straits runs. The weights are written plainly in the analysis so
-anyone can see, and change, the assumptions.
+## What to check before citing
 
-## License
+The structure, maps and method are reproducible, and the Eurostat figures come
+straight from the API. Terminal capacities are compiled from operator reporting and
+are current to 2024 and 2025, so confirm them against the latest source if you cite
+a specific date. Note that published headline figures often describe planned rather
+than operating capacity: Mukran is widely quoted at 13.5 bcm, which assumes a second
+FSRU that is no longer on charter, so it is counted here at about 6 bcm.
 
-Code is released under the MIT License. Each data source keeps its own terms,
-listed on the Data page.
+## Limitations
+
+This measures geographic exposure, not the probability of disruption. It uses proxy
+measures rather than a causal model, and it is a single snapshot. It shows where
+the exposure sits. It is not a risk forecast.
+
+## Licence
+
+Code released under the MIT Licence. Each data source keeps its own terms, listed
+on the [Data](https://tobyn-smith.github.io/transit/01-data.html) page.
