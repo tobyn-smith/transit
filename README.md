@@ -33,7 +33,8 @@ The site has three pages and a slide deck:
   capacity, a map of the transit corridors and which have been disrupted, a chart
   of how close each terminal is to Russian territory, a proximity-zone map with
   distance rings, a map of national gas import dependence, a country-level table
-  of import capacity, a sortable ranked table of exposure, and an interactive map
+  of import capacity, a sortable ranked table of exposure, a set of sliders that
+  recompute the exposure ranking as you change the weights, and an interactive map
   with toggleable layers you can click through.
 - **Slides**: a short, navigable presentation of the whole thing for a general
   audience, with the terminal map embedded in a slide.

@@ -411,39 +411,125 @@ reactable(
 )
 ```
 
-## How sensitive is the ranking?
+## Change the weights yourself
 
-The weights are a choice, so it helps to see how much they change the result. The
-table recomputes the score under three weightings: balanced (the version used
-above), proximity-led, and capacity-led.
+The weights are a choice, so rather than defend one set, here they are to move.
+Drag a slider or take one of the presets, and the ranking recomputes as you go.
+The weights are rescaled to sum to one, so only their balance matters.
 
-```{r sensitivity}
+```{r weights-data}
 #| echo: false
-scen <- function(wp, wc, wk) {
-  d <- st_drop_geometry(terminals)
-  wp * d$s_proximity + wc * d$s_capacity + wk * d$s_chokepoint
-}
-ramp <- colorRamp(exp_cols)
-sc <- colDef(align = "center", style = function(value) {
-  x <- max(0, min(1, (value - 0.2) / 0.6))
-  list(background = grDevices::rgb(ramp(x), maxColorValue = 255),
-       color = if (x > 0.55) "#ffffff" else "#12263f", fontWeight = 600)
-})
-st_drop_geometry(terminals) |>
-  transmute(Terminal = name,
-            Balanced        = round(scen(0.4, 0.3, 0.3), 2),
-            `Proximity-led` = round(scen(0.6, 0.2, 0.2), 2),
-            `Capacity-led`  = round(scen(0.2, 0.6, 0.2), 2)) |>
-  arrange(desc(Balanced)) |>
-  reactable(sortable = TRUE, highlight = TRUE, borderless = TRUE,
-            pagination = FALSE, theme = rtheme,
-            columns = list(Balanced = sc, `Proximity-led` = sc, `Capacity-led` = sc))
+#| output: asis
+wd <- st_drop_geometry(terminals) |>
+  transmute(name,
+            p = round(s_proximity, 4),
+            c = round(s_capacity, 4),
+            k = round(s_chokepoint, 4))
+cat('<script>window.terminalScores = ',
+    jsonlite::toJSON(wd, dataframe = "rows"), ';</script>', sep = "")
 ```
 
-The terminals nearest Russian territory, Hamina, Klaipėda, and Gdańsk, lead under
-the proximity-led weighting, while Mukran, much the largest, rises to the top
-under the capacity-led one. The order depends on the weights, which are easy to
-change.
+```{=html}
+<div class="wx">
+  <div class="wx-presets">
+    <span>Presets:</span>
+    <button type="button" data-w="40,30,30">Balanced</button>
+    <button type="button" data-w="60,20,20">Proximity-led</button>
+    <button type="button" data-w="20,60,20">Capacity-led</button>
+    <button type="button" data-w="20,20,60">Transit-led</button>
+  </div>
+  <div class="wx-controls">
+    <label>Proximity to Russia <output id="wx-p-out">40%</output>
+      <input type="range" id="wx-p" min="0" max="100" step="5" value="40"></label>
+    <label>Share of capacity <output id="wx-c-out">30%</output>
+      <input type="range" id="wx-c" min="0" max="100" step="5" value="30"></label>
+    <label>Route past the Straits <output id="wx-k-out">30%</output>
+      <input type="range" id="wx-k" min="0" max="100" step="5" value="30"></label>
+  </div>
+  <table class="wx-table">
+    <thead><tr><th>Rank</th><th>Terminal</th><th>Exposure</th></tr></thead>
+    <tbody id="wx-rows"></tbody>
+  </table>
+</div>
+
+<style>
+.wx { border: 1px solid rgba(18,38,63,0.13); padding: 1rem 1.1rem; margin: 1.2rem 0; }
+.wx-presets { font-size: 0.85rem; color: #5a6675; margin-bottom: 0.9rem; }
+.wx-presets button {
+  font: inherit; font-size: 0.82rem; color: #12263f; background: #fff;
+  border: 1px solid rgba(18,38,63,0.3); padding: 0.2rem 0.6rem; margin-right: 0.3rem;
+  cursor: pointer; border-radius: 2px;
+}
+.wx-presets button:hover { background: #eef2f6; }
+.wx-presets button[aria-pressed="true"] { background: #12263f; color: #fff; border-color: #12263f; }
+.wx-controls { display: grid; grid-template-columns: repeat(auto-fit, minmax(190px, 1fr)); gap: 0.9rem; }
+.wx-controls label { display: block; font-size: 0.85rem; color: #24303f; }
+.wx-controls output { font-weight: 600; color: #12263f; }
+.wx-controls input[type=range] { width: 100%; margin-top: 0.3rem; accent-color: #8f1d17; }
+.wx-table { width: 100%; margin-top: 1.1rem; font-size: 0.9rem; border-collapse: collapse; }
+.wx-table th { text-align: left; border-bottom: 2px solid #12263f; padding: 0.3rem 0.4rem; }
+.wx-table td { border-bottom: 1px solid rgba(18,38,63,0.13); padding: 0.35rem 0.4rem; }
+.wx-table td:first-child { width: 2.6rem; color: #5a6675; font-variant-numeric: tabular-nums; }
+.wx-bar { display: inline-block; height: 0.7rem; background: #8f1d17; vertical-align: middle;
+  margin-right: 0.5rem; min-width: 2px; }
+.wx-val { font-variant-numeric: tabular-nums; color: #24303f; }
+</style>
+
+<script>
+(function () {
+  var data = window.terminalScores;
+  var rows = document.getElementById('wx-rows');
+  if (!data || !rows) return;
+  var ids = ['p', 'c', 'k'];
+  var inputs = {}, outs = {};
+  ids.forEach(function (i) {
+    inputs[i] = document.getElementById('wx-' + i);
+    outs[i]   = document.getElementById('wx-' + i + '-out');
+  });
+
+  function render() {
+    var raw = {}, total = 0;
+    ids.forEach(function (i) { raw[i] = Number(inputs[i].value); total += raw[i]; });
+    if (total === 0) { total = 1; raw.p = 1; }
+    ids.forEach(function (i) {
+      outs[i].textContent = Math.round(100 * raw[i] / total) + '%';
+    });
+    var scored = data.map(function (d) {
+      return { name: d.name,
+               score: (raw.p * d.p + raw.c * d.c + raw.k * d.k) / total };
+    }).sort(function (a, b) { return b.score - a.score; });
+
+    var max = scored[0].score || 1;
+    rows.innerHTML = scored.map(function (d, i) {
+      var w = Math.max(2, Math.round(120 * d.score / max));
+      return '<tr><td>' + (i + 1) + '</td><td>' + d.name + '</td>' +
+             '<td><span class="wx-bar" style="width:' + w + 'px"></span>' +
+             '<span class="wx-val">' + d.score.toFixed(2) + '</span></td></tr>';
+    }).join('');
+
+    var current = ids.map(function (i) { return raw[i]; }).join(',');
+    document.querySelectorAll('.wx-presets button').forEach(function (b) {
+      b.setAttribute('aria-pressed', b.dataset.w === current ? 'true' : 'false');
+    });
+  }
+
+  ids.forEach(function (i) { inputs[i].addEventListener('input', render); });
+  document.querySelectorAll('.wx-presets button').forEach(function (b) {
+    b.addEventListener('click', function () {
+      var w = b.dataset.w.split(',');
+      ids.forEach(function (id, n) { inputs[id].value = w[n]; });
+      render();
+    });
+  });
+  render();
+})();
+</script>
+```
+
+Weighting towards proximity lifts the terminals nearest Russian territory, Hamina,
+Klaipėda and Gdańsk. Weighting towards capacity lifts Mukran, much the largest.
+That the order moves at all is the point: the ranking is a function of the
+assumptions, and the assumptions are yours to set.
 
 ## Interactive map
 

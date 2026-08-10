@@ -48,6 +48,8 @@ read_csv("data/processed/lng_terminals.csv", show_col_types = FALSE) |>
             columns = list(Source = colDef(minWidth = 220)))
 ```
 
+[Download this table as a CSV](data/processed/lng_terminals.csv)
+
 The capacities are taken from operator reporting and the **Global Energy
 Monitor** terminal tracker, current as of 2024 to 2025. The `source` column in
 the table names the operator behind each figure. Two points worth flagging:
@@ -98,6 +100,8 @@ read_csv("data/processed/import_dependence.csv", show_col_types = FALSE) |>
   reactable(sortable = TRUE, highlight = TRUE, borderless = TRUE,
             pagination = FALSE, theme = rtheme)
 ```
+
+[Download this table as a CSV](data/processed/import_dependence.csv)
 
 The table above is committed 2023 data. For comparison, the figure below is pulled
 live from the Eurostat API in your browser when this page loads:
