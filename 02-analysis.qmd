@@ -216,7 +216,7 @@ share_within <- function(km) {
 ```
 
 Only `r share_within(200)`% of the region's operating import capacity sits within
-200 km of Russian territory. The two largest terminals, Mukran and Świnoujście,
+200 km of Russian territory. The two largest terminals, Świnoujście and Mukran,
 lie more than 350 km back, so the exposure concentrates in the smaller terminals
 closest to the border.
 
@@ -589,9 +589,9 @@ cat('<script>window.terminalScores = ',
 ```
 
 Weighting towards proximity lifts the terminals nearest Russian territory, Hamina,
-Klaipėda and Gdańsk. Weighting towards capacity lifts Mukran, much the largest.
-That the order moves at all is the point: the ranking is a function of the
-assumptions, and the assumptions are yours to set.
+Klaipėda and Gdańsk. Weighting towards capacity lifts Świnoujście, the largest in
+the region. That the order moves at all is the point: the ranking is a function of
+the assumptions, and the assumptions are yours to set.
 
 ## Interactive map
 

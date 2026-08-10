@@ -8,6 +8,11 @@ website:
   title: "Baltic Energy Transit Risk"
   description: "Spatial exposure of post-2022 Baltic energy import infrastructure"
   favicon: favicon.svg
+  site-url: https://tobyn-smith.github.io/transit
+  search: true
+  open-graph: true
+  twitter-card:
+    card-style: summary_large_image
   navbar:
     background: dark
     title: "Baltic Transit Risk"

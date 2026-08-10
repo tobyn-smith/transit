@@ -54,9 +54,13 @@ The capacities are taken from operator reporting and the **Global Energy
 Monitor** terminal tracker, current as of 2024 to 2025. The `source` column in
 the table names the operator behind each figure. Two points worth flagging:
 
-- Capacities move. Świnoujście reached 8.3 bcm only after its third tank came
-  online in early 2025, and Mukran's 13.5 bcm assumes both of its FSRUs (the
-  moored ships that store and re-gasify LNG) are running.
+- Capacities move, and a headline figure is often the planned one. Świnoujście
+  reached 8.3 bcm only in January 2025, once its third tank came online. Mukran is
+  frequently quoted at 13.5 bcm, but that assumes two FSRUs (the moored ships that
+  store and re-gasify LNG). Deutsche ReGas ended the charter on the second unit,
+  so the terminal runs on one ship, the Neptune, and is counted here at about
+  6 bcm. Taking the 13.5 figure at face value would roughly double Germany's
+  seaborne supply on paper.
 - The Paldiski jetty in Estonia is deliberately left out. It is shelved, and its
   capacity figure refers to the same ship (the Exemplar) that now operates at
   Inkoo, so including both would count one vessel twice.
