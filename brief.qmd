@@ -7,16 +7,21 @@ format:
     pdf-engine: xelatex
     documentclass: article
     geometry:
-      - margin=2.4cm
+      - margin=2.3cm
     fontsize: 10pt
+    fig-pos: "H"
     colorlinks: true
     linkcolor: RoyalBlue
     urlcolor: RoyalBlue
     include-in-header:
       text: |
+        \usepackage{float}
+        \usepackage[default,scale=0.96]{sourceserifpro}
+        \usepackage[scaled=0.92]{sourcesanspro}
         \usepackage{sectsty}
-        \sectionfont{\color[HTML]{12263F}}
-        \subsectionfont{\color[HTML]{12263F}}
+        \sectionfont{\color[HTML]{12263F}\sffamily\large}
+        \subsectionfont{\color[HTML]{12263F}\sffamily}
+        \renewcommand{\arraystretch}{1.15}
 execute:
   warning: false
   message: false
@@ -29,6 +34,7 @@ library(dplyr)
 library(readr)
 library(ggplot2)
 library(rnaturalearth)
+library(ggrepel)
 library(knitr)
 
 laea <- 3035
@@ -95,7 +101,7 @@ concentrated that remaining infrastructure is, and how exposed.
 
 ## Where the terminals sit
 
-```{r map, fig.width = 6.4, fig.height = 5.2}
+```{r map, fig.width = 6.6, fig.height = 4.6}
 ggplot() +
   geom_sf(data = land_aoi, fill = land, colour = "#d3dae1", linewidth = 0.18) +
   geom_sf(data = st_crop(russia, aoi), fill = "#dfd0cf", colour = "#c9b4b2",
@@ -103,7 +109,11 @@ ggplot() +
   geom_sf(data = st_sf(geometry = chokepoint), fill = NA, colour = ink,
           linewidth = 0.4, linetype = "31") +
   geom_sf(data = terminals, aes(size = capacity_bcm, colour = exposure)) +
-  scale_size_continuous(range = c(1.6, 7), name = "Capacity\n(bcm/yr)") +
+  geom_text_repel(data = terminals, aes(label = name, geometry = geometry),
+                  stat = "sf_coordinates", size = 2.1, colour = ink, seed = 1,
+                  min.segment.length = 0, segment.colour = "#8e9aa6",
+                  segment.size = 0.15, box.padding = 0.35, max.overlaps = Inf) +
+  scale_size_continuous(range = c(1.6, 6.5), name = "Capacity\n(bcm/yr)") +
   scale_colour_gradientn(colours = exp_cols, name = "Exposure") +
   labs(title = "Baltic LNG import terminals",
        subtitle = "Point size is capacity, colour is exposure; dashed box is the Danish Straits",
