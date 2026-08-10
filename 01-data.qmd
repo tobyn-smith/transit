@@ -12,10 +12,10 @@ library(dplyr)
 library(reactable)
 
 rtheme <- reactableTheme(
-  borderColor    = "rgba(23,21,15,0.12)",
-  highlightColor = "#f0ece2",
-  headerStyle    = list(borderBottom = "1.5px solid #17150f", fontWeight = 600),
-  style          = list(fontFamily = '"IBM Plex Sans", system-ui, sans-serif',
+  borderColor    = "rgba(18,38,63,0.13)",
+  highlightColor = "#eef2f6",
+  headerStyle    = list(borderBottom = "1.5px solid #12263f", fontWeight = 600),
+  style          = list(fontFamily = '"Source Sans 3", system-ui, sans-serif',
                         fontSize = "13px"))
 ```
 
@@ -102,7 +102,7 @@ read_csv("data/processed/import_dependence.csv", show_col_types = FALSE) |>
 The table above is committed 2023 data. For comparison, the figure below is pulled
 live from the Eurostat API in your browser when this page loads:
 
-::: {#live-dependency style="font-size:0.95em;color:#6b6760;margin-top:0.5rem"}
+::: {#live-dependency style="font-size:0.95em;color:#5a6675;margin-top:0.5rem"}
 Checking Eurostat for the latest EU-wide figure...
 :::
 
