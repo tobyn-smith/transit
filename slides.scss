@@ -1,30 +1,46 @@
 /*-- scss:defaults --*/
 
-$body-bg:      #f7f4ec;
-$body-color:   #17150f;
-$link-color:   #9e2b25;
+$body-bg:      #ffffff;
+$body-color:   #24303f;
+$link-color:   #1b4f72;
 
-$font-family-sans-serif: "IBM Plex Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
-$presentation-heading-font: "Newsreader", Georgia, "Times New Roman", serif;
-$presentation-heading-color: #17150f;
-$presentation-heading-font-weight: 600;
+$font-family-sans-serif: "Source Sans 3", system-ui, -apple-system, "Segoe UI", sans-serif;
+$presentation-heading-font: "Source Serif 4", Georgia, "Times New Roman", serif;
+$presentation-heading-color: #12263f;
+$presentation-heading-font-weight: 700;
 $presentation-font-size-root: 30px;
 
 /*-- scss:rules --*/
 
-@import url('https://fonts.googleapis.com/css2?family=Newsreader:wght@500;600&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,600;8..60,700&family=Source+Sans+3:wght@400;500;600&display=swap');
 
+.reveal { font-variant-numeric: tabular-nums; }
 .reveal .slides section { text-align: left; padding-top: 0.6em; }
-.reveal h1, .reveal h2, .reveal h3 { letter-spacing: -0.01em; }
-.reveal h2 { border-bottom: 1px solid rgba(23, 21, 15, 0.14); padding-bottom: 0.2em; }
 
-.reveal strong { color: #9e2b25; }
+.reveal h2 {
+  border-bottom: 2px solid #12263f;
+  padding-bottom: 0.18em;
+  margin-bottom: 0.6em;
+}
 
-.reveal table { font-size: 0.7em; }
-.reveal table th { border-bottom: 1.5px solid #17150f; }
+.reveal strong { color: #8f1d17; }
 
-.reveal .slide-number { font-family: "IBM Plex Mono", monospace; }
+.reveal table { font-size: 0.68em; }
+.reveal table th { border-bottom: 2px solid #12263f; }
 
-// subtle mono kicker for the title block
-.reveal .title { letter-spacing: -0.02em; }
-.reveal .subtitle { color: #6b6760; }
+.reveal .title { color: #12263f; }
+.reveal .subtitle { color: #5a6675; }
+
+// a navy rule along the top of every slide, as a masthead
+.reveal .slides section::before {
+  content: "";
+  position: absolute;
+  top: -0.35em;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: #12263f;
+}
+.reveal .slides section.title-slide::before { background: none; }
+
+.reveal .progress { color: #8f1d17; }
