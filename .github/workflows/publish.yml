@@ -48,6 +48,7 @@ jobs:
             any::gt
             any::reactable
             any::ggrepel
+            any::jsonlite
 
       - name: Render
         run: quarto render

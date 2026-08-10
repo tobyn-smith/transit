@@ -1,6 +1,8 @@
 project:
   type: website
   output-dir: docs
+  resources:
+    - data/processed/*.csv
 
 website:
   title: "Baltic Energy Transit Risk"
