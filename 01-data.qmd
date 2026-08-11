@@ -107,22 +107,7 @@ read_csv("data/processed/import_dependence.csv", show_col_types = FALSE) |>
 
 [Download this table as a CSV](data/processed/import_dependence.csv)
 
-## Gas demand
-
-To judge whether the terminals are large enough, the analysis compares their
-capacity with what each country actually burns. That demand figure is inland gas
-consumption from **Eurostat** (indicator `nrg_cb_gas`, natural gas, 2023), held in
-`data/processed/gas_demand.csv` and converted from million cubic metres to bcm so
-it sits on the same scale as terminal capacity. `scripts/03_eurostat.R` pulls it
-alongside the dependency figures.
-
-One caveat worth stating: 2023 demand was itself depressed by high prices and
-mild weather across much of Europe, so coverage against a colder, higher demand
-year would look less comfortable.
-
-[Download this table as a CSV](data/processed/gas_demand.csv)
-
-The dependency table above is committed 2023 data. For comparison, the figure below is pulled
+The table above is committed 2023 data. For comparison, the figure below is pulled
 live from the Eurostat API in your browser when this page loads:
 
 ::: {#live-dependency style="font-size:0.95em;color:#5a6675;margin-top:0.5rem"}
@@ -149,6 +134,21 @@ Checking Eurostat for the latest EU-wide figure...
 </script>
 ```
 
+## Gas demand
+
+To judge whether the terminals are large enough, the analysis compares their
+capacity with what each country actually burns. That demand figure is inland gas
+consumption from **Eurostat** (indicator `nrg_cb_gas`, natural gas, 2023), held in
+`data/processed/gas_demand.csv` and converted from million cubic metres to bcm so
+it sits on the same scale as terminal capacity. `scripts/03_eurostat.R` pulls it
+alongside the dependency figures.
+
+One caveat worth stating: 2023 demand was itself depressed by high prices and
+mild weather across much of Europe, so coverage against a colder, higher demand
+year would look less comfortable.
+
+[Download the demand figures as a CSV](data/processed/gas_demand.csv)
+
 ## Russian pipeline imports
 
 The before and after comparison uses imports of natural gas from Russia by
@@ -160,7 +160,7 @@ These are recorded imports, not pipeline capacity, which is the fairer compariso
 capacity figures for pipelines like Nord Stream describe what could have flowed
 rather than what these particular countries actually took.
 
-[Download this table as a CSV](data/processed/russian_imports.csv)
+[Download the import figures as a CSV](data/processed/russian_imports.csv)
 
 ## A note on conflict data
 
