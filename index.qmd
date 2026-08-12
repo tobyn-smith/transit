@@ -19,18 +19,21 @@ terminals <- read_csv("data/processed/lng_terminals.csv", show_col_types = FALSE
 
 ## In brief
 
-Russian pipeline gas into the eight Baltic littoral countries fell from about
-70 bcm in 2021 to almost nothing by 2023. In its place the region leans on seaborne
-LNG, landed at a handful of coastal terminals whose combined capacity is roughly a
-third of what stopped arriving. This project maps that infrastructure
-and scores how exposed each terminal is, using distance to Russian territory,
-share of import capacity, and the length of the supply run past the Danish
-Straits. Three things stand out: capacity is concentrated in two southern
-terminals, the terminals nearest Russia are the small ones, and every cargo
-enters through a single strait. Measured against what each country burns, the
-small northeastern states built far more capacity than they need while the large
-consumers cover only part of theirs by sea. The infrastructure has already been
-hit several times since 2022, so none of this is abstract.
+Russian pipeline gas into the eight Baltic littoral states collapsed from roughly
+70 bcm in 2021 to almost nothing by 2023. In its place the region now leans on
+seaborne LNG, landed at a handful of coastal terminals that together hold about a
+third of the capacity which stopped arriving.
+
+The problem is not the size of that gap. Lower demand and pipeline gas from the
+west and north have largely closed it. It is that what replaced the pipelines is
+concentrated in a few fixed points, sits closest to Russian territory precisely
+where it is smallest, and is one asset deep in every country that has it. Remove
+any single country's largest terminal and its seaborne cover disappears.
+
+This project maps that infrastructure and scores how exposed each terminal is,
+using distance to Russian territory, share of regional capacity, and the length of
+the supply route past the Danish Straits. The infrastructure has already been
+struck three times since 2022, so none of this is hypothetical.
 
 Terminal capacities are current to 2024 and 2025; gas import dependency is
 Eurostat data for 2023. Every source is listed on the [Data](01-data.qmd) page.
@@ -44,8 +47,10 @@ terminals for liquefied natural gas (LNG), such as Klaipėda, Świnoujście, and
 Inkoo. These are the sites where tankers unload gas that has been chilled to a
 liquid for shipping, and turn it back into gas for the pipeline network.
 
-That shift concentrated a great deal of supply onto a handful of coastal sites.
-This project asks how concentrated, and how exposed:
+That shift did not simply change where the gas comes from. It concentrated the
+supply of eight countries onto a handful of fixed coastal sites, each of which can
+be located on a map and counted. This project asks how concentrated, and how
+exposed:
 
 > After 2022, Baltic energy imports shifted onto a small set of coastal LNG
 > terminals and ports. How concentrated is that infrastructure, and how exposed
@@ -73,7 +78,8 @@ leaflet(terminals) |>
 1. **Concentration.** Capacity is lopsided. Two southern terminals, Świnoujście
    in Poland and Mukran in Germany, hold about three fifths of the region's
    operating import capacity, while the northeast leans on one or two terminals
-   each: Inkoo for the Gulf of Finland and Klaipėda for Lithuania.
+   each: Inkoo for the Gulf of Finland and Klaipėda for Lithuania. The replacement
+   for a continental pipeline network is, in practice, six coastal sites.
 2. **Proximity.** The terminals closest to Russian territory are Hamina, at the
    eastern end of the Gulf of Finland, and Klaipėda and Gdańsk, which sit beside
    the Kaliningrad exclave. Proximity and capacity do not always line up: the two
@@ -88,7 +94,9 @@ leaflet(terminals) |>
    actually burns, Finland and Lithuania hold terminal capacity worth several
    times their own demand, while Germany and Poland cover only part of theirs by
    sea. The northeast did not build to meet its own consumption. It built a
-   buffer, and its neighbours draw on it.
+   buffer, and its neighbours draw on it. That is a deliberate strategic choice,
+   and it explains why the region's most exposed assets are also its most useful
+   ones.
 
 ## The exposure score
 
@@ -131,7 +139,8 @@ Sources: [Balticconnector return to service (Gasgrid)](https://gasgrid.fi/en/202
 
 ## What follows for policy
 
-Four points come out of the maps rather than out of theory:
+Four points follow from the maps rather than from theory. Each is a consequence of
+where the infrastructure physically sits:
 
 1. **The north-east has no spare door.** Borrowing the logic of the EU's N-1
    standard and removing each country's largest terminal, the cover vanishes.
