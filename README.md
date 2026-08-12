@@ -31,9 +31,14 @@
 
 Before 2022 most of the Baltic region's gas arrived by pipeline from Russia. After
 the invasion of Ukraine and the sabotage of the Nord Stream pipelines, that supply
-stopped: Russian pipeline gas into the eight littoral countries fell from about
-70 bcm in 2021 to almost nothing by 2023. Imports moved onto a handful of coastal
-terminals for liquefied natural gas.
+stopped: Russian pipeline gas into the eight littoral states collapsed from roughly
+70 bcm in 2021 to almost nothing by 2023. What replaced a continental pipeline
+network is, in practice, six coastal terminals.
+
+The problem is not the size of that gap, which lower demand and pipeline gas from
+the west have largely closed. It is that what remains is concentrated, sits nearest
+Russian territory precisely where it is smallest, and is one asset deep in every
+country that holds it.
 
 > How concentrated is that infrastructure, and how exposed is it, measured by
 > capacity, by distance to Russian territory, and by reliance on passage through

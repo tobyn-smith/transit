@@ -85,19 +85,26 @@ lng_cap <- sum(terminals$capacity_bcm[terminals$status == "operating"])
 reg_cov <- round(100 * lng_cap / sum(demand$gas_demand_bcm))
 ```
 
-## The problem
+## Executive summary
 
-Before 2022 most of the Baltic region's gas arrived by pipeline from Russia. After
-the invasion of Ukraine and the sabotage of the Nord Stream pipelines that supply
-stopped. Russian pipeline gas into the eight Baltic littoral countries fell from
-about `r round(ru_21)` bcm in 2021 to `r round(ru_23, 1)` bcm in 2023. In its place
-the region now leans on seaborne liquefied natural gas, landed at a handful of
-coastal terminals.
+The Baltic region replaced a continental pipeline network with six coastal sites.
+Russian pipeline gas into the eight littoral states fell from roughly
+`r round(ru_21)` bcm in 2021 to `r round(ru_23, 1)` bcm in 2023, while the
+terminals built to receive seaborne gas hold about `r round(lng_cap, 1)` bcm a
+year, some `r round(100 * lng_cap / ru_21)`% of what stopped arriving.
 
-Those terminals hold roughly `r round(lng_cap, 1)` bcm a year of operating
-capacity, about a third of what stopped arriving. The rest of the gap closed
-through lower demand and pipeline gas from the west and north. This brief asks how
-concentrated that remaining infrastructure is, and how exposed.
+The strategic problem is not the size of that gap, which lower demand and pipeline
+gas from the west and north have largely closed. It is that the infrastructure
+which replaced the pipelines is concentrated, sits nearest Russian territory
+precisely where it is smallest, and is one asset deep in every country that holds
+it. Policymakers should therefore treat these terminals less as a solved
+substitution and more as a set of single points of failure whose loss would push
+the region back onto the same subsea links that have already been cut three times
+since 2022.
+
+This brief sets out where that infrastructure sits, how exposed each terminal is on
+a stated and adjustable measure, what happens when the largest terminal in each
+country is removed, and what follows for policy.
 
 ## Where the terminals sit
 
@@ -130,12 +137,13 @@ ggplot() +
 **Capacity is concentrated in the south.** Świnoujście in Poland and Mukran in
 Germany hold about three fifths of the region's operating import capacity. The
 northeast leans on one or two terminals each, Inkoo for the Gulf of Finland and
-Klaipėda for Lithuania.
+Klaipėda for Lithuania. What replaced a continental pipeline network is, in
+practice, six coastal sites.
 
 **The terminals nearest Russia are the small ones.** Hamina, at the eastern end of
 the Gulf of Finland, and Klaipėda and Gdańsk beside the Kaliningrad exclave sit
 closest. The two largest terminals are among the farthest away. Size and proximity
-do not line up, which is what the exposure score is built to show.
+do not line up, which is precisely what the exposure score is built to expose.
 
 **Every cargo enters through one strait.** All LNG bound for these terminals
 passes the Danish Straits. The Kiel Canal is the only other way in and is far too
