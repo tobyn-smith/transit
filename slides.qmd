@@ -33,8 +33,8 @@ terminals <- read_csv("data/processed/lng_terminals.csv", show_col_types = FALSE
 Before 2022, most of the Baltic region's gas came by pipeline from Russia.
 
 After the invasion of Ukraine and the sabotage of the Nord Stream pipelines, that
-supply was cut. What replaced a continental pipeline network is, in practice, six
-coastal terminals for liquefied natural gas (LNG).
+supply was cut. What replaced a continental pipeline network is, in practice, five
+working coastal terminals for liquefied natural gas (LNG).
 
 **How concentrated is that infrastructure, and how exposed is it?**
 

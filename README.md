@@ -33,7 +33,8 @@ Before 2022 most of the Baltic region's gas arrived by pipeline from Russia. Aft
 the invasion of Ukraine and the sabotage of the Nord Stream pipelines, that supply
 stopped: Russian pipeline gas into the eight littoral states collapsed from roughly
 70 bcm in 2021 to almost nothing by 2023. What replaced a continental pipeline
-network is, in practice, six coastal terminals.
+network is, in practice, five working coastal terminals, with a sixth planned at
+Gdańsk.
 
 The problem is not the size of that gap, which lower demand and pipeline gas from
 the west have largely closed. It is that what remains is concentrated, sits nearest
@@ -59,7 +60,7 @@ country that holds it.
 
 - **Overview** &mdash; the question, findings in plain language, what follows for policy, and limitations.
 - **Data** &mdash; every source, with the tables sortable, searchable and downloadable.
-- **Analysis** &mdash; six maps and charts, a ranked exposure table, and sliders that recompute the ranking as you change the weights.
+- **Analysis** &mdash; eight maps and charts, a ranked exposure table, and sliders that recompute the ranking as you change the weights.
 - **Slides** &mdash; a short navigable deck of the whole argument.
 - **Brief** &mdash; a printable PDF version.
 

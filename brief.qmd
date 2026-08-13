@@ -87,7 +87,8 @@ reg_cov <- round(100 * lng_cap / sum(demand$gas_demand_bcm))
 
 ## Executive summary
 
-The Baltic region replaced a continental pipeline network with six coastal sites.
+The Baltic region replaced a continental pipeline network with five working
+coastal sites.
 Russian pipeline gas into the eight littoral states fell from roughly
 `r round(ru_21)` bcm in 2021 to `r round(ru_23, 1)` bcm in 2023, while the
 terminals built to receive seaborne gas hold about `r round(lng_cap, 1)` bcm a
@@ -138,7 +139,7 @@ ggplot() +
 Germany hold about three fifths of the region's operating import capacity. The
 northeast leans on one or two terminals each, Inkoo for the Gulf of Finland and
 Klaipėda for Lithuania. What replaced a continental pipeline network is, in
-practice, six coastal sites.
+practice, five working coastal sites, with a sixth planned at Gdańsk.
 
 **The terminals nearest Russia are the small ones.** Hamina, at the eastern end of
 the Gulf of Finland, and Klaipėda and Gdańsk beside the Kaliningrad exclave sit
