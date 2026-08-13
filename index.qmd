@@ -79,7 +79,8 @@ leaflet(terminals) |>
    in Poland and Mukran in Germany, hold about three fifths of the region's
    operating import capacity, while the northeast leans on one or two terminals
    each: Inkoo for the Gulf of Finland and Klaipėda for Lithuania. The replacement
-   for a continental pipeline network is, in practice, six coastal sites.
+   for a continental pipeline network is, in practice, five working coastal sites,
+with a sixth planned at Gdańsk.
 2. **Proximity.** The terminals closest to Russian territory are Hamina, at the
    eastern end of the Gulf of Finland, and Klaipėda and Gdańsk, which sit beside
    the Kaliningrad exclave. Proximity and capacity do not always line up: the two
