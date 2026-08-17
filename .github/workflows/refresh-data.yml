@@ -1,7 +1,7 @@
 name: Refresh data
 
-# Re-pulls the Eurostat gas import dependency figures on a schedule and rebuilds
-# the site only if they have changed. Runs monthly, or on demand.
+# Re-pulls the Eurostat gas import dependency and demand figures on a schedule
+# and rebuilds the site only if either has changed. Runs monthly, or on demand.
 
 on:
   schedule:
@@ -29,18 +29,20 @@ jobs:
             any::dplyr
             any::readr
 
-      - name: Pull the latest Eurostat dependence figures
+      - name: Pull the latest Eurostat gas figures
         run: Rscript scripts/03_eurostat.R
 
+      # 03_eurostat.R writes both the dependence and the demand tables, so a
+      # change to either should commit and rebuild the site.
       - name: Commit and trigger a rebuild if the data changed
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          if [ -n "$(git status --porcelain data/processed/import_dependence.csv)" ]; then
+          if [ -n "$(git status --porcelain data/processed/import_dependence.csv data/processed/gas_demand.csv)" ]; then
             git config user.name "tobyn-smith"
             git config user.email "298003421+tobyn-smith@users.noreply.github.com"
-            git add data/processed/import_dependence.csv
-            git commit -m "refresh eurostat dependence figures"
+            git add data/processed/import_dependence.csv data/processed/gas_demand.csv
+            git commit -m "refresh eurostat gas figures"
             git push
             gh workflow run publish.yml
           else

@@ -332,9 +332,11 @@ ggplot() +
 
 ```{r zone-table}
 #| echo: false
+# Keep all four distance bands, even the empty one: a band with no terminal is
+# information, and a table that silently skips it reads like missing data.
 terminals |>
   st_drop_geometry() |>
-  group_by(Band = zone) |>
+  group_by(Band = zone, .drop = FALSE) |>
   summarise(Terminals = dplyr::n(),
             `Capacity (bcm)` = round(sum(capacity_bcm), 1), .groups = "drop") |>
   gt() |>
