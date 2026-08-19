@@ -23,11 +23,13 @@ terminals <- read_csv("data/processed/lng_terminals.csv", show_col_types = FALSE
     dist_chokepoint_km = as.numeric(st_distance(geometry, st_union(chokepoint))) / 1000
   )
 
-# Capacity share within distance bands of Russian territory
-total_cap <- sum(terminals$capacity_bcm, na.rm = TRUE)
+# Capacity share within distance bands of Russian territory. Operating terminals
+# only, matching the Analysis page: planned capacity (e.g. Gdańsk) is not part of
+# what the region can actually land today.
+op_cap <- sum(terminals$capacity_bcm[terminals$status == "operating"], na.rm = TRUE)
 share_within <- function(km) {
-  near <- terminals |> filter(dist_russia_km <= km)
-  sum(near$capacity_bcm, na.rm = TRUE) / total_cap
+  near <- terminals |> filter(status == "operating", dist_russia_km <= km)
+  sum(near$capacity_bcm, na.rm = TRUE) / op_cap
 }
 
 # exposure index: weights and 0-1 scaling
