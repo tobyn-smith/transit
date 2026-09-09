@@ -6,14 +6,13 @@ execute:
 ---
 
 Every map and figure on this page is built from the public data listed on the
-[Data](01-data.qmd) page, and all distances are reported in kilometres. Each chart
-has a "Show code" toggle if you want to see how it was made, but you do not need
-to read any code to follow the analysis.
+[Data](01-data.qmd) page, and all distances are in kilometres. Each chart has a
+"Show code" toggle if you want to see how it was made. You do not need to read
+any of it to follow the argument.
 
-The terminal capacities come from operator reporting and the Global Energy
-Monitor tracker, current to 2024 and 2025 (see the [Data](01-data.qmd) page).
-Capacities change, so read the rankings as a picture of exposure rather than
-precise figures.
+Terminal capacities come from operator reporting and the Global Energy Monitor
+tracker, current to 2024 and 2025. Capacities change, so read the rankings as a
+picture of the pattern rather than as precise figures.
 
 ```{r setup}
 #| include: false
@@ -137,9 +136,9 @@ corridor_cols <- c("Operating" = "#2c5d7c", "Disrupted since 2022" = "#8f1d17")
 
 ## What was replaced
 
-Before looking at where the terminals sit, it is worth seeing the size of the hole
-they were built to fill. Russian pipeline gas into these eight countries has all
-but stopped, and the LNG capacity built since covers only part of what went.
+Before the map, the size of the hole these terminals were built to fill.
+Russian pipeline gas into these eight countries has all but stopped, and the
+LNG capacity built since covers only part of what went.
 
 ```{r swap}
 #| echo: false
@@ -171,7 +170,7 @@ ggplot(swap, aes(x = what, y = bcm, fill = kind)) +
   scale_y_continuous(expand = expansion(mult = c(0, 0.22))) +
   coord_flip() +
   labs(x = NULL, y = "Billion cubic metres per year",
-       title = "A large hole, partly filled",
+       title = "Russian pipeline gas and the LNG built since",
        caption = "Russian pipeline imports, Eurostat nrg_ti_gas. LNG capacity is operating terminals only.") +
   theme_transit() +
   theme(panel.grid.major.y = element_blank(), panel.grid.minor = element_blank())
@@ -184,10 +183,10 @@ Finland and Sweden recorded any at all. Germany alone accounted for
 2021 total and Poland `r round(ru$russian_gas_bcm[ru$iso_a2 == "PL" & ru$year == 2021], 1)` bcm.
 
 The operating LNG terminals amount to `r round(lng_cap, 1)` bcm a year, roughly a
-third of what stopped arriving. The gap did not close through terminals alone. It
-closed through lower demand, Norwegian pipeline gas, and imports arriving overland
-from the west, which is worth remembering before reading these terminals as the
-whole of the region's answer.
+third of what stopped arriving. The gap closed through lower demand, Norwegian
+pipeline gas, and imports arriving overland from the west, as well as through
+these terminals. I would not read the terminals as the whole of the region's
+answer.
 
 ## Concentration
 
@@ -225,10 +224,9 @@ ggplot() +
 
 ## Transit corridors
 
-The terminals are only part of the picture. They replaced, or now sit alongside, a
-network of subsea pipelines and cables, several of which have been damaged or
-sabotaged since 2022. The map shows the main corridors as schematic straight
-lines between their landing points.
+The terminals sit alongside a network of subsea pipelines and cables, several
+of which have been damaged or sabotaged since 2022. The map shows the main
+corridors as schematic straight lines between their landing points.
 
 ```{r map-corridors}
 #| echo: false
@@ -271,8 +269,8 @@ share_within <- function(km) {
 
 Only `r share_within(200)`% of the region's operating import capacity sits within
 200 km of Russian territory. The two largest terminals, Świnoujście and Mukran,
-lie more than 350 km back, so the exposure concentrates in the smaller terminals
-closest to the border.
+lie more than 350 km back, so most of the close-in exposure sits on the smaller
+terminals.
 
 ```{r dist-plot}
 #| echo: false
@@ -422,10 +420,10 @@ dep_tbl |>
 ```
 
 Estonia, Latvia and Sweden have no terminal of their own, yet almost all their
-gas is imported; they lean on neighbours through the Balticconnector and regional
-pipelines. Lithuania, Germany and Poland each run a single terminal, so that one
-asset carries the country's seaborne supply. Denmark stands apart, with low
-dependency on the back of its North Sea production.
+gas is imported. They lean on neighbours through the Balticconnector and
+regional pipelines. Lithuania, Germany and Poland each run a single terminal,
+so one outage takes out that country's seaborne supply. Denmark is the odd one
+out: low dependency, on the back of its North Sea production.
 
 ## Is the capacity enough?
 
@@ -473,28 +471,27 @@ reg_cov <- round(100 * tot_cap / tot_dem)
 ```
 
 Across the eight countries the operating terminals could land `r reg_cov`% of the
-gas the region burns in a year. That regional figure hides the more interesting
-split. Finland and Lithuania built capacity well beyond their own consumption, so
-their terminals are not just national supply but a regional buffer that neighbours
-can draw on. Poland and Germany, with far larger demand, cover only part of it by
-sea and still lean on pipelines from the west and north.
+gas the region burns in a year. That regional figure hides a split I care more
+about. Finland and Lithuania built capacity well beyond their own consumption,
+so neighbours can draw on them. Poland and Germany, with far larger demand,
+cover only part of it by sea and still lean on pipelines from the west and
+north.
 
-Four countries show no terminal, but they are not in the same position. Estonia,
-Latvia and Sweden import all their gas through neighbours, so the empty bar is a
-dependency. Denmark's empty bar is not: it produces its own gas from the North Sea
-and is the one country here that does not need a terminal.
+Four countries show no terminal, and they are not in the same position.
+Estonia, Latvia and Sweden import all their gas through neighbours, so the
+empty bar is a dependency. Denmark's empty bar is not: it produces its own gas
+from the North Sea and is the one country here that does not need a terminal.
 
-Read alongside the exposure score, this sharpens the picture. The terminals sitting
-closest to Russian territory are the small ones, but two of them, Klaipėda and
-Inkoo, are precisely the assets carrying spare capacity for their neighbours. The
-most exposed sites are also the ones the region's fallback depends on.
+Two of the small, close-in terminals, Klaipėda and Inkoo, are also the ones
+carrying spare capacity for their neighbours. That pairing is what I would
+want a reader to remember.
 
 ## What if the biggest terminal goes down?
 
-EU gas security rules use an idea called the N-1 standard: can a country still meet
-demand if its single largest piece of supply infrastructure fails? The test below
-borrows that logic and applies it to seaborne capacity alone, removing each
-country's largest terminal and asking what the rest could still land.
+EU gas security rules use an idea called the N-1 standard: can a country still
+meet demand if its single largest piece of supply infrastructure fails? The
+test below borrows that logic and applies it to seaborne capacity alone. I
+remove each country's largest terminal and ask what the rest could still land.
 
 ```{r n1}
 #| echo: false
@@ -533,7 +530,7 @@ ggplot(n1_long, aes(x = reorder(country, coverage), y = coverage, fill = scenari
   scale_y_continuous(expand = expansion(mult = c(0, 0.14))) +
   coord_flip() +
   labs(x = NULL, y = "Seaborne capacity as a share of national gas demand (%)",
-       title = "Lose one terminal, and the cover disappears",
+       title = "What is left if the largest terminal goes offline",
        subtitle = "Dashed line is 100% of annual demand",
        caption = "Operating terminals only. Pipelines, storage and domestic production are not counted.") +
   theme_transit() +
@@ -541,18 +538,18 @@ ggplot(n1_long, aes(x = reorder(country, coverage), y = coverage, fill = scenari
         legend.position = "top")
 ```
 
-The result is stark. Finland and Lithuania comfortably clear their own demand while
-everything is running, but each depends on one large terminal. Take Inkoo out and
-Finland is left with Hamina, a small-scale site covering about a fifth of demand.
-Take out Klaipėda, Świnoujście or Mukran and Lithuania, Poland and Germany have no
-seaborne capacity at all.
+Finland and Lithuania clear their own demand while everything is running, but
+each depends on one large terminal. Take Inkoo out and Finland is left with
+Hamina, a small-scale site covering about a fifth of demand. Take out Klaipėda,
+Świnoujście or Mukran and Lithuania, Poland and Germany have no seaborne
+capacity at all.
 
-Two caveats matter here. The real N-1 standard counts every source of supply,
-including pipelines, storage and domestic production, so these countries are not
-failing the actual regulatory test. They have other ways to get gas, which is the
-point: lose a terminal and you fall back onto exactly the pipelines and
-interconnectors that have been damaged since 2022. And this compares against annual
-demand, while a failure in January would bite harder than the average suggests.
+Two caveats. The real N-1 standard counts every source of supply, including
+pipelines, storage and domestic production, so these countries are not failing
+the actual regulatory test. They have other ways to get gas. Lose a terminal
+and you fall back onto the same pipelines and interconnectors that have been
+damaged since 2022. And this compares against annual demand, whilst a failure
+in January would bite harder than the average suggests.
 
 ## Exposure ranking
 
@@ -596,9 +593,10 @@ reactable(
 
 ## Change the weights yourself
 
-The weights are a choice, so rather than defend one set, here they are to move.
-Drag a slider or take one of the presets, and the ranking recomputes as you go.
-The weights are rescaled to sum to one, so only their balance matters.
+The weights are a choice, so rather than defend one set I have put them here
+to move. Drag a slider or take one of the presets, and the ranking recomputes
+as you go. The weights are rescaled to sum to one, so only their balance
+matters.
 
 ```{r weights-data}
 #| echo: false
@@ -709,10 +707,10 @@ cat('<script>window.terminalScores = ',
 </script>
 ```
 
-Weighting towards proximity lifts the terminals nearest Russian territory, Hamina,
-Klaipėda and Gdańsk. Weighting towards capacity lifts Świnoujście, the largest in
-the region. That the order moves at all is the point: the ranking is a function of
-the assumptions, and the assumptions are yours to set.
+Weighting towards proximity lifts the terminals nearest Russian territory,
+Hamina, Klaipėda and Gdańsk. Weighting towards capacity lifts Świnoujście, the
+largest in the region. The order moving at all is the useful part: the ranking
+is a function of the assumptions, and the assumptions are yours to set.
 
 ## Interactive map
 

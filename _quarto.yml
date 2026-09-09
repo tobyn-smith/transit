@@ -6,7 +6,7 @@ project:
 
 website:
   title: "Baltic Energy Transit Risk"
-  description: "Spatial exposure of post-2022 Baltic energy import infrastructure"
+  description: "How exposed the new Baltic gas import terminals are after 2022"
   favicon: favicon.svg
   site-url: https://tobyn-smith.github.io/transit
   search: true
@@ -31,7 +31,7 @@ website:
         aria-label: GitHub
   page-footer:
     border: false
-    left: "Public data only. Sources on the Data page."
+    left: "Public data only. Sources are on the Data page."
     right: "Built with R, sf and Quarto."
 
 format:

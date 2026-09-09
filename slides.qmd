@@ -1,6 +1,6 @@
 ---
 title: "Baltic Energy Transit Risk"
-subtitle: "Exposure of post-2022 energy import infrastructure"
+subtitle: "How exposed the new Baltic gas import terminals are"
 author: "Tobyn Smith"
 format:
   revealjs:
@@ -32,11 +32,11 @@ terminals <- read_csv("data/processed/lng_terminals.csv", show_col_types = FALSE
 
 Before 2022, most of the Baltic region's gas came by pipeline from Russia.
 
-After the invasion of Ukraine and the sabotage of the Nord Stream pipelines, that
-supply was cut. What replaced a continental pipeline network is, in practice, five
-working coastal terminals for liquefied natural gas (LNG).
+After the invasion of Ukraine and the Nord Stream sabotage, that route was
+shut. What replaced it is five working coastal terminals for liquefied natural
+gas, plus a sixth planned at Gdańsk.
 
-**How concentrated is that infrastructure, and how exposed is it?**
+How concentrated is that infrastructure, and how exposed is it?
 
 ## The size of the hole
 
@@ -45,9 +45,9 @@ Russian pipeline gas into these eight countries:
 - **2021:** about 70 bcm
 - **2023:** about 0.3 bcm, essentially nothing
 
-Operating LNG capacity built in the region: **around 23 bcm**, roughly a third of
-what stopped arriving. The rest closed through lower demand and pipeline gas from
-the west and north.
+Operating LNG capacity built in the region: **around 23 bcm**, roughly a third
+of what stopped arriving. The rest closed through lower demand and pipeline
+gas from the west and north.
 
 ## The terminals
 
@@ -65,48 +65,50 @@ leaflet(terminals, height = 480) |>
 ```
 
 ::: {style="font-size:0.7em;color:#5a6675"}
-Hover for a name, click for the detail. Each point is sized by capacity.
+Hover for a name, click for the figures. Each point is sized by capacity.
 :::
 
-## What the project measures
+## What I am measuring
 
-An **exposure score** for each terminal, from three plain ingredients:
+An exposure score for each terminal, from three ingredients:
 
 - how close it sits to Russian territory,
 - how much of the region's import capacity it holds,
 - how long its supply route past the Danish Straits runs.
 
-The weights are a stated judgement, not a result. Anyone can change them.
+The weights are a choice I made, not a result. Anyone can change them on the
+site.
 
 ## Finding 1: concentration
 
 Import capacity is lopsided.
 
-- Two southern terminals, **Świnoujście** (Poland) and **Mukran** (Germany), hold
-  most of the region's capacity.
-- The northeast leans on one or two terminals each: Inkoo for the Gulf of Finland,
-  Klaipėda for Lithuania.
+- Two southern terminals, **Świnoujście** (Poland) and **Mukran** (Germany),
+  hold most of the region's capacity.
+- The northeast runs on one or two terminals each: Inkoo for the Gulf of
+  Finland, Klaipėda for Lithuania.
 
 ## Finding 2: proximity
 
-The terminals closest to Russia are the **small** ones:
+The terminals closest to Russia are the small ones:
 
 - **Hamina**, at the eastern end of the Gulf of Finland,
 - **Klaipėda** and **Gdańsk**, beside the Kaliningrad exclave.
 
-The two largest terminals sit farthest from Russia. Size and proximity do not line
-up, which is what the score is built to show.
+The two largest terminals sit farthest from Russia. That mismatch is why I did
+not rank on size alone.
 
 ## Finding 3: one way in
 
-Every LNG cargo passes the **Danish Straits**.
+Every LNG cargo passes the Danish Straits.
 
 The Kiel Canal is the only other entrance, and it is far too small for LNG
-carriers, so the Straits are the effective door.
+carriers, so the Straits are the door that actually matters.
 
-Terminals deep in the Gulf of Finland run the longest exposed route to reach port.
+Terminals deep in the Gulf of Finland have the longest run once they are
+inside the sea.
 
-## This is not hypothetical
+## Disruptions since 2022
 
 | Date | Asset | What happened |
 |------|-------|---------------|
@@ -114,60 +116,64 @@ Terminals deep in the Gulf of Finland run the longest exposed route to reach por
 | Oct 2023 | Balticconnector | Pipeline and cable damaged by an anchor; repaired 2024 |
 | Dec 2024 | Estlink 2 | Power and telecoms cables cut; back in service 2025 |
 
-Baltic energy and data links have been hit repeatedly, mostly by ships dragging
-anchors across the seabed.
+Baltic energy and data links have been hit repeatedly, mostly by ships
+dragging anchors across the seabed. I am not scoring these events. They are
+why the geography is worth looking at.
 
 ## Who leans on whom
 
 Not every country has its own terminal.
 
-- **Estonia, Latvia, Sweden:** no terminal; they depend on neighbours through the
-  Balticconnector and regional pipelines.
-- **Lithuania, Germany, Poland:** a single terminal each, one point of failure.
+- **Estonia, Latvia, Sweden:** no terminal; they depend on neighbours through
+  the Balticconnector and regional pipelines.
+- **Lithuania, Germany, Poland:** a single terminal each, so one outage takes
+  out their seaborne supply.
 - **Denmark:** low dependency, on the back of its own North Sea gas.
 
 ## Is the capacity enough?
 
 Capacity only means something next to demand.
 
-- **Finland and Lithuania** hold several times their own annual consumption. They
-  built a regional buffer, not just national supply.
-- **Germany and Poland** cover only part of much larger demand by sea, and still
-  lean on pipelines from the west and north.
+- **Finland and Lithuania** hold several times their own annual consumption.
+  They built a regional buffer that neighbours can draw on.
+- **Germany and Poland** cover only part of much larger demand by sea, and
+  still lean on pipelines from the west and north.
 - **Estonia, Latvia, Sweden** have no terminal at all.
 
-The most exposed terminals are also the ones carrying the region's spare capacity.
+The terminals sitting closest to Russia are also the ones carrying the
+region's spare capacity. Those two facts belong together.
 
 ## Lose one terminal
 
-Applying the logic of the EU's N-1 standard to seaborne capacity alone:
+If you apply the EU's N-1 idea to seaborne capacity alone:
 
-- **Finland** falls from over three times its demand to about a fifth, on Hamina
-  alone.
+- **Finland** falls from over three times its demand to about a fifth, on
+  Hamina alone.
 - **Lithuania, Poland and Germany** fall to zero seaborne capacity.
 
-They are not failing the real N-1 test, which counts pipelines and storage too.
-But the fallback is precisely the pipelines and cables that have been cut.
+They are not failing the real N-1 test, which counts pipelines and storage
+too. The fallback is the same pipelines and cables that have been cut.
 
-## What follows for policy
+## What I would take from this
 
-- **No spare door in the north-east:** Finland and Lithuania each lean on one
-  terminal; the fallback is the very pipelines that have been hit.
-- **The connectors are the soft layer:** Estonia, Latvia and Sweden import
-  through neighbours, not terminals of their own.
-- **The Straits are shared:** one entrance for all eight countries, so patrols
-  there protect everyone at once.
-- **FSRUs cut both ways:** quick to add and movable, but few and chartered.
+- Finland and Lithuania each lean on one terminal; the fallback is the
+  pipelines that have already been hit.
+- Estonia, Latvia and Sweden import through neighbours, not terminals of
+  their own.
+- One entrance through the Straits serves all eight countries, so patrols
+  there cover everyone at once.
+- FSRUs were quick to add and can be moved, but they are few and chartered.
 
 ## Limitations
 
-- This measures **geographic exposure**, not the probability of disruption.
+- This measures geographic exposure, not the probability of disruption.
 - The score uses proxies (distance, capacity share), not a causal model.
 - It is a single snapshot; capacity, routes and terminals change.
 
-It shows where the exposure sits. It is not a risk forecast.
+I would treat this as a way to see where the exposure sits, not as a
+forecast.
 
-## Explore the full project
+## The full project
 
 The maps, the data, and the exposure ranking, all built from public sources:
 
