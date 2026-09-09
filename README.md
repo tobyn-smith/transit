@@ -1,7 +1,9 @@
 <h1 align="center">Baltic Energy Transit Risk</h1>
 
 <p align="center">
-  <em>Mapping how exposed the Baltic region's energy import infrastructure became after 2022</em>
+  A student project on the coastal LNG terminals that replaced Russian pipeline
+  gas around the Baltic after 2022, and how exposed each one looks from public
+  data.
 </p>
 
 <p align="center">
@@ -27,42 +29,52 @@
 
 ---
 
-## The question
+## What this is
 
-Before 2022 most of the Baltic region's gas arrived by pipeline from Russia. After
-the invasion of Ukraine and the sabotage of the Nord Stream pipelines, that supply
-stopped: Russian pipeline gas into the eight littoral states collapsed from roughly
-70 bcm in 2021 to almost nothing by 2023. What replaced a continental pipeline
-network is, in practice, five working coastal terminals, with a sixth planned at
-Gdańsk.
+This started as a student project in international affairs. I wanted a map of
+the terminals the Baltic region stood up after Russian pipeline gas stopped, and
+a way to say how exposed each one looks from public data alone.
 
-The problem is not the size of that gap, which lower demand and pipeline gas from
-the west have largely closed. It is that what remains is concentrated, sits nearest
-Russian territory precisely where it is smallest, and is one asset deep in every
-country that holds it.
+In 2021 the eight countries on that sea took about 70 bcm from Russia by pipe.
+By 2023 that was almost nothing. Five working coastal terminals, plus a sixth
+planned at Gdańsk, can land about 23 bcm a year, roughly a third of what
+stopped arriving. The rest of the gap closed because demand fell and because
+gas still comes in by pipe from Norway and the west.
 
-> How concentrated is that infrastructure, and how exposed is it, measured by
-> capacity, by distance to Russian territory, and by reliance on passage through
-> the Danish Straits?
+So the region is not short of gas on a normal year. What I wanted to see is how
+concentrated those terminals are, how close they sit to Russian territory, and
+how much of the supply run depends on ships coming through the Danish Straits.
 
-## What it finds
+> After 2022, Baltic energy imports shifted onto a small set of coastal LNG
+> terminals. How concentrated is that infrastructure, and how exposed is it,
+> measured by capacity, by distance to Russian territory, and by how far a
+> cargo has to run past the Danish Straits?
+
+## What I found
+
+The overbuild in Finland and Lithuania is the finding I would actually carry
+into a conversation, because the spare capacity sits on the terminals closest
+to Russia.
 
 | | |
 |:--|:--|
-| **Partly filled** | The terminals hold about 23 bcm of operating capacity, roughly a third of what stopped arriving. The rest closed through lower demand and pipeline gas from the west. |
-| **Lopsided** | Świnoujście and Mukran hold about three fifths of operating capacity; the northeast leans on one or two terminals each. |
-| **Small and close** | The terminals nearest Russian territory are the smallest ones. The two largest sit farthest away. |
-| **One way in** | Every cargo passes the Danish Straits. The Kiel Canal is far too small for LNG carriers. |
-| **Deliberate overbuild** | Finland and Lithuania hold capacity worth several times their own demand. They built a regional buffer. |
-| **One deep** | Remove each country's largest terminal and the cover vanishes: Finland drops to a fifth of demand, Lithuania, Poland and Germany to nothing. |
+| The terminals only partly filled the hole | About 23 bcm of operating capacity against roughly 70 bcm of Russian pipeline gas that stopped. Lower demand and western pipeline gas closed the rest. |
+| Capacity sits in the south | Świnoujście and Mukran hold about three fifths of operating capacity. The northeast runs on one or two terminals each. |
+| The small terminals are the close ones | Hamina, Klaipėda and Gdańsk sit nearest Russian territory. The two largest sites sit farthest away. |
+| There is one way in | Every cargo passes the Danish Straits. The Kiel Canal is too small for LNG carriers. |
+| Finland and Lithuania overbuilt on purpose | They hold capacity worth several times their own demand, and neighbours draw on it. |
+| Knock out the largest terminal and the cover goes | Finland drops to about a fifth of demand on Hamina alone. Lithuania, Poland and Germany drop to no seaborne capacity. |
 
 ## What is on the site
 
-- **Overview** &mdash; the question, findings in plain language, what follows for policy, and limitations.
-- **Data** &mdash; every source, with the tables sortable, searchable and downloadable.
-- **Analysis** &mdash; eight maps and charts, a ranked exposure table, and sliders that recompute the ranking as you change the weights.
-- **Slides** &mdash; a short navigable deck of the whole argument.
-- **Brief** &mdash; a printable PDF version.
+- **Overview:** the question, what I found, what I would take from it, and the
+  limits.
+- **Data:** every source, with the tables sortable, searchable and
+  downloadable.
+- **Analysis:** maps and charts, a ranked exposure table, and sliders that
+  recompute the ranking when you change the weights.
+- **Slides:** a short deck of the same argument.
+- **Brief:** a printable PDF.
 
 ## Data
 
@@ -81,14 +93,18 @@ A scheduled job re-pulls the Eurostat series each month and rebuilds the site if
 the figures change. The Data page also shows one figure fetched live from the
 Eurostat API when the page loads.
 
-## Method
+## How the score works
 
-Distances are measured in a projection suited to Europe (ETRS89 / LAEA Europe), so
-they come out in kilometres rather than degrees. The exposure score combines three
-things, each with a stated weight: proximity to Russian territory (0.4), share of
-the region's import capacity (0.3), and the length of the supply route past the
-Danish Straits (0.3). The weights are a judgement, not a finding, and the Analysis
-page lets any reader change them and watch the ranking move.
+Distances are measured in a projection suited to Europe (ETRS89 / LAEA Europe),
+so they come out in kilometres rather than degrees. Each terminal gets a number
+from three things, each with a stated weight: proximity to Russian territory
+(0.4), share of the region's import capacity (0.3), and the length of the
+supply route past the Danish Straits (0.3).
+
+I put the most weight on proximity because the question is about exposure to
+one neighbour, and distance is the most direct thing the public data will
+support. The weights are a judgement, not a finding. The Analysis page lets you
+change them and watch the ranking move.
 
 ## Run it yourself
 
@@ -147,19 +163,20 @@ docs/                          Built site (created by quarto render)
 ## What to check before citing
 
 The structure, maps and method are reproducible, and the Eurostat figures come
-straight from the API. Terminal capacities are compiled from operator reporting and
-are current to 2024 and 2025, so confirm them against the latest source if you cite
-a specific date. Note that published headline figures often describe planned rather
-than operating capacity: Mukran is widely quoted at 13.5 bcm, which assumes a second
-FSRU that is no longer on charter, so it is counted here at about 6 bcm.
+straight from the API. Terminal capacities are compiled from operator reporting
+and are current to 2024 and 2025, so confirm them against the latest source if
+you cite a specific date. Published headline figures often describe planned
+rather than operating capacity: Mukran is widely quoted at 13.5 bcm, which
+assumes a second FSRU that is no longer on charter, so I count it here at about
+6 bcm.
 
 ## Limitations
 
-This measures geographic exposure, not the probability of disruption. It uses proxy
-measures rather than a causal model, and it is a single snapshot. It shows where
-the exposure sits. It is not a risk forecast.
+This measures geographic exposure, not the probability of disruption. It uses
+proxy measures rather than a causal model, and it is a single snapshot. Use it
+to see where the exposure sits rather than citing it as a forecast.
 
 ## Licence
 
-Code released under the MIT Licence. Each data source keeps its own terms, listed
-on the [Data](https://tobyn-smith.github.io/transit/01-data.html) page.
+Code released under the MIT Licence. Each data source keeps its own terms,
+listed on the [Data](https://tobyn-smith.github.io/transit/01-data.html) page.

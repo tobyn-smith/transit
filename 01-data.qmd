@@ -20,9 +20,9 @@ rtheme <- reactableTheme(
 ```
 
 Every dataset here is public and free, with no login and no paid access. Where a
-source would normally require accepting terms or running a manual download, this
-project avoids it by using a small table stored with the project instead, and the
-notes below say exactly what to replace if you want to extend the project.
+source would normally require accepting terms or running a manual download, I
+kept a small table in the repo instead. The notes below say what to replace if
+you want to extend the project.
 
 ## Base geography
 
@@ -143,9 +143,9 @@ consumption from **Eurostat** (indicator `nrg_cb_gas`, natural gas, 2023), held 
 it sits on the same scale as terminal capacity. `scripts/03_eurostat.R` pulls it
 alongside the dependency figures.
 
-One caveat worth stating: 2023 demand was itself depressed by high prices and
-mild weather across much of Europe, so coverage against a colder, higher demand
-year would look less comfortable.
+2023 demand was itself depressed by high prices and mild weather across much
+of Europe, so coverage against a colder, higher-demand year would look less
+comfortable.
 
 [Download the demand figures as a CSV](data/processed/gas_demand.csv)
 
@@ -162,18 +162,18 @@ rather than what these particular countries actually took.
 
 [Download the import figures as a CSV](data/processed/russian_imports.csv)
 
-## A note on conflict data
+## Why there is no conflict event layer
 
-This project frames the question as exposure and structural dependence, not
-active conflict, because there is no battlefield on the Baltic seabed. ACLED is
-deliberately not used, since it now requires registration, which would break the
-public data rule. If a later version needs conflict events, UCDP GED is the
-public, no-login substitute.
+I framed this as exposure and structural dependence, not active conflict,
+because there is no battlefield on the Baltic seabed. ACLED is left out on
+purpose: it now requires registration, which would break the public data rule.
+If a later version needs conflict events, UCDP GED is the public, no-login
+substitute.
 
 ## How the data is prepared
 
 The steps that turn the raw tables and map data into the layers behind the maps
-live in `scripts/01_clean.R`, and the Analysis page repeats them when it builds:
+live in `scripts/01_clean.R`. The Analysis page repeats them when it builds:
 
 - tidy up the columns,
 - put everything on a map projection suited to Europe, so distances come out in
