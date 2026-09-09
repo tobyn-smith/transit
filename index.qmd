@@ -37,8 +37,8 @@ I score each terminal on those three things. The weights are a choice I made,
 not a result, and you can move them on the Analysis page.
 
 Nord Stream was blown in 2022, Balticconnector was damaged in 2023, and Estlink 2
-was cut in 2024. I am not modelling those events. I am mapping the geography they
-keep landing on.
+was cut in 2024. I am mapping the geography those events keep landing on, not
+scoring the events themselves.
 
 Terminal capacities are operator figures from 2024 and 2025. Import dependency is
 Eurostat for 2023. Everything I used is on the [Data](01-data.qmd) page.

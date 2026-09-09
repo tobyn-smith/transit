@@ -173,8 +173,8 @@ assumes a second FSRU that is no longer on charter, so I count it here at about
 ## Limitations
 
 This measures geographic exposure, not the probability of disruption. It uses
-proxy measures rather than a causal model, and it is a single snapshot. I would
-treat it as a way to see where the exposure sits, not as a forecast.
+proxy measures rather than a causal model, and it is a single snapshot. Use it
+to see where the exposure sits rather than citing it as a forecast.
 
 ## Licence
 

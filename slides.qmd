@@ -117,7 +117,7 @@ inside the sea.
 | Dec 2024 | Estlink 2 | Power and telecoms cables cut; back in service 2025 |
 
 Baltic energy and data links have been hit repeatedly, mostly by ships
-dragging anchors across the seabed. I am not scoring these events. They are
+dragging anchors across the seabed. I left those events as context, which is
 why the geography is worth looking at.
 
 ## Who leans on whom
@@ -170,8 +170,7 @@ too. The fallback is the same pipelines and cables that have been cut.
 - The score uses proxies (distance, capacity share), not a causal model.
 - It is a single snapshot; capacity, routes and terminals change.
 
-I would treat this as a way to see where the exposure sits, not as a
-forecast.
+I would not cite this as a forecast.
 
 ## The full project
 
