@@ -7,8 +7,7 @@ execute:
 
 Every map and figure on this page is built from the public data listed on the
 [Data](01-data.qmd) page, and all distances are in kilometres. Each chart has a
-"Show code" toggle if you want to see how it was made, though you do not need
-to read any of it to follow the argument.
+"Show code" toggle if you want to see how it was made.
 
 Terminal capacities come from operator reporting and the Global Energy Monitor
 tracker, current to 2024 and 2025. Capacities change, so I would read the
@@ -137,8 +136,8 @@ corridor_cols <- c("Operating" = "#2c5d7c", "Disrupted since 2022" = "#8f1d17")
 ## What was replaced
 
 Before the map, the size of the hole these terminals were built to fill.
-Russian pipeline gas into these eight countries has all but stopped, and the
-LNG capacity built since covers only part of what went.
+Russian pipeline gas into these eight countries has all but stopped. The LNG
+capacity built since covers only part of what went.
 
 ```{r swap}
 #| echo: false
@@ -185,7 +184,7 @@ Finland and Sweden recorded any at all. Germany alone accounted for
 The operating LNG terminals amount to `r round(lng_cap, 1)` bcm a year, roughly a
 third of what stopped arriving. The gap closed through lower demand, Norwegian
 pipeline gas, and imports arriving overland from the west, as well as through
-these terminals, so I would not read the terminals as the whole of the region's
+these terminals. I would not read the terminals as the whole of the region's
 answer.
 
 ## Concentration
@@ -420,15 +419,14 @@ dep_tbl |>
 ```
 
 Estonia, Latvia and Sweden have no terminal of their own, yet almost all their
-gas is imported, so they lean on neighbours through the Balticconnector and
+gas is imported. They lean on neighbours through the Balticconnector and
 regional pipelines. Lithuania, Germany and Poland each run a single terminal,
-which means one outage takes out that country's seaborne supply. Denmark is
-the odd one out: dependency is low there, on the back of its North Sea
-production.
+so one outage takes out that country's seaborne supply. Denmark is the odd one
+out. Dependency is low there, on the back of its North Sea production.
 
 ## Is the capacity enough?
 
-Capacity only means something next to demand, so this compares each country's
+Capacity only means something next to demand. This compares each country's
 operating terminal capacity with the gas it actually burned in 2023. A bar at
 100% means the terminals alone could cover a normal year's consumption.
 
@@ -480,7 +478,7 @@ north.
 
 Four countries show no terminal, and they are not in the same position.
 Estonia, Latvia and Sweden import all their gas through neighbours, so the
-empty bar is a dependency. Denmark's empty bar is not: it produces its own gas
+empty bar is a dependency. Denmark's empty bar is not. It produces its own gas
 from the North Sea and is the one country here that does not need a terminal.
 
 Two of the small, close-in terminals, Klaipėda and Inkoo, are also the ones
@@ -547,9 +545,9 @@ capacity at all.
 
 Two caveats. The real N-1 standard counts every source of supply, including
 pipelines, storage and domestic production, so these countries are not failing
-the actual regulatory test; they have other ways to get gas. Lose a terminal
+the actual regulatory test. They have other ways to get gas. Lose a terminal
 and you fall back onto the same pipelines and interconnectors that have been
-damaged since 2022. And this compares against annual demand, so a failure in
+damaged since 2022. And this compares against annual demand. A failure in
 January would bite harder than the average suggests.
 
 ## Exposure ranking
@@ -709,7 +707,7 @@ cat('<script>window.terminalScores = ',
 ```
 
 Weighting towards proximity lifts the terminals nearest Russian territory,
-Hamina, Klaipėda and Gdańsk; weighting towards capacity lifts Świnoujście, the
+Hamina, Klaipėda and Gdańsk. Weighting towards capacity lifts Świnoujście, the
 largest in the region. The order moving at all is the useful part. The ranking
 is a function of the assumptions, and the assumptions are yours to set.
 
