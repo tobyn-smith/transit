@@ -21,13 +21,13 @@ rtheme <- reactableTheme(
 
 Every dataset here is public and free, with no login and no paid access. Where a
 source would normally require accepting terms or running a manual download, I
-kept a small table in the repo instead. The notes below say what to replace if
-you want to extend the project.
+kept a small table in the repo instead, and the notes below say what to replace
+if you want to extend the project.
 
 ## Base geography
 
 Country shapes and coastlines come from **Natural Earth**, loaded through the
-`rnaturalearth` package. Natural Earth is in the public domain. The package
+`rnaturalearth` package. Natural Earth is in the public domain, and the package
 ships the data, so there is nothing to download by hand.
 
 ## Energy infrastructure
@@ -157,7 +157,7 @@ pipeline, from **Eurostat** (indicator `nrg_ti_gas`, partner Russia, natural gas
 for 2021 and 2023, held in `data/processed/russian_imports.csv` and converted to
 bcm. 2021 is used as the last full year before the invasion.
 
-These are recorded imports, not pipeline capacity. I think that is the fairer
+These are recorded imports, not pipeline capacity, which I think is the fairer
 comparison. Capacity figures for pipelines like Nord Stream describe what could
 have flowed rather than what these particular countries actually took.
 

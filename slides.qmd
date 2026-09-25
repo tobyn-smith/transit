@@ -31,9 +31,8 @@ terminals <- read_csv("data/processed/lng_terminals.csv", show_col_types = FALSE
 ## The question
 
 Before 2022, most of the Baltic region's gas came by pipeline from Russia.
-
 After the invasion of Ukraine and the Nord Stream sabotage, that route was
-shut. What replaced it is five working coastal terminals for liquefied
+shut, and what replaced it is five working coastal terminals for liquefied
 natural gas, plus a sixth planned at Gdańsk.
 
 How concentrated is that infrastructure, and how exposed is it?
@@ -80,12 +79,12 @@ I picked the weights myself. Anyone can change them on the site.
 
 ## Finding 1: concentration
 
-Import capacity is lopsided.
+Import capacity is lopsided: two southern terminals, **Świnoujście** (Poland)
+and **Mukran** (Germany), hold most of the region's capacity, while the
+northeast runs on one or two terminals each.
 
-- Two southern terminals, **Świnoujście** (Poland) and **Mukran** (Germany),
-  hold most of the region's capacity.
-- The northeast runs on one or two terminals each: Inkoo for the Gulf of
-  Finland, Klaipėda for Lithuania.
+- Inkoo for the Gulf of Finland
+- Klaipėda for Lithuania
 
 ## Finding 2: proximity
 
@@ -99,10 +98,9 @@ alone for that reason.
 
 ## Finding 3: one way in
 
-Every LNG cargo passes the Danish Straits.
-
-The Kiel Canal is the only other entrance, and it is far too small for LNG
-carriers. The Straits are the door that actually matters.
+Every LNG cargo passes the Danish Straits. The Kiel Canal is the only other
+entrance, and it is far too small for LNG carriers, so the Straits are the
+door that actually matters.
 
 Terminals deep in the Gulf of Finland have the longest run once they are
 inside the sea.
@@ -116,7 +114,7 @@ inside the sea.
 | Dec 2024 | Estlink 2 | Power and telecoms cables cut; back in service 2025 |
 
 Baltic energy and data links have been hit repeatedly, mostly by ships
-dragging anchors across the seabed. I left those events as context. They are
+dragging anchors across the seabed. I left those events as context; they are
 why the geography is worth looking at.
 
 ## Who leans on whom
@@ -133,14 +131,14 @@ Not every country has its own terminal.
 
 Capacity only means something next to demand.
 
-- **Finland and Lithuania** hold several times their own annual consumption.
-  They built a regional buffer that neighbours can draw on.
+- **Finland and Lithuania** hold several times their own annual consumption,
+  so they built a regional buffer that neighbours can draw on.
 - **Germany and Poland** cover only part of much larger demand by sea, and
   still lean on pipelines from the west and north.
 - **Estonia, Latvia, Sweden** have no terminal at all.
 
 The terminals sitting closest to Russia are also the ones carrying the
-region's spare capacity. I would keep those two facts together.
+region's spare capacity, and I would keep those two facts together.
 
 ## Lose one terminal
 
@@ -151,7 +149,7 @@ If you apply the EU's N-1 idea to seaborne capacity alone:
 - **Lithuania, Poland and Germany** fall to zero seaborne capacity.
 
 The real N-1 test counts pipelines and storage too, so they are not failing
-that. The fallback is the same pipelines and cables that have been cut.
+that; the fallback is the same pipelines and cables that have been cut.
 
 ## What I would take from this
 
@@ -165,10 +163,9 @@ that. The fallback is the same pipelines and cables that have been cut.
 
 ## Limitations
 
-- This measures geographic exposure. It does not measure the probability of
-  disruption.
+- This measures geographic exposure, not the probability of disruption.
 - The score uses proxies (distance, capacity share), not a causal model.
-- It is a single snapshot. Capacity, routes and terminals change.
+- It is a single snapshot: capacity, routes and terminals change.
 
 I would not cite this as a forecast.
 

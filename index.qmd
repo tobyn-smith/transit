@@ -26,32 +26,34 @@ some way of saying how exposed each one looks if you only use public data.
 In 2021 the eight countries on that sea took about 70 bcm from Russia by pipe.
 By 2023 the same Eurostat series was down to almost nothing. Five working
 coastal LNG terminals, plus a sixth planned at Gdańsk, can land about 23 bcm a
-year between them. That is roughly a third of what stopped arriving. Demand
-fell, and gas still comes in by pipe from Norway and the west, which is how
-the rest of the gap closed.
+year between them, which is roughly a third of what stopped arriving. Demand
+fell, and gas still comes in by pipe from Norway and the west, so the rest of
+the gap closed that way rather than through these sites alone.
 
 On a normal year, then, the region is not short of gas. What I kept coming
 back to is how concentrated those terminals are, how close they sit to Russian
 territory, and how much of the supply run depends on ships coming through the
-Danish Straits. I score each terminal on those three things. I picked the
-weights myself, so you should treat them as a judgement. You can move them on
-the Analysis page.
+Danish Straits. I score each terminal on those three things, with weights I
+picked myself, so the ranking is a judgement rather than a discovered fact.
+You can move the weights on the Analysis page and watch how far the order
+shifts.
 
 Nord Stream was blown in 2022, Balticconnector was damaged in 2023, and
 Estlink 2 was cut in 2024. I am mapping the geography those events keep
-landing on. I am not scoring the events themselves.
+landing on, not scoring the events themselves.
 
-Terminal capacities are operator figures from 2024 and 2025. Import dependency
-is Eurostat for 2023. Everything I used is on the [Data](01-data.qmd) page.
+Terminal capacities are operator figures from 2024 and 2025, and import
+dependency is Eurostat for 2023. Everything I used is on the
+[Data](01-data.qmd) page.
 
 ## The question
 
 Before 2022 most of this gas came by pipe from Russia. After the invasion of
 Ukraine and the Nord Stream sabotage, that route was shut or abandoned, and
 the region started landing chilled gas from ships at sites such as Klaipėda,
-Świnoujście and Inkoo. An LNG terminal is where those ships unload. The cargo
-is then warmed back into gas for the pipe network. Some terminals are built on
-land. Some are a moored ship, an FSRU.
+Świnoujście and Inkoo. An LNG terminal is the coastal site where those ships
+unload and the cargo is warmed back into gas for the pipe network. Some of
+them are built on land; others are a moored ship, an FSRU.
 
 That move put a lot of eight countries' import capacity onto a few coastal
 points you can actually put on a map. The question I am asking is:
@@ -83,26 +85,26 @@ The numbers sit on the [Analysis](02-analysis.qmd) page. Capacities move, so I
 would read them as a picture of the pattern rather than as a precise
 measurement.
 
-Capacity is lopsided. Świnoujście in Poland and Mukran in Germany hold about
-three fifths of the operating import capacity. The northeast runs on one or
-two terminals each: Inkoo for the Gulf of Finland, Klaipėda for Lithuania.
-Five working sites replaced a continental pipe network, with Gdańsk still
-planned.
+Świnoujście in Poland and Mukran in Germany hold about three fifths of the
+operating import capacity, which already tells you how lopsided the map is.
+The northeast runs on one or two terminals each: Inkoo for the Gulf of
+Finland, Klaipėda for Lithuania. Five working sites replaced a continental
+pipe network, with Gdańsk still planned.
 
 The terminals closest to Russian territory are the small ones. Hamina sits at
-the eastern end of the Gulf of Finland. Klaipėda and Gdańsk sit next to
-Kaliningrad. The two largest terminals are among the farthest from Russia. I
-did not rank on size alone for that reason.
+the eastern end of the Gulf of Finland, Klaipėda and Gdańsk sit next to
+Kaliningrad, and the two largest terminals are among the farthest from
+Russia. I did not rank on size alone for that reason.
 
 Every cargo still comes through the Danish Straits. The Kiel Canal is the
-other way in, and it is too small for LNG carriers. Terminals up in the Gulf
-of Finland have the longest run once they are inside the sea.
+other way in, but it is too small for LNG carriers, so terminals up in the
+Gulf of Finland have the longest run once they are inside the sea.
 
-Finland and Lithuania built well beyond their own demand. Germany and Poland
-burn much more gas and only cover part of that by sea. The northeast, in
-other words, built a buffer that neighbours draw on. That is the part I care
-most about, because the terminals sitting closest to Russia are also the ones
-carrying spare capacity for the rest of the region.
+Finland and Lithuania built well beyond their own demand, while Germany and
+Poland burn much more gas and only cover part of that by sea. The northeast,
+in other words, built a buffer that neighbours draw on. That is the part I
+care most about, because the terminals sitting closest to Russia are also the
+ones carrying spare capacity for the rest of the region.
 
 ## How the score is built
 
@@ -115,12 +117,12 @@ Each terminal gets a number from three ingredients:
 I weighted proximity most because the question is about exposure to one
 neighbour, and distance is the most direct thing the public data will
 support. Capacity is in there because a larger terminal does more damage if
-it stops. Transit is in there because a site deep in the Gulf of Finland has
-a longer voyage to be restocked.
+it stops, and transit is in there because a site deep in the Gulf of Finland
+has a longer voyage to be restocked.
 
-Those weights are a judgement. They are written out on the Analysis page. You
-can drag them, and a table there shows how much the order moves. There is no
-hidden model. Every number can be explained out loud.
+Those weights are a judgement, written out on the Analysis page so you can
+drag them and see how much the order moves. There is no hidden model; every
+number can be explained out loud.
 
 ## Disruptions since 2022
 
@@ -133,9 +135,9 @@ Most of that damage has come from ships dragging anchors across the seabed.
 | Oct 2023 | Balticconnector | The Finland-Estonia gas pipeline and a telecoms cable were damaged by a ship's anchor. The pipeline was shut for six months and returned to commercial use on 22 April 2024. |
 | Dec 2024 | Estlink 2 | The Estonia-Finland power cable and four telecoms cables were cut on Christmas Day; a shadow-fleet tanker is the prime suspect. Repairs ran into 2025 and the link returned to commercial use on 20 June 2025. |
 
-I left those events as context. They are why the geography is worth looking
-at. The [Analysis](02-analysis.qmd) page maps the corridors and which have
-been hit.
+I left those events as context; they are why the geography is worth looking
+at. The [Analysis](02-analysis.qmd) page maps the corridors and which of them
+have been hit.
 
 Sources: [Balticconnector return to service (Gasgrid)](https://gasgrid.fi/en/2024/04/19/balticconnector-in-commercial-use-from-monday-22-april-onwards/),
 [Estlink 2 return to service (Fingrid)](https://www.fingrid.fi/en/news/news/2025/estlink-2-electricity-transmission-link-returns-to-commercial-use/),
@@ -144,42 +146,42 @@ Sources: [Balticconnector return to service (Gasgrid)](https://gasgrid.fi/en/202
 ## What I would take from this
 
 If you borrow the EU's N-1 idea and knock out each country's largest terminal,
-Finland is left with Hamina, covering about a fifth of demand. Lithuania,
+Finland is left with Hamina, covering about a fifth of demand, and Lithuania,
 Poland and Germany are left with no seaborne capacity at all. The real N-1
-test also counts pipes and storage, so they are not failing that test. The
+test also counts pipes and storage, so they are not failing that test; the
 fallback is the same links that have already been damaged.
 
 Estonia, Latvia and Sweden have no terminal of their own. Their gas comes
-through neighbours, over pipes and cables such as the Balticconnector. That
-layer has already been hit.
+through neighbours, over pipes and cables such as the Balticconnector, and
+that layer has already been hit.
 
-The Danish Straits are one entrance for all eight countries. Anything that
+The Danish Straits are one entrance for all eight countries, so anything that
 watches that stretch (the kind of patrol NATO stood up after the December 2024
 cable cuts) covers the whole region at once.
 
-FSRUs were quick to bring in and can be moved. They are also few and
+FSRUs were quick to bring in and can be moved, but they are also few and
 chartered. Mukran lost about half its capacity when a second ship came off
 charter, which is why I count it at about 6 bcm rather than the 13.5 bcm still
 quoted in a lot of headlines.
 
 ## Limitations
 
-This is geographic exposure. It is not a probability that anything will
-happen. A terminal close to a maritime boundary is a fact about a map.
+This is geographic exposure, not a probability that anything will happen. A
+terminal close to a maritime boundary is a fact about a map.
 
 A few caveats I would want a reader to have:
 
-- The score uses distance and capacity share as proxies. Change the weights
+- The score uses distance and capacity share as proxies, so change the weights
   and the ranking moves.
-- It is one snapshot. Capacities, routes and terminals change.
+- It is one snapshot: capacities, routes and terminals change.
 - Capacities are compiled from operator reporting and Global Energy Monitor,
   current to 2024 and 2025. Dependence figures are Eurostat for 2023. See
   [Data](01-data.qmd).
-- The 2023 to 2025 cable and pipeline incidents are context. They are not
-  events in the model.
+- The 2023 to 2025 cable and pipeline incidents are context, not events in
+  the model.
 
-I would treat this as a way to see where the exposure sits. I would not cite
-it as a forecast.
+I would treat this as a way to see where the exposure sits, not as something
+to cite as a forecast.
 
 ## Terms
 
@@ -202,5 +204,5 @@ it as a forecast.
 - [Slides](slides.qmd) is the same argument as a short deck.
 - The [printable brief](brief.pdf) is two pages.
 
-You do not need any technical background. The code behind each chart is
+You do not need any technical background; the code behind each chart is
 folded away.

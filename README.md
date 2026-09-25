@@ -39,7 +39,8 @@ In 2021 the eight countries on that sea took about 70 bcm from Russia by pipe.
 By 2023 that was almost nothing. Five working coastal terminals, plus a sixth
 planned at Gdańsk, can land about 23 bcm a year, roughly a third of what
 stopped arriving. Demand fell, and gas still comes in by pipe from Norway and
-the west, which is how the rest of the gap closed.
+the west, so the rest of the gap closed that way rather than through these
+sites alone.
 
 On a normal year, then, the region is not short of gas. What I kept coming
 back to is how concentrated those terminals are, how close they sit to Russian
