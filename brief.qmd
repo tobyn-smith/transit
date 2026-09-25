@@ -94,15 +94,15 @@ terminals built to receive seaborne gas hold about `r round(lng_cap, 1)` bcm a
 year, some `r round(100 * lng_cap / ru_21)`% of what stopped arriving.
 
 The gap itself is mostly closed. Demand fell, and pipeline gas still arrives
-from the west and north. What I am trying to show is that the replacement sits
-in a few fixed places, that the terminals nearest Russian territory are the
-small ones, and that every country with a terminal is running on a single
-site. Lose that site and the fallback is the same subsea links that have
-already been cut three times since 2022.
+from the west and north. What I am trying to show is simpler than that. The
+replacement sits in a few fixed places. The terminals nearest Russian
+territory are the small ones. Every country with a terminal is running on a
+single site. Lose that site and the fallback is the same subsea links that
+have already been cut three times since 2022.
 
 The rest of the brief is the map, a stated and adjustable exposure score, what
-happens when the largest terminal in each country is removed, and what I would
-take from that.
+happens when the largest terminal in each country is removed, and what I make
+of that.
 
 ## Where the terminals sit
 
@@ -133,23 +133,23 @@ ggplot() +
 ## Findings
 
 Świnoujście in Poland and Mukran in Germany hold about three fifths of the
-region's operating import capacity. The northeast runs on one or two terminals
-each, Inkoo for the Gulf of Finland and Klaipėda for Lithuania. Five working
-coastal sites replaced a continental pipeline network, with a sixth planned at
-Gdańsk.
+region's operating import capacity. The northeast runs on one or two
+terminals each, Inkoo for the Gulf of Finland and Klaipėda for Lithuania. Five
+working coastal sites replaced a continental pipeline network, with a sixth
+planned at Gdańsk.
 
-The terminals nearest Russia are the small ones. Hamina sits at the eastern end
-of the Gulf of Finland; Klaipėda and Gdańsk sit next to Kaliningrad. The two
-largest terminals are among the farthest away. Size and proximity do not line
-up, which is why I did not rank on size alone.
+The terminals nearest Russia are the small ones. Hamina sits at the eastern
+end of the Gulf of Finland. Klaipėda and Gdańsk sit next to Kaliningrad. The
+two largest terminals are among the farthest away. Size and proximity do not
+line up, so I did not rank on size alone.
 
 All LNG bound for these terminals passes the Danish Straits. The Kiel Canal is
 the only other way in and is far too small for LNG carriers. The terminals
 deepest inside the sea have the longest run to port.
 
 Set against what each country actually burns, Finland and Lithuania hold
-capacity worth several times their own demand, whilst Germany and Poland cover
-only part of theirs by sea. Across the eight countries the terminals could land
+capacity worth several times their own demand. Germany and Poland cover only
+part of theirs by sea. Across the eight countries the terminals could land
 `r reg_cov`% of annual consumption. That overbuild is the part I care most
 about, because the spare capacity sits on the terminals closest to Russia.
 
@@ -166,10 +166,10 @@ terminals |>
 ## What I would take from this
 
 If you borrow the EU's N-1 idea and knock out each country's largest terminal,
-Finland is left covering about a fifth of its demand and Lithuania, Poland and
-Germany are left with no seaborne capacity at all. They are not failing the
-real test, which counts pipelines and storage too. The fallback is the same
-links that have been damaged since 2022.
+Finland is left covering about a fifth of its demand. Lithuania, Poland and
+Germany are left with no seaborne capacity at all. The real test counts
+pipelines and storage too, so they are not failing that. The fallback is the
+same links that have been damaged since 2022.
 
 Estonia, Latvia and Sweden import through neighbours rather than terminals of
 their own, over links such as the Balticconnector that have already been
@@ -191,12 +191,12 @@ Mukran lost half its capacity when a charter ended.
 
 ## Limitations
 
-This measures geographic exposure, not the probability of disruption. The score
-uses proxies rather than a causal model, and different reasonable weights shift
-the ranking. It is a single snapshot: capacities move, and headline figures
-often describe planned rather than operating capacity. Demand in 2023 was
-itself depressed by high prices and mild weather, so coverage in a colder year
-would look less comfortable.
+This measures geographic exposure. It does not measure the probability of
+disruption. The score uses proxies rather than a causal model, and different
+reasonable weights shift the ranking. It is a single snapshot: capacities
+move, and headline figures often describe planned rather than operating
+capacity. Demand in 2023 was itself depressed by high prices and mild weather,
+so coverage in a colder year would look less comfortable.
 
 ## Sources
 

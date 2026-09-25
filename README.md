@@ -32,18 +32,19 @@
 ## What this is
 
 This started as a student project in international affairs. I wanted a map of
-the terminals the Baltic region stood up after Russian pipeline gas stopped, and
-a way to say how exposed each one looks from public data alone.
+the terminals the Baltic region built after Russian pipeline gas stopped, and
+some way of saying how exposed each one looks if you only use public data.
 
 In 2021 the eight countries on that sea took about 70 bcm from Russia by pipe.
 By 2023 that was almost nothing. Five working coastal terminals, plus a sixth
 planned at Gdańsk, can land about 23 bcm a year, roughly a third of what
-stopped arriving. The rest of the gap closed because demand fell and because
-gas still comes in by pipe from Norway and the west.
+stopped arriving. Demand fell, and gas still comes in by pipe from Norway and
+the west, which is how the rest of the gap closed.
 
-So the region is not short of gas on a normal year. What I wanted to see is how
-concentrated those terminals are, how close they sit to Russian territory, and
-how much of the supply run depends on ships coming through the Danish Straits.
+On a normal year, then, the region is not short of gas. What I kept coming
+back to is how concentrated those terminals are, how close they sit to Russian
+territory, and how much of the supply run depends on ships coming through the
+Danish Straits.
 
 > After 2022, Baltic energy imports shifted onto a small set of coastal LNG
 > terminals. How concentrated is that infrastructure, and how exposed is it,
@@ -52,9 +53,8 @@ how much of the supply run depends on ships coming through the Danish Straits.
 
 ## What I found
 
-The overbuild in Finland and Lithuania is the finding I would actually carry
-into a conversation, because the spare capacity sits on the terminals closest
-to Russia.
+The overbuild in Finland and Lithuania is the part I care most about, because
+the spare capacity sits on the terminals closest to Russia.
 
 | | |
 |:--|:--|
@@ -103,8 +103,8 @@ supply route past the Danish Straits (0.3).
 
 I put the most weight on proximity because the question is about exposure to
 one neighbour, and distance is the most direct thing the public data will
-support. The weights are a judgement, not a finding. The Analysis page lets you
-change them and watch the ranking move.
+support. The weights are a judgement. They are not a finding. The Analysis
+page lets you change them and watch the ranking move.
 
 ## Run it yourself
 
@@ -172,9 +172,10 @@ assumes a second FSRU that is no longer on charter, so I count it here at about
 
 ## Limitations
 
-This measures geographic exposure, not the probability of disruption. It uses
-proxy measures rather than a causal model, and it is a single snapshot. Use it
-to see where the exposure sits rather than citing it as a forecast.
+This measures geographic exposure. It does not measure the probability of
+disruption. It uses proxy measures rather than a causal model, and it is a
+single snapshot. Use it to see where the exposure sits rather than citing it
+as a forecast.
 
 ## Licence
 

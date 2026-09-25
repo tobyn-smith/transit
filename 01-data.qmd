@@ -27,8 +27,8 @@ you want to extend the project.
 ## Base geography
 
 Country shapes and coastlines come from **Natural Earth**, loaded through the
-`rnaturalearth` package. Natural Earth is in the public domain, and because the
-package ships the data, there is nothing to download by hand.
+`rnaturalearth` package. Natural Earth is in the public domain. The package
+ships the data, so there is nothing to download by hand.
 
 ## Energy infrastructure
 
@@ -52,7 +52,7 @@ read_csv("data/processed/lng_terminals.csv", show_col_types = FALSE) |>
 
 The capacities are taken from operator reporting and the **Global Energy
 Monitor** terminal tracker, current as of 2024 to 2025. The `source` column in
-the table names the operator behind each figure. Two points worth flagging:
+the table names the operator behind each figure. Two points I would flag:
 
 - Capacities move, and a headline figure is often the planned one. Świnoujście
   reached 8.3 bcm only in January 2025, once its third tank came online. Mukran is
@@ -75,7 +75,7 @@ Energy Monitor** tracker.
 The corridor map on the Analysis page uses a small table,
 `data/processed/transit_lines.csv`, listing the main subsea pipelines and cables
 by their landing points and status. They are drawn as **schematic straight
-lines**, not surveyed routes: the aim is to show which corridors exist and which
+lines**, not surveyed routes. The aim is to show which corridors exist and which
 have been disrupted, not their exact path. Positions and dates come from operator
 and press reporting. To map the true routes, add the actual route lines from
 **EMODnet Human Activities** or **OpenStreetMap**.
@@ -83,9 +83,10 @@ and press reporting. To map the true routes, add the actual route lines from
 ## Proximity reference
 
 Instead of a maritime boundary line, the proximity measure uses distance to the
-nearest **Russian territory**, meaning the mainland near the Gulf of Finland plus
-the Kaliningrad exclave, taken from Natural Earth. It is reproducible from a
-public package and easy to read: how far each terminal is from Russian soil.
+nearest **Russian territory**. That means the mainland near the Gulf of Finland
+plus the Kaliningrad exclave, taken from Natural Earth. It is reproducible from a
+public package, and it is easy to read: how far each terminal is from Russian
+soil.
 
 ## Dependence
 
@@ -156,19 +157,19 @@ pipeline, from **Eurostat** (indicator `nrg_ti_gas`, partner Russia, natural gas
 for 2021 and 2023, held in `data/processed/russian_imports.csv` and converted to
 bcm. 2021 is used as the last full year before the invasion.
 
-These are recorded imports, not pipeline capacity, which is the fairer comparison:
-capacity figures for pipelines like Nord Stream describe what could have flowed
-rather than what these particular countries actually took.
+These are recorded imports, not pipeline capacity. I think that is the fairer
+comparison. Capacity figures for pipelines like Nord Stream describe what could
+have flowed rather than what these particular countries actually took.
 
 [Download the import figures as a CSV](data/processed/russian_imports.csv)
 
 ## Why there is no conflict event layer
 
-I framed this as exposure and structural dependence, not active conflict,
-because there is no battlefield on the Baltic seabed. ACLED is left out on
-purpose: it now requires registration, which would break the public data rule.
-If a later version needs conflict events, UCDP GED is the public, no-login
-substitute.
+I framed this as exposure and structural dependence rather than active
+conflict, because there is no battlefield on the Baltic seabed. ACLED is left
+out on purpose: it now requires registration, which would break the public
+data rule. If a later version needs conflict events, UCDP GED is the public,
+no-login substitute.
 
 ## How the data is prepared
 

@@ -11,8 +11,8 @@ Every map and figure on this page is built from the public data listed on the
 any of it to follow the argument.
 
 Terminal capacities come from operator reporting and the Global Energy Monitor
-tracker, current to 2024 and 2025. Capacities change, so read the rankings as a
-picture of the pattern rather than as precise figures.
+tracker, current to 2024 and 2025. Capacities change, so I would read the
+rankings as a picture of the pattern rather than as precise figures.
 
 ```{r setup}
 #| include: false
@@ -137,8 +137,8 @@ corridor_cols <- c("Operating" = "#2c5d7c", "Disrupted since 2022" = "#8f1d17")
 ## What was replaced
 
 Before the map, the size of the hole these terminals were built to fill.
-Russian pipeline gas into these eight countries has all but stopped, and the
-LNG capacity built since covers only part of what went.
+Russian pipeline gas into these eight countries has all but stopped. The LNG
+capacity built since covers only part of what went.
 
 ```{r swap}
 #| echo: false
@@ -224,9 +224,9 @@ ggplot() +
 
 ## Transit corridors
 
-The terminals sit alongside a network of subsea pipelines and cables, several
-of which have been damaged or sabotaged since 2022. The map shows the main
-corridors as schematic straight lines between their landing points.
+The terminals sit alongside a network of subsea pipelines and cables. Several
+of those links have been damaged or sabotaged since 2022. The map shows the
+main corridors as schematic straight lines between their landing points.
 
 ```{r map-corridors}
 #| echo: false
@@ -269,8 +269,8 @@ share_within <- function(km) {
 
 Only `r share_within(200)`% of the region's operating import capacity sits within
 200 km of Russian territory. The two largest terminals, Świnoujście and Mukran,
-lie more than 350 km back, so most of the close-in exposure sits on the smaller
-terminals.
+lie more than 350 km back. Most of the close-in exposure, then, sits on the
+smaller terminals.
 
 ```{r dist-plot}
 #| echo: false
@@ -296,8 +296,8 @@ terminals |>
 
 The rings mark distance from Russian territory in 100 km steps. The terminals
 inside 100 km are the small ones, near Kaliningrad and at the eastern end of the
-Gulf of Finland. The largest capacity sits in the outer band, well back from the
-border.
+Gulf of Finland. The largest capacity sits in the outer band, well back from
+the border.
 
 ```{r map-zones}
 #| echo: false
@@ -423,12 +423,12 @@ Estonia, Latvia and Sweden have no terminal of their own, yet almost all their
 gas is imported. They lean on neighbours through the Balticconnector and
 regional pipelines. Lithuania, Germany and Poland each run a single terminal,
 so one outage takes out that country's seaborne supply. Denmark is the odd one
-out: low dependency, on the back of its North Sea production.
+out. Dependency is low there, on the back of its North Sea production.
 
 ## Is the capacity enough?
 
 Capacity only means something next to demand. This compares each country's
-operating terminal capacity with the gas it actually burned in 2023, so a bar at
+operating terminal capacity with the gas it actually burned in 2023. A bar at
 100% means the terminals alone could cover a normal year's consumption.
 
 ```{r coverage}
@@ -479,7 +479,7 @@ north.
 
 Four countries show no terminal, and they are not in the same position.
 Estonia, Latvia and Sweden import all their gas through neighbours, so the
-empty bar is a dependency. Denmark's empty bar is not: it produces its own gas
+empty bar is a dependency. Denmark's empty bar is not. It produces its own gas
 from the North Sea and is the one country here that does not need a terminal.
 
 Two of the small, close-in terminals, Klaipėda and Inkoo, are also the ones
@@ -548,8 +548,8 @@ Two caveats. The real N-1 standard counts every source of supply, including
 pipelines, storage and domestic production, so these countries are not failing
 the actual regulatory test. They have other ways to get gas. Lose a terminal
 and you fall back onto the same pipelines and interconnectors that have been
-damaged since 2022. And this compares against annual demand, whilst a failure
-in January would bite harder than the average suggests.
+damaged since 2022. And this compares against annual demand. A failure in
+January would bite harder than the average suggests.
 
 ## Exposure ranking
 
@@ -709,7 +709,7 @@ cat('<script>window.terminalScores = ',
 
 Weighting towards proximity lifts the terminals nearest Russian territory,
 Hamina, Klaipėda and Gdańsk. Weighting towards capacity lifts Świnoujście, the
-largest in the region. The order moving at all is the useful part: the ranking
+largest in the region. The order moving at all is the useful part. The ranking
 is a function of the assumptions, and the assumptions are yours to set.
 
 ## Interactive map
