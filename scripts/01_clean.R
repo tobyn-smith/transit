@@ -8,6 +8,7 @@ library(sf)
 library(dplyr)
 library(readr)
 library(rnaturalearth)
+library(rnaturalearthdata)
 
 laea <- 3035
 dir.create("data/processed", recursive = TRUE, showWarnings = FALSE)
