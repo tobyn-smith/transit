@@ -118,14 +118,14 @@ page lets you change them and watch the ranking move.
 3. **Install Quarto** from [quarto.org](https://quarto.org/docs/get-started). This turns the analysis into the website.
 4. **Download the project**: green **Code** button above, then **Download ZIP**, and unzip it.
 5. **Open** `baltic-energy-transit.Rproj` in RStudio.
-6. **Install the packages.** In the Console panel, paste this and press Enter:
+6. **Restore the pinned packages.** In the Console panel, paste this and press Enter:
 
    ```r
-   install.packages(c("sf", "dplyr", "readr", "ggplot2", "leaflet",
-                      "rnaturalearth", "rnaturalearthdata", "scales",
-                      "gt", "reactable", "ggrepel", "jsonlite",
-                      "rmarkdown", "knitr"))
+   install.packages("renv")
+   renv::restore()
    ```
+
+   Spatial packages need GDAL, GEOS and PROJ on the machine. On Debian or Ubuntu that is usually `libgdal-dev`, `libgeos-dev` and `libproj-dev`.
 
 7. **Build the site.** In the Terminal panel, run:
 
@@ -159,6 +159,30 @@ docs/                          Built site (created by quarto render)
 ```
 
 </details>
+
+## How to reproduce
+
+Package versions are pinned in `renv.lock` against R 4.3.3.
+
+1. Install [R 4.3.3](https://cloud.r-project.org) and [Quarto](https://quarto.org/docs/get-started).
+2. Open `baltic-energy-transit.Rproj` and restore the library:
+
+   ```r
+   install.packages("renv")
+   renv::restore()
+   ```
+
+3. Rebuild the optional spatial layers (the committed CSVs are the analysis inputs):
+
+   ```r
+   source("scripts/00_download.R")
+   source("scripts/01_clean.R")
+   source("scripts/02_analysis.R")
+   ```
+
+4. Render the site with `quarto render` and open `docs/index.html`.
+
+`scripts/03_eurostat.R` re-downloads the 2023 Eurostat snapshot. The committed CSVs are the published figures. A later API revision can change what a fresh pull returns, so compare before you overwrite those files.
 
 ## What to check before citing
 
