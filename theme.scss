@@ -1,36 +1,36 @@
 /*-- scss:defaults --*/
 
-// institutional palette: cool neutrals, navy structure, red reserved for risk
-$navy:   #12263f;
-$ink:    #24303f;
-$slate:  #5a6675;
-$rule:   rgba(18, 38, 63, 0.13);
-$tint:   #f4f6f8;
-$risk:   #8f1d17;
-$link:   #1b4f72;
+// Colour and type tokens confirmed from Tobyn's Counterterrorism Google
+// Slides deck (15EAfZA6jiUY69MgCRRJ-OsDiAUnw44EFtFY0j58f_is, read 18 Nov 2026).
+$band:   #3B5571;
+$cream:  #F7F3EA;
+$panel:  #ECE6D9;
+$ink:    #1E2833;
+$slate:  #5E6875;
+$muted:  #D3DCE6;
+$rule:   rgba(30, 40, 51, 0.18);
 
-$primary:          $navy;
+$primary:          $band;
 $body-color:       $ink;
-$body-bg:          #ffffff;
-$link-color:       $link;
-$link-hover-color: $navy;
+$body-bg:          $cream;
+$link-color:       $band;
+$link-hover-color: $ink;
 
-// one family for text, one for headings, no display webfont beyond that
 $font-family-sans-serif: "Source Sans 3", system-ui, -apple-system, "Segoe UI", sans-serif;
-$headings-font-family:   "Source Serif 4", Georgia, "Times New Roman", serif;
+$headings-font-family:   Newsreader, Georgia, "Times New Roman", serif;
 $headings-font-weight:   600;
-$headings-color:         $navy;
+$headings-color:         $ink;
 
-$border-radius:    2px;
-$border-radius-sm: 2px;
-$border-radius-lg: 2px;
+$border-radius:    0;
+$border-radius-sm: 0;
+$border-radius-lg: 0;
 
 $toc-color: $slate;
-$toc-active-border: $link;
+$toc-active-border: $band;
 
 /*-- scss:rules --*/
 
-@import url('https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,600;8..60,700&family=Source+Sans+3:wght@400;500;600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,600;0,6..72,700;1,6..72,400&family=Source+Sans+3:wght@400;500;600;700&display=swap');
 
 body {
   font-size: 1.02rem;
@@ -39,22 +39,23 @@ body {
   -webkit-font-smoothing: antialiased;
 }
 
-h1, h2, h3 { letter-spacing: -0.005em; }
+h1, h2, h3 { letter-spacing: 0; }
 
 h2 {
   margin-top: 2.75rem;
   padding-bottom: 0.3rem;
-  border-bottom: 2px solid $navy;
+  border-bottom: 1px solid $ink;
   font-size: 1.45rem;
 }
 h3 { margin-top: 1.9rem; font-size: 1.15rem; color: $ink; }
 
-// title block: a navy rule under the title, no banner
 #title-block-header { margin-bottom: 1.8rem; }
 .quarto-title .title {
-  font-weight: 700;
+  font-family: $headings-font-family;
+  font-weight: 600;
   font-size: 2.3rem;
   line-height: 1.15;
+  color: $ink;
 }
 .quarto-title .subtitle {
   font-family: $font-family-sans-serif;
@@ -63,60 +64,63 @@ h3 { margin-top: 1.9rem; font-size: 1.15rem; color: $ink; }
   margin-top: 0.3rem;
 }
 
-// masthead
+// masthead: slate title band, cream type
 .navbar {
-  background-color: $navy !important;
-  border-bottom: 3px solid $risk;
+  background-color: $band !important;
+  border-bottom: none;
   padding-top: 0.55rem;
   padding-bottom: 0.55rem;
 }
 .navbar .navbar-brand {
   font-family: $headings-font-family;
-  font-weight: 700;
-  font-size: 1.02rem;
-  color: #fff !important;
+  font-weight: 600;
+  font-size: 1.08rem;
+  color: $cream !important;
 }
 .navbar .nav-link {
   font-size: 0.9rem;
   font-weight: 500;
   padding-left: 0.85rem;
   padding-right: 0.85rem;
-  color: rgba(255, 255, 255, 0.72) !important;
+  color: $muted !important;
 }
-.navbar .nav-link:hover { color: #fff !important; }
-.navbar .nav-link.active { color: #fff !important; text-decoration: underline;
-  text-underline-offset: 6px; text-decoration-thickness: 2px; }
+.navbar .nav-link:hover { color: $cream !important; }
+.navbar .nav-link.active { color: $cream !important; text-decoration: underline;
+  text-underline-offset: 6px; text-decoration-thickness: 1px; }
+.navbar .navbar-toggler { border-color: $muted; }
+.navbar .navbar-toggler-icon { filter: invert(1); }
 
 a { text-underline-offset: 2px; }
 
-// the research question, set as an indented statement
 blockquote {
   font-family: $headings-font-family;
+  font-style: italic;
   font-size: 1.12rem;
   line-height: 1.45;
-  color: $navy;
-  background: $tint;
-  border-left: 3px solid $navy;
+  color: $ink;
+  background: $panel;
+  border-left: 3px solid $band;
   padding: 0.9rem 1.1rem;
   margin: 1.5rem 0;
 }
 
-// figures and captions
 figure, .figure { margin: 1.6rem 0; }
 figcaption, .figure-caption { font-size: 0.8rem; color: $slate; }
 
-// tables
 table { font-size: 0.93rem; }
-thead th { border-bottom: 2px solid $navy !important; }
+thead th { border-bottom: 1px solid $ink !important; }
 
 .nav-footer {
   font-size: 0.82rem;
-  border-top: 1px solid $rule;
+  border-top: 1px solid $ink;
   color: $slate;
+  background: $cream;
 }
 
-div.sourceCode { border: 1px solid $rule; background: $tint; }
+div.sourceCode { border: 1px solid $rule; background: $panel; }
 
-// keep wide content from overflowing on small screens
 img { max-width: 100%; height: auto; }
 .cell-output-display { overflow-x: auto; }
+
+// panel treatment for callouts and tabsets if they appear
+.panel, .callout, .sidebar { background: $panel; }

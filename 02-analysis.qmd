@@ -708,8 +708,8 @@ cat('<script>window.terminalScores = ',
 
 Weighting towards proximity lifts the terminals nearest Russian territory,
 Hamina, Klaipėda and Gdańsk. Weighting towards capacity lifts Świnoujście, the
-largest in the region. The order moving at all is the useful part. The ranking
-is a function of the assumptions, and the assumptions are yours to set.
+largest in the region. The useful part is that the order moves at all. Change the weights
+and you can see how much the ranking depends on what you assume.
 
 ## Interactive map
 

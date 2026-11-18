@@ -43,21 +43,8 @@ landing on, not scoring the events themselves.
 Terminal capacities are operator figures from 2024 and 2025. Import dependency
 is Eurostat for 2023. Everything I used is on the [Data](01-data.qmd) page.
 
-## The question
-
-Before 2022 most of this gas came by pipe from Russia. After the invasion of
-Ukraine and the Nord Stream sabotage that route was shut or abandoned, and the
-region started landing chilled gas from ships at Klaipėda, Świnoujście, Inkoo
-and a handful of other coastal sites. That put a lot of eight countries'
-import capacity onto a few points you can actually put on a map. The question
-I am asking is:
-
-> After 2022, Baltic energy imports shifted onto a small set of coastal LNG
-> terminals. How concentrated is that infrastructure, and how exposed is it, if
-> you measure by capacity, by distance to Russian territory, and by how far a
-> cargo has to run past the Danish Straits?
-
-Hover a point for the name, click for the figures. Size is capacity.
+How concentrated is that infrastructure, and how exposed is it? Hover a
+point for the name, click for the figures. Size is capacity.
 
 ```{r overview-map}
 #| echo: false
@@ -109,8 +96,8 @@ Each terminal gets a number from three ingredients:
 I weighted proximity most because the question is about exposure to one
 neighbour, and distance is the most direct thing the public data will
 support. Capacity is in there because a larger terminal does more damage if
-it stops. Transit is in there because a site deep in the Gulf of Finland has
-a longer voyage to be restocked.
+it stops. I put the Straits in because a cargo bound for the Gulf of Finland
+has a longer run once it is inside the sea.
 
 Those weights are a judgement. They are on the Analysis page if you want to
 drag them and see how much the order moves.

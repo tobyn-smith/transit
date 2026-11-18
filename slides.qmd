@@ -77,7 +77,7 @@ An exposure score for each terminal, from three ingredients:
 
 I picked the weights myself. Anyone can change them on the site.
 
-## Finding 1: concentration
+## Capacity sits in the south
 
 Import capacity is lopsided.
 
@@ -86,7 +86,7 @@ Import capacity is lopsided.
 - The northeast runs on one or two terminals each: Inkoo for the Gulf of
   Finland, Klaipėda for Lithuania.
 
-## Finding 2: proximity
+## The small terminals are the close ones
 
 The terminals closest to Russia are the small ones:
 
@@ -96,7 +96,7 @@ The terminals closest to Russia are the small ones:
 The two largest terminals sit farthest from Russia. I did not rank on size
 alone for that reason.
 
-## Finding 3: one way in
+## There is one way in
 
 Every LNG cargo passes the Danish Straits. The Kiel Canal is the only other
 entrance, and it is far too small for LNG carriers. The Straits are the door
