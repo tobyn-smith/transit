@@ -16,6 +16,7 @@ $presentation-font-size-root: 30px;
 
 @import url('https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,600;0,6..72,700;1,6..72,400&family=Source+Sans+3:wght@400;500;600;700&display=swap');
 
+:root { --r-main-font: "Source Sans 3", system-ui, -apple-system, "Segoe UI", sans-serif; }
 .reveal { font-variant-numeric: tabular-nums; background: #F7F3EA; }
 .reveal .slides section { text-align: left; padding-top: 0.6em; }
 
@@ -33,17 +34,6 @@ $presentation-font-size-root: 30px;
 .reveal .title { color: #1E2833; }
 .reveal .subtitle { color: #5E6875; }
 
-// a thin ink rule along the top of content slides
-.reveal .slides section::before {
-  content: "";
-  position: absolute;
-  top: -0.35em;
-  left: 0;
-  right: 0;
-  height: 1px;
-  background: #1E2833;
-}
-.reveal .slides section.title-slide::before { background: none; }
 
 // title slide: slate band, cream type, as in the CT deck
 .reveal .slides section.title-slide,
@@ -64,3 +54,24 @@ $presentation-font-size-root: 30px;
 }
 
 .reveal .progress { color: #3B5571; }
+
+// maps: the same frame, sea tint, legend and tooltip as the site and the
+// Grid Resilience map
+.reveal .leaflet-container {
+  background: #E8ECEF !important;
+  border: 1px solid rgba(30, 40, 51, 0.18);
+  border-radius: 8px;
+  font-family: "Source Sans 3", system-ui, sans-serif !important;
+}
+.reveal .leaflet-bar, .reveal .leaflet-container .info.legend {
+  background: #F7F3EA; color: #1E2833;
+  border: 1px solid rgba(30, 40, 51, 0.18) !important; border-radius: 6px !important; box-shadow: none !important;
+}
+.reveal .leaflet-bar a { background: #F7F3EA; color: #1E2833; }
+.reveal .leaflet-tooltip, .reveal .leaflet-popup-content-wrapper {
+  background: #F7F3EA; color: #1E2833; border: 1px solid rgba(30, 40, 51, 0.18); border-radius: 6px;
+  box-shadow: 0 2px 8px rgba(30, 40, 51, 0.12); font-family: "Source Sans 3", system-ui, sans-serif; font-size: 16px;
+}
+.reveal .leaflet-tooltip::before { display: none; }
+.reveal .leaflet-popup-tip { background: #F7F3EA; }
+.reveal .leaflet-control-attribution { background: rgba(247, 243, 234, 0.8) !important; font-size: 11px; }

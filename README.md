@@ -1,16 +1,14 @@
 <h1 align="center">Baltic Energy Transit Risk</h1>
 
 <p align="center">
-  A student project on the coastal LNG terminals that replaced Russian pipeline
-  gas around the Baltic after 2022, and how exposed each one looks from public
-  data.
+  A student project on the coastal LNG (liquefied natural gas) terminals that replaced Russian pipeline gas around the Baltic after 2022, and how exposed each one looks from public data alone.
 </p>
 
 <p align="center">
-  <a href="https://tobyn-smith.github.io/transit/"><strong>Read the site</strong></a> ·
-  <a href="https://tobyn-smith.github.io/transit/slides.html">Slides</a> ·
-  <a href="https://tobyn-smith.github.io/transit/02-analysis.html">Analysis</a> ·
-  <a href="https://tobyn-smith.github.io/transit/01-data.html">Data</a>
+  <a href="https://tobynsmith.me/baltic/"><strong>Read the site</strong></a> ·
+  <a href="https://tobynsmith.me/baltic/slides.html">Slides</a> ·
+  <a href="https://tobynsmith.me/baltic/02-analysis.html">Analysis</a> ·
+  <a href="https://tobynsmith.me/baltic/01-data.html">Data</a>
 </p>
 
 <p align="center">
@@ -23,7 +21,7 @@
 </p>
 
 <p align="center">
-  <img src="https://tobyn-smith.github.io/transit/02-analysis_files/figure-html/map-concentration-1.png"
+  <img src="https://tobynsmith.me/baltic/02-analysis_files/figure-html/map-concentration-1.png"
        alt="Map of Baltic LNG import terminals sized by capacity and coloured by exposure" width="620">
 </p>
 
@@ -31,15 +29,9 @@
 
 ## What this is
 
-This started as a student project in international affairs. I wanted a map of
-the terminals the Baltic region built after Russian pipeline gas stopped, and
-some way of saying how exposed each one looks if you only use public data.
+This started as a student project in international affairs. I wanted to map the terminals the Baltic region built after Russian pipeline gas stopped, and to work out how exposed each one looks from public data alone.
 
-In 2021 the eight countries on that sea took about 70 bcm from Russia by pipe.
-By 2023 that was almost nothing. Five working coastal terminals, plus a sixth
-planned at Gdańsk, can land about 23 bcm a year, roughly a third of what
-stopped arriving. The rest of the gap closed because demand fell and because
-gas still comes in by pipe from Norway and the west.
+In 2021 the eight countries on that sea took about 70 bcm (billion cubic metres) of gas from Russia by pipe. By 2023 that was almost nothing. Five working coastal terminals, plus a sixth planned at Gdańsk, can land about 23 bcm a year, which is roughly a third of what stopped arriving. The rest of the gap closed because demand fell and because gas still comes in by pipe from Norway and the west.
 
 On a normal year, then, the region is not short of gas. What I kept coming
 back to is how concentrated those terminals are, how close they sit to Russian
@@ -53,8 +45,7 @@ Danish Straits.
 
 ## What I found
 
-The overbuild in Finland and Lithuania is the part I care most about, because
-the spare capacity sits on the terminals closest to Russia.
+The part I care most about is the overbuild in Finland and Lithuania. The spare capacity sits on the terminals closest to Russia.
 
 | | |
 |:--|:--|
@@ -78,7 +69,7 @@ the spare capacity sits on the terminals closest to Russia.
 
 ## Data
 
-All public, no logins, no paid sources.
+Everything is public, with no logins and no paid sources.
 
 | Source | Used for | File |
 |:--|:--|:--|
@@ -95,16 +86,9 @@ Eurostat API when the page loads.
 
 ## How the score works
 
-Distances are measured in a projection suited to Europe (ETRS89 / LAEA Europe),
-so they come out in kilometres rather than degrees. Each terminal gets a number
-from three things, each with a stated weight: proximity to Russian territory
-(0.4), share of the region's import capacity (0.3), and the length of the
-supply route past the Danish Straits (0.3).
+I measure distances in a projection suited to Europe (ETRS89 / LAEA Europe), which gives kilometres rather than degrees. I score each terminal on three things, each with a stated weight: proximity to Russian territory (0.4), share of the region's import capacity (0.3), and the length of the supply route past the Danish Straits (0.3).
 
-I put the most weight on proximity because the question is about exposure to
-one neighbour, and distance is the most direct thing the public data will
-support. The weights are a judgement. They are not a finding. The Analysis
-page lets you change them and watch the ranking move.
+I put the most weight on proximity because the question is about exposure to one neighbour, and distance is the most direct thing the public data will support. The weights are my own judgement, and on the Analysis page you can change them and watch the ranking move.
 
 ## Run it yourself
 
@@ -162,22 +146,13 @@ docs/                          Built site (created by quarto render)
 
 ## What to check before citing
 
-The structure, maps and method are reproducible, and the Eurostat figures come
-straight from the API. Terminal capacities are compiled from operator reporting
-and are current to 2024 and 2025, so confirm them against the latest source if
-you cite a specific date. Published headline figures often describe planned
-rather than operating capacity: Mukran is widely quoted at 13.5 bcm, which
-assumes a second FSRU that is no longer on charter, so I count it here at about
-6 bcm.
+The structure, maps and method are reproducible, and the Eurostat figures come straight from the API. I compiled the terminal capacities from operator reporting, and they are current to 2024 and 2025. If you cite one for a specific date, check it against the latest source. Published headline figures often describe planned rather than operating capacity. Mukran, for example, is widely quoted at 13.5 bcm, which assumes a second FSRU (a floating terminal ship) that is no longer on charter, and I count it here at about 6 bcm.
 
 ## Limitations
 
-This measures geographic exposure. It does not measure the probability of
-disruption. It uses proxy measures rather than a causal model, and it is a
-single snapshot. Use it to see where the exposure sits rather than citing it
-as a forecast.
+This measures geographic exposure. It does not measure the probability of disruption. It uses proxy measures and is not a causal model, and it is a single snapshot. I would use it to see where the exposure sits, and I would not cite it as a forecast.
 
 ## Licence
 
 Code released under the MIT Licence. Each data source keeps its own terms,
-listed on the [Data](https://tobyn-smith.github.io/transit/01-data.html) page.
+listed on the [Data](https://tobynsmith.me/baltic/01-data.html) page.

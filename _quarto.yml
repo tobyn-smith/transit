@@ -8,7 +8,7 @@ website:
   title: "Baltic Energy Transit Risk"
   description: "How exposed the new Baltic gas import terminals are after 2022"
   favicon: favicon.svg
-  site-url: https://tobyn-smith.github.io/transit
+  site-url: https://tobynsmith.me/baltic
   search: true
   image: 02-analysis_files/figure-html/map-concentration-1.png
   open-graph: true
@@ -16,7 +16,7 @@ website:
     card-style: summary_large_image
   navbar:
     background: dark
-    title: "Baltic Transit Risk"
+    title: "Tobyn Smith / Baltic Transit Risk"
     right:
       - href: index.qmd
         text: Overview
@@ -45,3 +45,5 @@ format:
     smooth-scroll: true
     anchor-sections: true
     fig-cap-location: bottom
+    grid:
+      body-width: 700px

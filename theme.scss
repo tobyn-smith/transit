@@ -2,6 +2,8 @@
 
 // Colour and type tokens confirmed from Tobyn's Counterterrorism Google
 // Slides deck (15EAfZA6jiUY69MgCRRJ-OsDiAUnw44EFtFY0j58f_is, read 18 Nov 2026).
+// The same tokens drive the Grid Resilience site (energyosint docs/style.css),
+// so the two projects read as one family.
 $band:   #3B5571;
 $cream:  #F7F3EA;
 $panel:  #ECE6D9;
@@ -9,6 +11,7 @@ $ink:    #1E2833;
 $slate:  #5E6875;
 $muted:  #D3DCE6;
 $rule:   rgba(30, 40, 51, 0.18);
+$mapsea: #E8ECEF;
 
 $primary:          $band;
 $body-color:       $ink;
@@ -21,9 +24,9 @@ $headings-font-family:   Newsreader, Georgia, "Times New Roman", serif;
 $headings-font-weight:   600;
 $headings-color:         $ink;
 
-$border-radius:    0;
-$border-radius-sm: 0;
-$border-radius-lg: 0;
+$border-radius:    6px;
+$border-radius-sm: 4px;
+$border-radius-lg: 8px;
 
 $toc-color: $slate;
 $toc-active-border: $band;
@@ -33,55 +36,67 @@ $toc-active-border: $band;
 @import url('https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,600;0,6..72,700;1,6..72,400&family=Source+Sans+3:wght@400;500;600;700&display=swap');
 
 body {
-  font-size: 1.02rem;
-  line-height: 1.6;
+  font-size: 1.09rem;          // 17.5px, as on Grid Resilience
+  line-height: 1.7;
   font-variant-numeric: tabular-nums;
   -webkit-font-smoothing: antialiased;
 }
+p { margin-bottom: 1rem; }
 
-h1, h2, h3 { letter-spacing: 0; }
+h1, h2, h3 { letter-spacing: 0; color: $ink; }
 
 h2 {
-  margin-top: 2.75rem;
-  padding-bottom: 0.3rem;
+  font-size: clamp(1.45rem, 3.4vw, 1.8rem);
+  line-height: 1.2;
+  margin-top: 3rem;
+  margin-bottom: 1.1rem;
+  padding-bottom: 12px;
   border-bottom: 1px solid $ink;
-  font-size: 1.45rem;
 }
-h3 { margin-top: 1.9rem; font-size: 1.15rem; color: $ink; }
+h3 { margin-top: 2rem; font-size: 1.12rem; }
 
-#title-block-header { margin-bottom: 1.8rem; }
+// title block, matching the Grid Resilience title slide
+#title-block-header { margin: 2.6rem 0 2rem; }
 .quarto-title .title {
   font-family: $headings-font-family;
   font-weight: 600;
-  font-size: 2.3rem;
-  line-height: 1.15;
+  font-size: clamp(2.2rem, 5vw, 3rem);
+  line-height: 1.1;
+  letter-spacing: -0.01em;
   color: $ink;
 }
 .quarto-title .subtitle {
-  font-family: $font-family-sans-serif;
-  color: $slate;
-  font-size: 1.02rem;
-  margin-top: 0.3rem;
+  font-family: $headings-font-family;
+  font-style: italic;
+  font-weight: 400;
+  font-size: 1.22rem;
+  line-height: 1.5;
+  color: $ink;
+  max-width: 42ch;
+  margin-top: 0.6rem;
 }
 
-// masthead: slate title band, cream type
+// masthead: one full-width slate band, cream type, 58px tall
 .navbar {
   background-color: $band !important;
   border-bottom: none;
-  padding-top: 0.55rem;
-  padding-bottom: 0.55rem;
+  box-shadow: none;
+  min-height: 58px;
+  padding-top: 0;
+  padding-bottom: 0;
 }
-.navbar .navbar-brand {
+.navbar > .container-fluid, .navbar .navbar-container { padding-left: 24px; padding-right: 24px; }
+.navbar .navbar-brand, .navbar .navbar-title {
   font-family: $headings-font-family;
   font-weight: 600;
   font-size: 1.08rem;
   color: $cream !important;
 }
 .navbar .nav-link {
-  font-size: 0.9rem;
-  font-weight: 500;
-  padding-left: 0.85rem;
-  padding-right: 0.85rem;
+  font-size: 0.92rem;
+  font-weight: 400;
+  padding-left: 0.8rem;
+  padding-right: 0.8rem;
   color: $muted !important;
 }
 .navbar .nav-link:hover { color: $cream !important; }
@@ -89,8 +104,16 @@ h3 { margin-top: 1.9rem; font-size: 1.15rem; color: $ink; }
   text-underline-offset: 6px; text-decoration-thickness: 1px; }
 .navbar .navbar-toggler { border-color: $muted; }
 .navbar .navbar-toggler-icon { filter: invert(1); }
+.navbar #quarto-search .aa-DetachedSearchButton,
+.navbar .quarto-navbar-tools .quarto-navigation-tool { color: $muted; }
 
 a { text-underline-offset: 2px; }
+
+// the table of contents sits quietly beside the text, no panel
+#quarto-margin-sidebar, .sidebar.toc-left, #TOC { background: transparent !important; }
+#TOC { font-size: 0.86rem; }
+#TOC .toc-actions, #toc-title, h2#toc-title { font-family: $font-family-sans-serif; font-size: 0.78rem;
+  font-weight: 600; letter-spacing: 0.04em; text-transform: uppercase; color: $slate; border: none; }
 
 blockquote {
   font-family: $headings-font-family;
@@ -100,27 +123,76 @@ blockquote {
   color: $ink;
   background: $panel;
   border-left: 3px solid $band;
+  border-radius: 0 6px 6px 0;
   padding: 0.9rem 1.1rem;
   margin: 1.5rem 0;
 }
 
-figure, .figure { margin: 1.6rem 0; }
-figcaption, .figure-caption { font-size: 0.8rem; color: $slate; }
+figure, .figure { margin: 1.8rem 0; }
+figcaption, .figure-caption { font-size: 0.92rem; color: $slate; line-height: 1.55; }
 
-table { font-size: 0.93rem; }
-thead th { border-bottom: 1px solid $ink !important; }
+table { font-size: 0.94rem; }
+thead th { border-bottom: 1px solid $ink !important; font-weight: 600; }
 
+// footer, matching Grid Resilience
 .nav-footer {
-  font-size: 0.82rem;
+  font-size: 0.9rem;
   border-top: 1px solid $ink;
   color: $slate;
   background: $cream;
+  padding-top: 1.4rem;
+  padding-bottom: 2.4rem;
 }
+.nav-footer a { color: $slate; }
 
-div.sourceCode { border: 1px solid $rule; background: $panel; }
+div.sourceCode { border: 1px solid $rule; background: $panel; border-radius: 6px; }
+.code-fold summary, details.code-fold > summary { font-size: 0.8rem; color: $slate; }
+
+button, .btn { border-radius: 4px; }
 
 img { max-width: 100%; height: auto; }
 .cell-output-display { overflow-x: auto; }
 
-// panel treatment for callouts and tabsets if they appear
-.panel, .callout, .sidebar { background: $panel; }
+.callout { background: $panel; border-radius: 6px; }
+
+// maps: the same frame, sea tint, legend and tooltip as the Grid Resilience map
+.leaflet-container {
+  background: $mapsea !important;
+  border: 1px solid $rule;
+  border-radius: 8px;
+  font-family: $font-family-sans-serif !important;
+  margin: 1.4rem 0;
+}
+.leaflet-bar, .leaflet-control-layers, .leaflet-container .info.legend {
+  background: $cream;
+  color: $ink;
+  border: 1px solid $rule !important;
+  border-radius: 6px !important;
+  box-shadow: none !important;
+}
+.leaflet-bar a { background: $cream; color: $ink; border-bottom-color: $rule; }
+.leaflet-bar a:hover { background: $panel; }
+.leaflet-container .info.legend { font-size: 0.78rem; line-height: 1.4; padding: 6px 10px; }
+.leaflet-control-layers-expanded { font-size: 0.8rem; padding: 6px 10px; }
+.leaflet-tooltip, .leaflet-popup-content-wrapper {
+  background: $cream;
+  color: $ink;
+  border: 1px solid $rule;
+  border-radius: 6px;
+  box-shadow: 0 2px 8px rgba(30, 40, 51, 0.12);
+  font-family: $font-family-sans-serif;
+  font-size: 0.8rem;
+}
+.leaflet-tooltip::before { display: none; }
+.leaflet-popup-tip { background: $cream; box-shadow: none; }
+.leaflet-popup-content { margin: 8px 12px; line-height: 1.45; }
+.leaflet-control-attribution { background: rgba(247, 243, 234, 0.8) !important; color: $slate; font-size: 0.66rem; }
+.leaflet-control-attribution a { color: $slate; }
+.leaflet-control-scale-line { background: rgba(247, 243, 234, 0.8); border-color: $slate; color: $slate; }
+
+@media (max-width: 600px) {
+  body { font-size: 1.03rem; }
+  .navbar > .container-fluid, .navbar .navbar-container { padding-left: 12px; padding-right: 12px; }
+  .navbar .navbar-brand, .navbar .navbar-title { font-size: 0.94rem; }
+  #title-block-header { margin-top: 1.6rem; }
+}

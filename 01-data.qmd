@@ -12,30 +12,22 @@ library(dplyr)
 library(reactable)
 
 rtheme <- reactableTheme(
-  borderColor    = "rgba(18,38,63,0.13)",
-  highlightColor = "#eef2f6",
-  headerStyle    = list(borderBottom = "1.5px solid #12263f", fontWeight = 600),
+  borderColor    = "rgba(30,40,51,0.18)",
+  highlightColor = "#ECE6D9",
+  headerStyle    = list(borderBottom = "1.5px solid #1E2833", fontWeight = 600),
   style          = list(fontFamily = '"Source Sans 3", system-ui, sans-serif',
                         fontSize = "13px"))
 ```
 
-Every dataset here is public and free, with no login and no paid access. Where a
-source would normally require accepting terms or running a manual download, I
-kept a small table in the repo instead. The notes below say what to replace if
-you want to extend the project.
+Every dataset here is public and free, with no login and no paid access. Where a source would normally mean accepting terms or doing a manual download, I kept a small table in the repo instead. If you want to extend the project, the notes below say what to swap in.
 
 ## Base geography
 
-Country shapes and coastlines come from **Natural Earth**, loaded through the
-`rnaturalearth` package. Natural Earth is in the public domain. The package
-ships the data, so there is nothing to download by hand.
+Country shapes and coastlines come from **Natural Earth**, loaded through the `rnaturalearth` package. Natural Earth is in the public domain, and the package ships with the data, which means there is nothing to download by hand.
 
 ## Energy infrastructure
 
-The infrastructure layer is a small table of the region's LNG import terminals,
-`data/processed/lng_terminals.csv`. It holds the name, country, location, annual
-import capacity (in billion cubic metres, or bcm), status, and a source note for
-each terminal. You can sort or search it here:
+The infrastructure layer is a small table of the region's LNG (liquefied natural gas) import terminals, `data/processed/lng_terminals.csv`. For each terminal it holds the name, country, location, annual import capacity (in billion cubic metres, or bcm), status and a source note. You can sort or search it here:
 
 ```{r terminals-table}
 #| echo: false
@@ -50,51 +42,24 @@ read_csv("data/processed/lng_terminals.csv", show_col_types = FALSE) |>
 
 [Download this table as a CSV](data/processed/lng_terminals.csv)
 
-The capacities are taken from operator reporting and the **Global Energy
-Monitor** terminal tracker, current as of 2024 to 2025. The `source` column in
-the table names the operator behind each figure. Two points I would flag:
+I took the capacities from operator reporting and the **Global Energy Monitor** terminal tracker, current as of 2024 to 2025, and the `source` column in the table names the operator behind each figure. I would flag two points:
 
-- Capacities move, and a headline figure is often the planned one. Świnoujście
-  reached 8.3 bcm only in January 2025, once its third tank came online. Mukran is
-  frequently quoted at 13.5 bcm, but that assumes two FSRUs (the moored ships that
-  store and re-gasify LNG). Deutsche ReGas ended the charter on the second unit,
-  so the terminal runs on one ship, the Neptune, and is counted here at about
-  6 bcm. Taking the 13.5 figure at face value would roughly double Germany's
-  seaborne supply on paper.
-- The Paldiski jetty in Estonia is deliberately left out. It is shelved, and its
-  capacity figure refers to the same ship (the Exemplar) that now operates at
-  Inkoo, so including both would count one vessel twice.
+- Capacities move, and a headline figure is often the planned one. Świnoujście only reached 8.3 bcm in January 2025, once its third tank came online. Mukran is often quoted at 13.5 bcm, but that figure assumes two FSRUs (the moored ships that store and re-gasify LNG). Deutsche ReGas ended the charter on the second unit, and the terminal now runs on one ship, the Neptune, which is why I count it here at about 6 bcm. Taking the 13.5 figure at face value would roughly double Germany's seaborne supply on paper.
+- I left the Paldiski jetty in Estonia out on purpose. It is shelved, and its capacity figure refers to the same ship (the Exemplar) that now operates at Inkoo. Including both would count one vessel twice.
 
-To extend the project, **EMODnet Human Activities** and **OpenStreetMap** (via
-the `osmdata` package) are the route to add the pipelines and cables as mapped
-routes, and the full set of capacities can be reconciled against the **Global
-Energy Monitor** tracker.
+Anyone extending the project could add the pipelines and cables as mapped routes from **EMODnet Human Activities** and **OpenStreetMap** (via the `osmdata` package), and check the full set of capacities against the **Global Energy Monitor** tracker.
 
 ## Transit corridors
 
-The corridor map on the Analysis page uses a small table,
-`data/processed/transit_lines.csv`, listing the main subsea pipelines and cables
-by their landing points and status. They are drawn as **schematic straight
-lines**, not surveyed routes. The aim is to show which corridors exist and which
-have been disrupted, not their exact path. Positions and dates come from operator
-and press reporting. To map the true routes, add the actual route lines from
-**EMODnet Human Activities** or **OpenStreetMap**.
+The corridor map on the Analysis page uses a small table, `data/processed/transit_lines.csv`, which lists the main subsea pipelines and cables by their landing points and status. I drew them as **schematic straight lines**. They are not surveyed routes. What I wanted to show is which corridors exist and which have been disrupted, and the exact path matters less for that. Positions and dates come from operator and press reporting. The true routes could be mapped by adding the actual route lines from **EMODnet Human Activities** or **OpenStreetMap**.
 
 ## Proximity reference
 
-Instead of a maritime boundary line, the proximity measure uses distance to the
-nearest **Russian territory**. That means the mainland near the Gulf of Finland
-plus the Kaliningrad exclave, taken from Natural Earth. It is reproducible from a
-public package, and it is easy to read: how far each terminal is from Russian
-soil.
+For proximity I used distance to the nearest **Russian territory** instead of a maritime boundary line. That covers the mainland near the Gulf of Finland plus the Kaliningrad exclave, taken from Natural Earth. Anyone can reproduce it from a public package, and it is easy to read, since it is simply how far each terminal is from Russian soil.
 
 ## Dependence
 
-The dependence layer uses gas import dependency from **Eurostat** (indicator
-`nrg_ind_id`, natural gas, 2023), held in `data/processed/import_dependence.csv`.
-The figure is the share of gas demand met by net imports. Values above 100%
-reflect stock draws or re-exports in that year, and Denmark is low because of its
-own North Sea production. `scripts/03_eurostat.R` reproduces the pull.
+The dependence layer uses gas import dependency from **Eurostat** (indicator `nrg_ind_id`, natural gas, 2023), held in `data/processed/import_dependence.csv`. The figure is the share of gas demand met by net imports. Where a value goes above 100%, it reflects stock draws or re-exports in that year. Denmark is low because it has its own North Sea production. `scripts/03_eurostat.R` reproduces the pull.
 
 ```{r dependence-table}
 #| echo: false
@@ -111,7 +76,7 @@ read_csv("data/processed/import_dependence.csv", show_col_types = FALSE) |>
 The table above is committed 2023 data. For comparison, the figure below is pulled
 live from the Eurostat API in your browser when this page loads:
 
-::: {#live-dependency style="font-size:0.95em;color:#5a6675;margin-top:0.5rem"}
+::: {#live-dependency style="font-size:0.95em;color:#5E6875;margin-top:0.5rem"}
 Checking Eurostat for the latest EU-wide figure...
 :::
 
@@ -137,44 +102,27 @@ Checking Eurostat for the latest EU-wide figure...
 
 ## Gas demand
 
-To judge whether the terminals are large enough, the analysis compares their
-capacity with what each country actually burns. That demand figure is inland gas
-consumption from **Eurostat** (indicator `nrg_cb_gas`, natural gas, 2023), held in
-`data/processed/gas_demand.csv` and converted from million cubic metres to bcm so
-it sits on the same scale as terminal capacity. `scripts/03_eurostat.R` pulls it
-alongside the dependency figures.
+To judge whether the terminals are big enough, I compare their capacity with what each country actually burns. The demand figure is inland gas consumption from **Eurostat** (indicator `nrg_cb_gas`, natural gas, 2023), held in `data/processed/gas_demand.csv`. I converted it from million cubic metres to bcm to put it on the same scale as terminal capacity. `scripts/03_eurostat.R` pulls it alongside the dependency figures.
 
-2023 demand was itself depressed by high prices and mild weather across much
-of Europe, so coverage against a colder, higher-demand year would look less
-comfortable.
+One caveat is that 2023 demand was itself depressed by high prices and mild weather across much of Europe. Against a colder year with higher demand, the coverage would look less comfortable.
 
 [Download the demand figures as a CSV](data/processed/gas_demand.csv)
 
 ## Russian pipeline imports
 
-The before and after comparison uses imports of natural gas from Russia by
-pipeline, from **Eurostat** (indicator `nrg_ti_gas`, partner Russia, natural gas),
-for 2021 and 2023, held in `data/processed/russian_imports.csv` and converted to
-bcm. 2021 is used as the last full year before the invasion.
+For the before and after comparison I used imports of natural gas from Russia by pipeline, from **Eurostat** (indicator `nrg_ti_gas`, partner Russia, natural gas), for 2021 and 2023. They are held in `data/processed/russian_imports.csv` and converted to bcm. I use 2021 as the last full year before the invasion.
 
-These are recorded imports, not pipeline capacity. I think that is the fairer
-comparison. Capacity figures for pipelines like Nord Stream describe what could
-have flowed rather than what these particular countries actually took.
+These are recorded imports rather than pipeline capacity, and I think that makes for the fairer comparison. Capacity figures for pipelines like Nord Stream describe what could have flowed. What these particular countries actually took is a different number.
 
 [Download the import figures as a CSV](data/processed/russian_imports.csv)
 
 ## Why there is no conflict event layer
 
-I framed this as exposure and structural dependence rather than active
-conflict, because there is no battlefield on the Baltic seabed. ACLED is left
-out on purpose: it now requires registration, which would break the public
-data rule. If a later version needs conflict events, UCDP GED is the public,
-no-login substitute.
+I framed this around exposure and structural dependence instead of active conflict. There is no battlefield on the Baltic seabed. I left ACLED out on purpose. It now requires registration, which would break the public data rule. If a later version needs conflict events, UCDP GED is the public, no-login substitute.
 
 ## How the data is prepared
 
-The steps that turn the raw tables and map data into the layers behind the maps
-live in `scripts/01_clean.R`. The Analysis page repeats them when it builds:
+The steps that turn the raw tables and map data into the layers behind the maps are in `scripts/01_clean.R`. The Analysis page runs the same steps each time it builds:
 
 - tidy up the columns,
 - put everything on a map projection suited to Europe, so distances come out in
@@ -199,5 +147,4 @@ live in `scripts/01_clean.R`. The Analysis page repeats them when it builds:
 - Operator figures for capacity and status: Gaz-System, Deutsche ReGas, Gasgrid
   Finland, KN Energies, and Hamina LNG (2024 to 2025 reporting).
 
-If you add pipelines or cables later: EMODnet Human Activities
-(<https://emodnet.ec.europa.eu/en/human-activities>) and OpenStreetMap.
+For adding pipelines or cables later, the sources are EMODnet Human Activities (<https://emodnet.ec.europa.eu/en/human-activities>) and OpenStreetMap.

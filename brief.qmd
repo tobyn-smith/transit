@@ -19,8 +19,8 @@ format:
         \usepackage[default,scale=0.96]{sourceserifpro}
         \usepackage[scaled=0.92]{sourcesanspro}
         \usepackage{sectsty}
-        \sectionfont{\color[HTML]{12263F}\sffamily\large}
-        \subsectionfont{\color[HTML]{12263F}\sffamily}
+        \sectionfont{\color[HTML]{1E2833}\sffamily\large}
+        \subsectionfont{\color[HTML]{1E2833}\sffamily}
         \renewcommand{\arraystretch}{1.15}
 execute:
   warning: false
@@ -38,11 +38,11 @@ library(ggrepel)
 library(knitr)
 
 laea <- 3035
-ink   <- "#12263f"
-muted <- "#5a6675"
-land  <- "#e6ebf0"
-sea   <- "#f7f9fb"
-exp_cols <- c("#e9eef2", "#cf8f6a", "#8f1d17")
+ink   <- "#1E2833"
+muted <- "#5E6875"
+land  <- "#ECE6D9"
+sea   <- "#E8ECEF"
+exp_cols <- c("#fdd49e", "#ef6548", "#990000")
 
 theme_brief <- function() {
   theme_minimal(base_size = 9) +
@@ -87,28 +87,17 @@ reg_cov <- round(100 * lng_cap / sum(demand$gas_demand_bcm))
 
 ## What this brief is
 
-The Baltic region replaced a continental pipeline network with five working
-coastal sites. Russian pipeline gas into the eight littoral states fell from
-roughly `r round(ru_21)` bcm in 2021 to `r round(ru_23, 1)` bcm in 2023. The
-terminals built to receive seaborne gas hold about `r round(lng_cap, 1)` bcm a
-year, some `r round(100 * lng_cap / ru_21)`% of what stopped arriving.
+The Baltic region replaced a continental pipeline network with five working coastal sites. Russian pipeline gas into the eight states on the Baltic coast fell from roughly `r round(ru_21)` bcm (billion cubic metres) in 2021 to `r round(ru_23, 1)` bcm in 2023. The terminals built to receive seaborne LNG (liquefied natural gas) hold about `r round(lng_cap, 1)` bcm a year, some `r round(100 * lng_cap / ru_21)`% of what stopped arriving.
 
-The gap itself is mostly closed. Demand fell, and pipeline gas still arrives
-from the west and north. What I am trying to show is simpler than that. The
-replacement sits in a few fixed places. The terminals nearest Russian
-territory are the small ones. Every country with a terminal is running on a
-single site. Lose that site and the fallback is the same subsea links that
-have already been cut three times since 2022.
+The gap itself is mostly closed, because demand fell and pipeline gas still arrives from the west and north. My point is a simpler one. The replacement sits in a few fixed places, and the terminals nearest Russian territory are the small ones. Lithuania, Poland and Germany each run on one working terminal. Finland has two, but Hamina is a small site and Inkoo carries almost all of it. Lose the main terminal and the fallback is the same subsea links that have already been cut three times since 2022.
 
-The rest of the brief is the map, a stated and adjustable exposure score, what
-happens when the largest terminal in each country is removed, and what I make
-of that.
+Below are the map, an exposure score with stated weights that anyone can adjust, a test of what happens when the largest terminal in each country is removed, and what I make of it.
 
 ## Where the terminals sit
 
 ```{r map, fig.width = 6.6, fig.height = 5.0}
 ggplot() +
-  geom_sf(data = land_aoi, fill = land, colour = "#d3dae1", linewidth = 0.18) +
+  geom_sf(data = land_aoi, fill = land, colour = "#D6CDBB", linewidth = 0.18) +
   geom_sf(data = st_crop(russia, aoi), fill = "#dfd0cf", colour = "#c9b4b2",
           linewidth = 0.18) +
   geom_sf(data = st_sf(geometry = chokepoint), fill = NA, colour = ink,
@@ -132,26 +121,13 @@ ggplot() +
 
 ## Findings
 
-Świnoujście in Poland and Mukran in Germany hold about three fifths of the
-region's operating import capacity. The northeast runs on one or two
-terminals each, Inkoo for the Gulf of Finland and Klaipėda for Lithuania. Five
-working coastal sites replaced a continental pipeline network, with a sixth
-planned at Gdańsk.
+Świnoujście in Poland and Mukran in Germany hold about three fifths of the region's operating import capacity. The northeast gets by on one or two terminals each, with Inkoo serving the Gulf of Finland and Klaipėda serving Lithuania. In all, five working coastal sites replaced a continental pipeline network, and a sixth is planned at Gdańsk.
 
-The terminals nearest Russia are the small ones. Hamina sits at the eastern
-end of the Gulf of Finland; Klaipėda and Gdańsk sit next to Kaliningrad. The
-two largest terminals are among the farthest away. Size and proximity do not
-line up, so I did not rank on size alone.
+The terminals nearest Russia are the small ones. Hamina sits at the eastern end of the Gulf of Finland, while Klaipėda and Gdańsk are next door to Kaliningrad. The two largest terminals are among the farthest away. Because size and proximity do not line up, I did not rank on size alone.
 
-All LNG bound for these terminals passes the Danish Straits. The Kiel Canal is
-the only other way in and is far too small for LNG carriers. The terminals
-deepest inside the sea have the longest run to port.
+All LNG bound for these terminals passes the Danish Straits, since the Kiel Canal, the only other way in, is far too small for LNG carriers. The terminals deepest inside the sea have the longest run to port.
 
-Set against what each country actually burns, Finland and Lithuania hold
-capacity worth several times their own demand. Germany and Poland cover only
-part of theirs by sea. Across the eight countries the terminals could land
-`r reg_cov`% of annual consumption. That overbuild is the part I care most
-about, because the spare capacity sits on the terminals closest to Russia.
+Set against what each country actually burns, Finland and Lithuania hold capacity worth several times their own demand, while Germany and Poland cover only part of theirs by sea. Across the eight countries, the terminals could land `r reg_cov`% of annual consumption. The overbuild is the part I care most about. The spare capacity sits on the terminals closest to Russia.
 
 ```{r ranking}
 terminals |>
@@ -165,21 +141,13 @@ terminals |>
 
 ## What I would take from this
 
-If you borrow the EU's N-1 idea and knock out each country's largest terminal,
-Finland is left covering about a fifth of its demand. Lithuania, Poland and
-Germany are left with no seaborne capacity at all. They are not failing the
-real test, which also counts pipelines and storage. The fallback is the same
-links that have been damaged since 2022.
+The EU's N-1 test asks whether a country can still meet demand if its largest piece of supply infrastructure fails. If I borrow that idea and knock out each country's largest terminal, Finland is left covering about a fifth of its demand, and Lithuania, Poland and Germany are left with no seaborne capacity at all. They are not failing the real test, which also counts pipelines and storage. Their fallback, though, is the same set of links that have been damaged since 2022.
 
-Estonia, Latvia and Sweden import through neighbours rather than terminals of
-their own, over links such as the Balticconnector that have already been
-damaged.
+Estonia, Latvia and Sweden have no terminals of their own and import through neighbours, over links such as the Balticconnector that have already been damaged.
 
-One entrance through the Danish Straits serves all eight countries, so
-surveillance and patrol arrangements there cover the whole region at once.
+All eight countries share one entrance through the Danish Straits. Surveillance and patrol arrangements there cover the whole region at once.
 
-FSRUs were quick to add and can be moved, but they are few and chartered.
-Mukran lost half its capacity when a charter ended.
+FSRUs (floating storage and regasification units, moored ships that act as terminals) were quick to add and can be moved, but there are only a few of them and they are on charter. Mukran lost half its capacity when a charter ended.
 
 ## Disruptions since 2022
 
@@ -191,18 +159,10 @@ Mukran lost half its capacity when a charter ended.
 
 ## Limitations
 
-This measures geographic exposure, not the probability of disruption. The
-score uses proxies rather than a causal model, and different reasonable
-weights shift the ranking. It is a single snapshot: capacities move, and
-headline figures often describe planned rather than operating capacity.
-Demand in 2023 was itself depressed by high prices and mild weather, so
-coverage in a colder year would look less comfortable.
+This measures geographic exposure. It does not measure the probability of disruption. The score uses proxies and is not a causal model, and different reasonable weights shift the ranking. It is also a single snapshot. Capacities move, and headline figures often describe planned rather than operating capacity. Demand in 2023 was itself depressed by high prices and mild weather, and coverage in a colder year would look less comfortable.
 
 ## Sources
 
-All public. Terminal locations and capacities from operator reporting and the
-Global Energy Monitor LNG tracker, current to 2024 and 2025. Gas import
-dependency (`nrg_ind_id`), inland consumption (`nrg_cb_gas`) and imports from
-Russia (`nrg_ti_gas`) from Eurostat. Country geography from Natural Earth.
+Every source is public. Terminal locations and capacities come from operator reporting and the Global Energy Monitor LNG tracker, current to 2024 and 2025. Gas import dependency (`nrg_ind_id`), inland consumption (`nrg_cb_gas`) and imports from Russia (`nrg_ti_gas`) come from Eurostat, and country geography from Natural Earth.
 
-Full data, methods and interactive maps: <https://tobyn-smith.github.io/transit>
+Full data, methods and interactive maps: <https://tobynsmith.me/baltic/>
